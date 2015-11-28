@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01C0BA621C0970C600EB0E6C /* Laser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C0BA611C0970C600EB0E6C /* Laser.swift */; };
 		01C0BA691C0977E000EB0E6C /* Background.sks in Resources */ = {isa = PBXBuildFile; fileRef = 01C0BA671C0977E000EB0E6C /* Background.sks */; };
 		01C0BA6A1C0977E000EB0E6C /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C0BA681C0977E000EB0E6C /* spark.png */; };
 		01C0BA6C1C09804900EB0E6C /* Helvetica-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 01C0BA6B1C09804900EB0E6C /* Helvetica-Bold.otf */; };
@@ -17,10 +16,10 @@
 		540324371A4B8B5300B61880 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 540324351A4B8B5300B61880 /* Main.storyboard */; };
 		540324391A4B8B5300B61880 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 540324381A4B8B5300B61880 /* Images.xcassets */; };
 		540A9B161B1534F200A8F6E0 /* FadeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540A9B151B1534F200A8F6E0 /* FadeText.swift */; };
-		541036881A55EFB000FA8BD2 /* Alien.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541036871A55EFB000FA8BD2 /* Alien.swift */; };
+		541036881A55EFB000FA8BD2 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541036871A55EFB000FA8BD2 /* Enemy.swift */; };
 		5410368A1A55EFD200FA8BD2 /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541036891A55EFD200FA8BD2 /* Sprite.swift */; };
 		547B0DAA1A5E105900B3985C /* Explosion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547B0DA91A5E105900B3985C /* Explosion.swift */; };
-		547B0DAC1A5F59BC00B3985C /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547B0DAB1A5F59BC00B3985C /* Rocket.swift */; };
+		547B0DAC1A5F59BC00B3985C /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547B0DAB1A5F59BC00B3985C /* Player.swift */; };
 		547B0DAF1A5F5D3E00B3985C /* Scoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547B0DAE1A5F5D3E00B3985C /* Scoreboard.swift */; };
 		547B0DB11A5F64CE00B3985C /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547B0DB01A5F64CE00B3985C /* Background.swift */; };
 		547BDB8C1A60C1B1009F1B50 /* Pause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BDB8B1A60C1B1009F1B50 /* Pause.swift */; };
@@ -43,7 +42,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		01C0BA611C0970C600EB0E6C /* Laser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Laser.swift; sourceTree = "<group>"; };
 		01C0BA671C0977E000EB0E6C /* Background.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Background.sks; path = ../../Background.sks; sourceTree = "<group>"; };
 		01C0BA681C0977E000EB0E6C /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = ../../spark.png; sourceTree = "<group>"; };
 		01C0BA6B1C09804900EB0E6C /* Helvetica-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica-Bold.otf"; path = "../../Helvetica-Bold.otf"; sourceTree = "<group>"; };
@@ -55,10 +53,10 @@
 		540324361A4B8B5300B61880 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		540324381A4B8B5300B61880 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		540A9B151B1534F200A8F6E0 /* FadeText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeText.swift; sourceTree = "<group>"; };
-		541036871A55EFB000FA8BD2 /* Alien.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alien.swift; sourceTree = "<group>"; };
+		541036871A55EFB000FA8BD2 /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		541036891A55EFD200FA8BD2 /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
 		547B0DA91A5E105900B3985C /* Explosion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Explosion.swift; sourceTree = "<group>"; };
-		547B0DAB1A5F59BC00B3985C /* Rocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rocket.swift; sourceTree = "<group>"; };
+		547B0DAB1A5F59BC00B3985C /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		547B0DAE1A5F5D3E00B3985C /* Scoreboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scoreboard.swift; sourceTree = "<group>"; };
 		547B0DB01A5F64CE00B3985C /* Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		547BDB8B1A60C1B1009F1B50 /* Pause.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pause.swift; sourceTree = "<group>"; };
@@ -161,12 +159,11 @@
 		547B0DAD1A5F5C9600B3985C /* Sprites */ = {
 			isa = PBXGroup;
 			children = (
-				541036871A55EFB000FA8BD2 /* Alien.swift */,
-				547B0DAB1A5F59BC00B3985C /* Rocket.swift */,
+				541036871A55EFB000FA8BD2 /* Enemy.swift */,
+				547B0DAB1A5F59BC00B3985C /* Player.swift */,
 				547B0DA91A5E105900B3985C /* Explosion.swift */,
 				547B0DAE1A5F5D3E00B3985C /* Scoreboard.swift */,
 				547B0DB01A5F64CE00B3985C /* Background.swift */,
-				01C0BA611C0970C600EB0E6C /* Laser.swift */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -322,12 +319,11 @@
 				54C242F51AC8AEE8005385C2 /* Options.swift in Sources */,
 				540324321A4B8B5300B61880 /* GameScene.swift in Sources */,
 				54C242F91AC8C26C005385C2 /* OptionsMenu.swift in Sources */,
-				547B0DAC1A5F59BC00B3985C /* Rocket.swift in Sources */,
+				547B0DAC1A5F59BC00B3985C /* Player.swift in Sources */,
 				540324341A4B8B5300B61880 /* GameViewController.swift in Sources */,
 				547B0DAA1A5E105900B3985C /* Explosion.swift in Sources */,
 				547BDB8C1A60C1B1009F1B50 /* Pause.swift in Sources */,
-				01C0BA621C0970C600EB0E6C /* Laser.swift in Sources */,
-				541036881A55EFB000FA8BD2 /* Alien.swift in Sources */,
+				541036881A55EFB000FA8BD2 /* Enemy.swift in Sources */,
 				540A9B161B1534F200A8F6E0 /* FadeText.swift in Sources */,
 				5410368A1A55EFD200FA8BD2 /* Sprite.swift in Sources */,
 				54D1EDCA1A846FB50058E8DB /* Utility.swift in Sources */,

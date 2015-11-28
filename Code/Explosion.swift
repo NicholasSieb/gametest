@@ -9,7 +9,7 @@ class Explosion: Sprite {
         self.runAction(
         SKAction.sequence([
                 SKAction.scaleBy(7, duration: 0.5),
-                SKAction.runBlock({ main.removeAliens = true }),
+                SKAction.runBlock({ main.removeEnemies = true }),
                 SKAction.fadeAlphaBy(-0.9, duration: 0.6),
                 SKAction.removeFromParent()
         ])

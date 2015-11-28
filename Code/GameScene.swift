@@ -2,10 +2,10 @@ import SpriteKit
 
 class GameScene: SKScene {
     var viewController: GameViewController?
-    let alienSpawnRate = 5
+    let enemySpawnRate = 5
     var isGameOver = false
     var gamePaused = false
-    var removeAliens = false
+    var removeEnemies = false
     var doFireLaser = false
     var scoreboard: Scoreboard!
     var rocket: Rocket!
@@ -93,31 +93,19 @@ class GameScene: SKScene {
                 }
               
             }
-            spawnAliens(true)
-            spawnAliens(false)
-            enumerateAliens()
-            //only here to test
-            //fireLaser()
+            spawnEnemies(true)
+            spawnEnemies(false)
+            enumerateEnemies()
         }
     }
-    
-    func fireLaser() {
-        //method to fire
-        let xPos = rocket.position.x
-        let yPos = rocket.position.y
-        let laser = Laser(x: xPos+5, y: yPos+5).addTo(self)
-        laser.zPosition = 2
-        
-        
-        
-    }
 
-    func spawnAliens(startAtTop: Bool) {
-        if random() % 1000 < alienSpawnRate {
+
+    func spawnEnemies(startAtTop: Bool) {
+        if random() % 1000 < enemySpawnRate {
             let randomX = 10 + random() % Int(size.width) - 10
             let startY = startAtTop.boolValue ? size.height : 0
-            let alien = Alien(x: CGFloat(randomX), y: startY, startAtTop: startAtTop).addTo(self)
-            alien.zPosition = 2
+            let enemy = Enemy(x: CGFloat(randomX), y: startY, startAtTop: startAtTop).addTo(self)
+            enemy.zPosition = 2
             
         }
     }
@@ -145,42 +133,42 @@ class GameScene: SKScene {
         view?.presentScene(gameScene, transition: reveal)
     }
 
-    func enumerateAliens() {
-        self.enumerateChildNodesWithName("alien") {
+    func enumerateEnemies() {
+        self.enumerateChildNodesWithName("enemy") {
             node, stop in
-            let alien = node as! Alien
-            self.alienBrains(alien)
+            let enemy = node as! Enemy
+            self.enemyAI(enemy)
         }
-        if (removeAliens) {
-            removeAliens = false
+        if (removeEnemies) {
+            removeEnemies = false
         }
     }
 
-    func alienBrains(alien: Alien) {
-        let y = alien.position.y
+    func enemyAI(enemy: Enemy) {
+        let y = enemy.position.y
         //check if player connected with enemy
         if !isGameOver {
-            if CGRectIntersectsRect(CGRectInset(alien.frame, 25, 25), CGRectInset(rocket.frame, 10, 10)) {
+            if CGRectIntersectsRect(CGRectInset(enemy.frame, 25, 25), CGRectInset(rocket.frame, 10, 10)) {
                 gameOver()
             }
-            //add checking if alien was shot
-            if !alien.isDisabled() {
+            //add checking if enemy was shot
+            if !enemy.isDisabled() {
                 //alien.setDisabled()
                // removeAliens = true
             }
-            if removeAliens {
-                if !alien.isDisabled() {
+            if removeEnemies {
+                if !enemy.isDisabled() {
                     //add score for killing enemy
                     scoreboard.addScore(1)
                 }
-                alien.removeFromParent()
+                enemy.removeFromParent()
             }
-            alien.moveTo(CGPointMake(rocket.position.x, rocket.position.y))
+            enemy.moveTo(CGPointMake(rocket.position.x, rocket.position.y))
         } else {
-            alien.move()
+            enemy.move()
         }
         if y < 0 || y > size.height {
-            alien.removeFromParent()
+            enemy.removeFromParent()
         }
     }
 

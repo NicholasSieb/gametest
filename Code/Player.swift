@@ -2,6 +2,8 @@ import SpriteKit
 
 class Rocket: Sprite {
     var fireArray = Array<SKTexture>();
+    var laserSize = 5;
+    var laserColor = UIColor.greenColor();
 
     init(x: CGFloat, y: CGFloat) {
         super.init(named: "rocket", x: x, y: y)
@@ -35,6 +37,20 @@ class Rocket: Sprite {
             dy = (dy + 50) / mag * speed
             self.position = CGPointMake(self.position.x + dx, self.position.y + dy)
         }
+    }
+    //func to shoot the lasers
+    //move lasers here so it's easier to modify (for upgrades possibly)
+    func shoot(){
+        let laser = SKSpriteNode()
+        laser.color = laserColor
+        laser.size = CGSize(width: laserSize, height: laserSize)
+        laser.position = CGPointMake(self.position.x, self.position.y)
+        self.addChild(laser)
+        
+        let vector = CGVectorMake(self.position.x, self.position.y)
+        
+        let laserMovement = SKAction.sequence([SKAction.repeatAction(SKAction.moveBy(vector, duration: 1), count: 10), SKAction.waitForDuration(30.0/60.0), SKAction.removeFromParent()])
+        laser.runAction(laserMovement)
     }
 
     required init?(coder aDecoder: NSCoder) {

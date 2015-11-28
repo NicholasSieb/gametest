@@ -1,19 +1,19 @@
 import SpriteKit
 
-class Alien: Sprite {
+class Enemy: Sprite {
     var startAtTop: Bool!
     var disabled: Bool = false
     let vel: CGFloat = 4
 
     init(x: CGFloat, y: CGFloat, startAtTop: Bool) {
-        super.init(named: "alien", x: x, y: y)
+        super.init(named: "enemy", x: x, y: y)
         self.startAtTop = startAtTop
         self.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 1)))
     }
 
     func setDisabled() {
         disabled = true
-        self.texture = SKTexture(imageNamed: "aliendisabled")
+        self.texture = SKTexture(imageNamed: "enemydisabled")
     }
 
     func isDisabled() -> Bool {
