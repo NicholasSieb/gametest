@@ -1,4 +1,4 @@
-# gametest
+# Project for CS 407
 
 TODO:
 
