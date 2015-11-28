@@ -10,7 +10,7 @@ class Scoreboard {
 
     init(x: CGFloat, y: CGFloat) {
         scoreboard.setScale(2.5)
-        scoreboard.fontName = "timeburner"
+        scoreboard.fontName = "Helvetica-Bold"
         scoreboard.position = CGPoint(x: x, y: y)
         scoreboard.horizontalAlignmentMode = .Left
         scoreboard.zPosition = 10
@@ -44,7 +44,7 @@ class Scoreboard {
         highscore.position = CGPointMake(size.width / 2, size.height / 2 + 50)
         highscore.fontColor = UIColor.redColor()
         highscore.fontSize = 80
-        highscore.fontName = "timeburner"
+        highscore.fontName = "Helvetica-Bold"
         highscore.runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.fadeInWithDuration(0.3), SKAction.fadeOutWithDuration(0.3)])))
         return highscore
     }

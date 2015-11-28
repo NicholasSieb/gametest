@@ -6,7 +6,7 @@ class FadeText {
     init(x: CGFloat, y: CGFloat, label: String) {
         text = SKLabelNode(text: label)
         text.position = CGPoint(x: x, y: y)
-        text.fontName = "timeburner"
+        text.fontName = "Helvetica-Bold"
         text.color = UIColor.whiteColor()
         text.fontSize = 25
         text.zPosition = 500

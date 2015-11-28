@@ -13,7 +13,7 @@ class Pause {
 
     func addPause() {
         let text = SKLabelNode(text: "=")
-        text.fontName = "timeburner"
+        text.fontName = "Helvetica-Bold"
         text.name = "pause"
         text.fontSize = 100
         text.zRotation = CGFloat(M_PI_2)

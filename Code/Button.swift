@@ -13,7 +13,7 @@ class Button {
 
     func addText(label: String, id: String) {
         let text = SKLabelNode(text: label)
-        text.fontName = "timeburner"
+        text.fontName = "Helvetica-Bold"
         text.name = id
         text.fontSize = 100
         text.verticalAlignmentMode = .Center
