@@ -1,27 +1,15 @@
 import SpriteKit
 
 class Laser: Sprite {
-    var fireArray = Array<SKTexture>();
     
     init(x: CGFloat, y: CGFloat) {
-        super.init(named: "rocket", x: x, y: y)
-        self.setScale(2.5)
-        fire()
+        super.init(named: "laserbullet", x: x, y: y)
+        self.setScale(1)
     }
     
-    func fire() {
-        for index in 0 ... 2 {
-            fireArray.append(SKTexture(imageNamed: "fire\(index)"))
-        }
-        let fire = SKSpriteNode(texture: fireArray[0]);
-        fire.anchorPoint = CGPoint(x: 0.5, y: 1.3)
-        self.addChild(fire)
-        let animateAction = SKAction.animateWithTextures(self.fireArray, timePerFrame: 0.10);
-        fire.runAction(SKAction.repeatActionForever(animateAction))
-    }
     
     func moveTo(x: CGFloat, y: CGFloat) {
-        let speed: CGFloat = 12
+        let speed: CGFloat = 36
         var dx: CGFloat, dy: CGFloat
         // Compute vector components in direction of the touch
         dx = x - self.position.x

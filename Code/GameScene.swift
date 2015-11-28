@@ -40,6 +40,7 @@ class GameScene: SKScene {
                 pauseGame()
             default:
                 currentlyTouching = true
+                
             }
             Utility.pressButton(self, touched: touched, score: String(scoreboard.getScore()))
         } else {
@@ -95,6 +96,8 @@ class GameScene: SKScene {
             spawnAliens(true)
             spawnAliens(false)
             enumerateAliens()
+            //only here to test
+            //fireLaser()
         }
     }
     
@@ -102,7 +105,9 @@ class GameScene: SKScene {
         //method to fire
         let xPos = rocket.position.x
         let yPos = rocket.position.y
-        let laser = Laser(x: xPos, y: yPos)
+        let laser = Laser(x: xPos+5, y: yPos+5).addTo(self)
+        laser.zPosition = 2
+        
         
         
     }
