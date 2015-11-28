@@ -3,6 +3,30 @@ import SpriteKit
 struct Utility {
 
 
+    
+    static func vecAdd(a: CGPoint, b: CGPoint) -> CGPoint {
+        return CGPointMake(a.x + b.x, a.y + b.y)
+    }
+    
+    static func vecSub(a: CGPoint, b: CGPoint) -> CGPoint{
+        return CGPointMake(a.x - b.x, a.y - b.y)
+    }
+    
+    static func vecMult(a: CGPoint, b: CGFloat) -> CGPoint{
+        return CGPointMake(a.x*b, a.y*b)
+    }
+    
+    static func vecLength(a: CGPoint) -> CGFloat{
+        return sqrt(a.x * a.x + a.y * a.y)
+    }
+    
+    
+    static func vecNormalize(a: CGPoint) -> CGPoint{
+        var length: CGFloat
+        length = vecLength(a)
+        return CGPointMake(a.x / length, a.y / length)
+    }
+    
     static func pressButton(main: SKScene, touched: SKNode, score: String) {
         let size = main.size
         if let name = touched.name {

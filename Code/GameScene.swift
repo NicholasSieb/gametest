@@ -10,6 +10,8 @@ class GameScene: SKScene {
     var scoreboard: Scoreboard!
     var rocket: Rocket!
     var pause: Pause!
+    var laserSize = 5;
+    var laserColor = UIColor.greenColor();
 
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
@@ -31,6 +33,7 @@ class GameScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else {return}
         currentPosition = touch.locationInNode(self)
+        
         let touched = self.nodeAtPoint(currentPosition)
         if let name = touched.name {
             switch name {
@@ -84,18 +87,39 @@ class GameScene: SKScene {
             pause = Pause(size: size, x: size.width - 50, y: size.height - size.height / 6).addTo(self)
         }
     }
+    
+    //func to shoot the lasers
+    //move lasers here so it's easier to modify (for upgrades possibly)
+    func shoot(x: CGFloat, y: CGFloat){
+        let laser = SKSpriteNode()
+        laser.color = laserColor
+        laser.size = CGSize(width: laserSize*10, height: laserSize*10)
+        laser.position = CGPointMake(self.position.x, self.position.y)
+        laser.physicsBody? = SKPhysicsBody(rectangleOfSize: laser.frame.size)
+        laser.physicsBody?.dynamic = true
+        laser.physicsBody?.affectedByGravity = false
+        laser.physicsBody?.collisionBitMask = 0x0;
+        laser.physicsBody?.velocity = CGVectorMake(0,0);
+        laser.anchorPoint = CGPoint(x: -2, y: -2)
+        self.addChild(laser)
+        
+        
+    }
 
     override func update(currentTime: CFTimeInterval) {
         if !gamePaused {
             if !isGameOver {
                 if currentlyTouching {
                     rocket.moveTo(currentPosition.x, y: currentPosition.y)
+                    //test bullets
+                    shoot(rocket.position.x, y: rocket.position.y)
                 }
               
             }
             spawnEnemies(true)
             spawnEnemies(false)
             enumerateEnemies()
+            
         }
     }
 
