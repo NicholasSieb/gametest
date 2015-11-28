@@ -14,6 +14,10 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
         Background(size: size).addTo(self)
+        let coolBackGround = SKEmitterNode(fileNamed: "Background")
+        coolBackGround?.position = CGPointMake(size.width/2, size.height)
+        coolBackGround!.zPosition = 0
+        addChild(coolBackGround!)
         rocket = Rocket(x: size.width / 2, y: size.height / 2).addTo(self) as! Rocket
         scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
         scoreboard.viewController = self.viewController
