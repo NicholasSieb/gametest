@@ -13,6 +13,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var laserSize = 5;
     var laserColor = UIColor.greenColor();
     var contactQueue = Array<SKPhysicsContact>()
+    let kBulletCategory: UInt32 = 0x1 << 1
+    let kEnemyCategory: UInt32 = 0x1 << 0
 
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
@@ -25,7 +27,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
         scoreboard.viewController = self.viewController
         pause = Pause(size: size, x: size.width - 50, y: size.height - size.height / 6).addTo(self)
-        physicsWorld.contactDelegate = self
+        self.physicsWorld.gravity = CGVectorMake(0,0)
+        self.physicsWorld.contactDelegate = self
+        view.showsPhysics = true
         
     }
 
@@ -92,25 +96,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //physics stuff
     
-    func didBeginContact(contact: SKPhysicsContact){
-        if contact as SKPhysicsContact? != nil{
-            self.contactQueue.append(contact)
-        }
+ //   func didBeginContact(contact: SKPhysicsContact){
+ //       if contact as SKPhysicsContact? != nil{
+ //           self.contactQueue.append(contact)
+ //       }
+ //   }
+    
+  func didBeginContact(contact: SKPhysicsContact){
+       print("TEST")
     }
     
-    func handleContact(contact: SKPhysicsContact){
-        
-    }
-    
-    func processContactsForUpdate(currentTime: CFTimeInterval){
-        for contact in self.contactQueue{
-            self.handleContact(contact)
-            
-            if let index = (self.contactQueue as NSArray).indexOfObject(contact) as Int?{
-                self.contactQueue.removeAtIndex(index)
-            }
-        }
-    }
+
     
     //func to shoot the lasers
     //move lasers here so it's easier to modify (for upgrades possibly)
@@ -119,11 +115,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         laser.color = laserColor
         laser.size = CGSize(width: laserSize, height: laserSize)
         
-        laser.physicsBody? = SKPhysicsBody(rectangleOfSize: laser.frame.size)
-        laser.physicsBody?.dynamic = true
-        laser.physicsBody?.affectedByGravity = false
-        laser.physicsBody?.collisionBitMask = 0x0;
-        laser.physicsBody?.velocity = CGVectorMake(0,0);
+        laser.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 30, height: 30))
+        laser.physicsBody!.dynamic = true
+        laser.physicsBody!.usesPreciseCollisionDetection = true
+        laser.physicsBody!.collisionBitMask = 0x0;
+        laser.physicsBody!.velocity = CGVectorMake(0,0);
+        laser.physicsBody!.categoryBitMask = kBulletCategory
+        laser.physicsBody!.contactTestBitMask = kEnemyCategory
         
         //get locations
         let location = CGPointMake(currentPosition.x, currentPosition.y)

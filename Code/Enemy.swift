@@ -4,12 +4,16 @@ class Enemy: Sprite {
     var startAtTop: Bool!
     var disabled: Bool = false
     let vel: CGFloat = 4
+    let kEnemyCategory: UInt32 = 0x1 << 0
 
     init(x: CGFloat, y: CGFloat, startAtTop: Bool) {
         super.init(named: "enemy", x: x, y: y)
         self.startAtTop = startAtTop
-        self.physicsBody? = SKPhysicsBody(rectangleOfSize: self.frame.size)
-        self.physicsBody?.collisionBitMask = 0x0
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 30, height: 30))
+        self.physicsBody!.dynamic = true
+        self.physicsBody!.collisionBitMask = 0x0
+        self.physicsBody!.contactTestBitMask = 0x0
+        self.physicsBody!.categoryBitMask = kEnemyCategory
         self.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 1)))
     }
 
