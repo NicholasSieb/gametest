@@ -1,6 +1,6 @@
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     var viewController: GameViewController?
     let enemySpawnRate = 5
     var isGameOver = false
@@ -12,6 +12,7 @@ class GameScene: SKScene {
     var pause: Pause!
     var laserSize = 5;
     var laserColor = UIColor.greenColor();
+    var contactQueue = Array<SKPhysicsContact>()
 
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
@@ -24,6 +25,7 @@ class GameScene: SKScene {
         scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
         scoreboard.viewController = self.viewController
         pause = Pause(size: size, x: size.width - 50, y: size.height - size.height / 6).addTo(self)
+        physicsWorld.contactDelegate = self
         
     }
 
@@ -88,20 +90,71 @@ class GameScene: SKScene {
         }
     }
     
+    //physics stuff
+    
+    func didBeginContact(contact: SKPhysicsContact){
+        if contact as SKPhysicsContact? != nil{
+            self.contactQueue.append(contact)
+        }
+    }
+    
+    func handleContact(contact: SKPhysicsContact){
+        
+    }
+    
+    func processContactsForUpdate(currentTime: CFTimeInterval){
+        for contact in self.contactQueue{
+            self.handleContact(contact)
+            
+            if let index = (self.contactQueue as NSArray).indexOfObject(contact) as Int?{
+                self.contactQueue.removeAtIndex(index)
+            }
+        }
+    }
+    
     //func to shoot the lasers
     //move lasers here so it's easier to modify (for upgrades possibly)
     func shoot(x: CGFloat, y: CGFloat){
         let laser = SKSpriteNode()
         laser.color = laserColor
-        laser.size = CGSize(width: laserSize*10, height: laserSize*10)
-        laser.position = CGPointMake(self.position.x, self.position.y)
+        laser.size = CGSize(width: laserSize, height: laserSize)
+        
         laser.physicsBody? = SKPhysicsBody(rectangleOfSize: laser.frame.size)
         laser.physicsBody?.dynamic = true
         laser.physicsBody?.affectedByGravity = false
         laser.physicsBody?.collisionBitMask = 0x0;
         laser.physicsBody?.velocity = CGVectorMake(0,0);
-        laser.anchorPoint = CGPoint(x: -2, y: -2)
+        
+        //get locations
+        let location = CGPointMake(currentPosition.x, currentPosition.y)
+        let projLoc = CGPointMake(rocket.position.x, rocket.position.y)
+        
+        laser.position = projLoc
+        
+        
+        //calculate offset of location to projectile
+        let offset = Utility.vecSub(location, b: projLoc)
+        
+        
+        //add a laser
         self.addChild(laser)
+        
+        //get direction to shoot in
+        let direction = Utility.vecNormalize(offset)
+        
+        //move endpoint of triangle far (offscreen hopefully)
+        let shootAmount = Utility.vecMult(direction, b: 1000)
+        
+        //add shoot amount to curr pos
+        let realDest = Utility.vecAdd(shootAmount, b: laser.position)
+        
+        //actions
+        
+        let velocity = (1200/1.0)
+        let realMoveDuration = Double(self.size.width) / velocity
+        let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
+        let removeAction = SKAction.removeFromParent()
+        laser.runAction(SKAction.sequence([moveAction, removeAction]))
         
         
     }
@@ -177,9 +230,14 @@ class GameScene: SKScene {
             }
             //add checking if enemy was shot
             if !enemy.isDisabled() {
+               // for laser:SKSpriteNode in laserArray {
+               // if CGRectIntersectsRect(CGRectInset(enemy.frame, 25, 25), CGRectInset(laser.frame,5,5)){
+               //     removeEnemies = true
+               // }
+                }
                 //alien.setDisabled()
                // removeAliens = true
-            }
+            //}
             if removeEnemies {
                 if !enemy.isDisabled() {
                     //add score for killing enemy

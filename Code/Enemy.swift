@@ -8,6 +8,8 @@ class Enemy: Sprite {
     init(x: CGFloat, y: CGFloat, startAtTop: Bool) {
         super.init(named: "enemy", x: x, y: y)
         self.startAtTop = startAtTop
+        self.physicsBody? = SKPhysicsBody(rectangleOfSize: self.frame.size)
+        self.physicsBody?.collisionBitMask = 0x0
         self.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 1)))
     }
 

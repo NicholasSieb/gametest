@@ -17,7 +17,7 @@ struct Utility {
     }
     
     static func vecLength(a: CGPoint) -> CGFloat{
-        return sqrt(a.x * a.x + a.y * a.y)
+        return CGFloat(sqrt(a.x * a.x + a.y * a.y))
     }
     
     
