@@ -103,7 +103,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
  //   }
     
   func didBeginContact(contact: SKPhysicsContact){
-       print("TEST")
+    var firstBody: SKPhysicsBody
+    //var secondBody: SKPhysicsBody
+    
+    firstBody = contact.bodyA
+    if (firstBody.node?.name == "enemy"){
+    let toChange = firstBody.node as? Enemy
+    toChange?.shot = true
+    toChange?.removeFromParent()
+    scoreboard.addScore(1)
+    //secondBody = contact.bodyB
+       print("collision detected")
+    }
+    
+    
+    //print(contact.bodyA)
     }
     
 
@@ -212,6 +226,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.enumerateChildNodesWithName("enemy") {
             node, stop in
             let enemy = node as! Enemy
+            
             self.enemyAI(enemy)
         }
         if (removeEnemies) {
@@ -228,10 +243,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             //add checking if enemy was shot
             if !enemy.isDisabled() {
-               // for laser:SKSpriteNode in laserArray {
-               // if CGRectIntersectsRect(CGRectInset(enemy.frame, 25, 25), CGRectInset(laser.frame,5,5)){
-               //     removeEnemies = true
-               // }
+                if(enemy.shot){
+                 removeEnemies = true
+                }
+              
                 }
                 //alien.setDisabled()
                // removeAliens = true
@@ -239,9 +254,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if removeEnemies {
                 if !enemy.isDisabled() {
                     //add score for killing enemy
-                    scoreboard.addScore(1)
+                    //scoreboard.addScore(1)
                 }
-                enemy.removeFromParent()
             }
             enemy.moveTo(CGPointMake(rocket.position.x, rocket.position.y))
         } else {
