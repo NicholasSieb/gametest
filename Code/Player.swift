@@ -73,7 +73,7 @@ class Rocket: Sprite {
         //actions
     
         
-        let velocity = (600/1.0)
+        let velocity = (300/1.0)
         let realMoveDuration = Double(self.size.width) / velocity
         let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
         let removeAction = SKAction.removeFromParent()

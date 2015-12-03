@@ -80,11 +80,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else {
             if !isGameOver {
                 
-                
+                if Options.option.get("sound"){
                 let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Pause", withExtension: "wav")!
                 do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
                 bgMusic.prepareToPlay()
                 bgMusic.play()
+                }
                 gamePaused = true
                 //speed = 0
                 pause.removeThis()
@@ -121,10 +122,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     scoreboard.addScore(1)
     //secondBody = contact.bodyB
        print("collision detected")
+        if Options.option.get("sound"){
         let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
         do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
         bgMusic.prepareToPlay()
         bgMusic.play()
+        }
     }
     
     
@@ -172,12 +175,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let realDest = Utility.vecAdd(shootAmount, b: laser.position)
         
         //actions
-        
+        if Options.option.get("sound"){
         let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Laser", withExtension: "wav")!
         do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
         bgMusic.prepareToPlay()
         bgMusic.play()
-        
+        }
         let velocity = (1200/1.0)
         let realMoveDuration = Double(self.size.width) / velocity
         let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
