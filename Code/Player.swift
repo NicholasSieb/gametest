@@ -3,6 +3,10 @@ import SpriteKit
 
 class Rocket: Sprite {
     var fireArray = Array<SKTexture>();
+    var laserColor = UIColor.redColor()
+    var laserSize = 5
+    let kBulletCategory: UInt32 = 0x1 << 1
+    let kEnemyCategory: UInt32 = 0x1 << 0
 
     
     
@@ -23,6 +27,59 @@ class Rocket: Sprite {
         self.addChild(fire)
         let animateAction = SKAction.animateWithTextures(self.fireArray, timePerFrame: 0.10);
         fire.runAction(SKAction.repeatActionForever(animateAction))
+    }
+    
+    
+    //func to shoot the lasers
+    //move lasers here so it's easier to modify (for upgrades possibly)
+    func shoot(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat){
+        //this version passes in player loc and touch loc
+        let laser = SKSpriteNode()
+        laser.color = laserColor
+        laser.size = CGSize(width: laserSize, height: laserSize)
+        
+        laser.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 30, height: 30))
+        laser.physicsBody!.dynamic = true
+        laser.physicsBody!.usesPreciseCollisionDetection = true
+        laser.physicsBody!.collisionBitMask = 0x0;
+        laser.physicsBody!.velocity = CGVectorMake(0,0);
+        laser.physicsBody!.categoryBitMask = kBulletCategory
+        laser.physicsBody!.contactTestBitMask = kEnemyCategory
+        
+        //get locations touch first then player
+        let location = CGPointMake(x2, y2)
+        let projLoc = CGPointMake(x1, y1)
+        
+        laser.position = projLoc
+        
+        
+        //calculate offset of location to projectile
+        let offset = Utility.vecSub(location, b: projLoc)
+        
+        
+        //add a laser
+        self.parent?.addChild(laser)
+        //self.addChild(laser)
+        
+        //get direction to shoot in
+        let direction = Utility.vecNormalize(offset)
+        
+        //move endpoint of triangle far (offscreen hopefully)
+        let shootAmount = Utility.vecMult(direction, b: 1000)
+        
+        //add shoot amount to curr pos
+        let realDest = Utility.vecAdd(shootAmount, b: laser.position)
+        
+        //actions
+    
+        
+        let velocity = (600/1.0)
+        let realMoveDuration = Double(self.size.width) / velocity
+        let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
+        let removeAction = SKAction.removeFromParent()
+        laser.runAction(SKAction.sequence([moveAction, removeAction]))
+        
+        
     }
 
     func moveTo(x: CGFloat, y: CGFloat) {

@@ -193,7 +193,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if currentlyTouching {
                     rocket.moveTo(currentPosition.x, y: currentPosition.y)
                     //test bullets
-                    shoot(rocket.position.x, y: rocket.position.y)
+                    rocket.shoot(rocket.position.x, y1: rocket.position.y, x2: currentPosition.x, y2: currentPosition.y)
                 }
               
             }
