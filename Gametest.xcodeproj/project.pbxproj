@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0110BACA1C110528006D04BA /* Enemy-Explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0110BAC51C110528006D04BA /* Enemy-Explosion.wav */; };
+		0110BACB1C110528006D04BA /* Laser.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0110BAC61C110528006D04BA /* Laser.wav */; };
+		0110BACC1C110528006D04BA /* Pause.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0110BAC71C110528006D04BA /* Pause.wav */; };
+		0110BACD1C110528006D04BA /* Player-Death.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0110BAC81C110528006D04BA /* Player-Death.wav */; };
+		0110BACE1C110528006D04BA /* Start.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0110BAC91C110528006D04BA /* Start.wav */; };
 		0180BD511C0A7E8300B42979 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 0180BD501C0A7E8300B42979 /* info.png */; };
 		0180BD531C0A802C00B42979 /* FAQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180BD521C0A802C00B42979 /* FAQ.swift */; };
 		01C0BA691C0977E000EB0E6C /* Background.sks in Resources */ = {isa = PBXBuildFile; fileRef = 01C0BA671C0977E000EB0E6C /* Background.sks */; };
@@ -44,6 +49,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0110BAC51C110528006D04BA /* Enemy-Explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Enemy-Explosion.wav"; path = "../../../Enemy-Explosion.wav"; sourceTree = "<group>"; };
+		0110BAC61C110528006D04BA /* Laser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Laser.wav; path = ../../../Laser.wav; sourceTree = "<group>"; };
+		0110BAC71C110528006D04BA /* Pause.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Pause.wav; path = ../../../Pause.wav; sourceTree = "<group>"; };
+		0110BAC81C110528006D04BA /* Player-Death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Player-Death.wav"; path = "../../../Player-Death.wav"; sourceTree = "<group>"; };
+		0110BAC91C110528006D04BA /* Start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Start.wav; path = ../../../Start.wav; sourceTree = "<group>"; };
 		0180BD501C0A7E8300B42979 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		0180BD521C0A802C00B42979 /* FAQ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQ.swift; sourceTree = "<group>"; };
 		01C0BA671C0977E000EB0E6C /* Background.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Background.sks; path = ../../Background.sks; sourceTree = "<group>"; };
@@ -189,6 +199,11 @@
 		54BC17781AC1ECE1000A7FED /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				0110BAC51C110528006D04BA /* Enemy-Explosion.wav */,
+				0110BAC61C110528006D04BA /* Laser.wav */,
+				0110BAC71C110528006D04BA /* Pause.wav */,
+				0110BAC81C110528006D04BA /* Player-Death.wav */,
+				0110BAC91C110528006D04BA /* Start.wav */,
 			);
 			name = sounds;
 			path = images;
@@ -280,15 +295,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0110BACC1C110528006D04BA /* Pause.wav in Resources */,
 				01C0BA6A1C0977E000EB0E6C /* spark.png in Resources */,
 				55AD86821A8E831E00839E28 /* game.atlas in Resources */,
+				0110BACE1C110528006D04BA /* Start.wav in Resources */,
 				54BC178E1AC1FABF000A7FED /* soundoff.png in Resources */,
 				54ECDC211A64E99400860C5E /* settings.png in Resources */,
+				0110BACB1C110528006D04BA /* Laser.wav in Resources */,
 				540324391A4B8B5300B61880 /* Images.xcassets in Resources */,
 				540324371A4B8B5300B61880 /* Main.storyboard in Resources */,
 				54BC178F1AC1FABF000A7FED /* soundon.png in Resources */,
+				0110BACA1C110528006D04BA /* Enemy-Explosion.wav in Resources */,
 				01C0BA6C1C09804900EB0E6C /* Helvetica-Bold.otf in Resources */,
 				01C0BA691C0977E000EB0E6C /* Background.sks in Resources */,
+				0110BACD1C110528006D04BA /* Player-Death.wav in Resources */,
 				54ECDC1F1A64E99400860C5E /* home.png in Resources */,
 				54A317941B3A037A00D8CB16 /* LaunchScreen.storyboard in Resources */,
 				0180BD511C0A7E8300B42979 /* info.png in Resources */,

@@ -1,4 +1,5 @@
 import SpriteKit
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var viewController: GameViewController?
@@ -15,6 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var contactQueue = Array<SKPhysicsContact>()
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
+    var bgMusic:AVAudioPlayer = AVAudioPlayer()
 
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
@@ -78,6 +80,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else {
             if !isGameOver {
                 
+                
+                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Pause", withExtension: "wav")!
+                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
+                bgMusic.prepareToPlay()
+                bgMusic.play()
                 gamePaused = true
                 //speed = 0
                 pause.removeThis()
@@ -114,6 +121,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     scoreboard.addScore(1)
     //secondBody = contact.bodyB
        print("collision detected")
+        let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
+        do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
+        bgMusic.prepareToPlay()
+        bgMusic.play()
     }
     
     
@@ -161,6 +172,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let realDest = Utility.vecAdd(shootAmount, b: laser.position)
         
         //actions
+        
+        let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Laser", withExtension: "wav")!
+        do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
+        bgMusic.prepareToPlay()
+        bgMusic.play()
         
         let velocity = (1200/1.0)
         let realMoveDuration = Double(self.size.width) / velocity
