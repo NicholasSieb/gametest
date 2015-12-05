@@ -5,6 +5,11 @@ class Rocket: Sprite {
     var fireArray = Array<SKTexture>();
     var laserColor = UIColor.redColor()
     var laserSize = 5
+    var boxSize = 30
+    //Here is the variable we use to increase the user's ship speed
+    var speedTwo: CGFloat = 12
+    //Here is the variable we use to determine the laser's speed
+    var velocity = (300/1.0)
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
 
@@ -38,7 +43,7 @@ class Rocket: Sprite {
         laser.color = laserColor
         laser.size = CGSize(width: laserSize, height: laserSize)
         
-        laser.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 30, height: 30))
+        laser.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: boxSize, height: boxSize))
         laser.physicsBody!.dynamic = true
         laser.physicsBody!.usesPreciseCollisionDetection = true
         laser.physicsBody!.collisionBitMask = 0x0;
@@ -73,7 +78,7 @@ class Rocket: Sprite {
         //actions
     
         
-        let velocity = (300/1.0)
+        //let velocity = (300/1.0)
         let realMoveDuration = Double(self.size.width) / velocity
         let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
         let removeAction = SKAction.removeFromParent()
@@ -83,7 +88,7 @@ class Rocket: Sprite {
     }
 
     func moveTo(x: CGFloat, y: CGFloat) {
-        let speed: CGFloat = 12
+        let speed: CGFloat = speedTwo
         var dx: CGFloat, dy: CGFloat
         // Compute vector components in direction of the touch
         dx = x - self.position.x

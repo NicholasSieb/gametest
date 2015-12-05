@@ -17,7 +17,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
     var bgMusic:AVAudioPlayer = AVAudioPlayer()
-    //testchange
+    //here is the button code
+    let button = UIButton()
+    let buttonTwo = UIButton()
+    let buttonThree = UIButton()
 
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
@@ -33,6 +36,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self
         view.showsPhysics = true
+        //Here we add the button to the game.
+        createButtons()
         
     }
 
@@ -283,6 +288,70 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if y < 0 || y > size.height {
             enemy.removeFromParent()
+        }
+    }
+    
+    //Here is code that will add a button to the screen.
+    func createButtons () {
+        //let button = UIButton();
+        //let buttonTwo = UIButton();
+        //Here we describe the button's title
+        //button.setTitle("Add", forState: .Normal)
+        //button.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        //Here we give the button an image
+        let image = UIImage(named: "spark.png")! as UIImage
+        button.setImage(image, forState: .Normal)
+        buttonTwo.setImage(image, forState: .Normal)
+        buttonThree.setImage(image, forState: .Normal)
+        //Here we add the position and size of the button
+        button.frame = CGRectMake(0, 50, 50, 50) //x,y,width,height
+        buttonTwo.frame = CGRectMake(0, 100, 50, 50)
+        buttonThree.frame = CGRectMake(0, 150, 50, 50)
+        //Here we add the button to the game
+        self.view!.addSubview(button)
+        self.view!.addSubview(buttonTwo)
+        self.view!.addSubview(buttonThree)
+        //Here we add functionality to the button
+        button.addTarget(self, action: "buttonPressed:", forControlEvents: .TouchUpInside)
+        buttonTwo.addTarget(self, action: "buttonPressedTwo:", forControlEvents: .TouchUpInside)
+        buttonThree.addTarget(self, action: "buttonPressedThree:", forControlEvents: .TouchUpInside)
+    }
+    
+    //Here this button increases the size of the laser for a cost.
+    func buttonPressed(sender: UIButton!) {
+        if(scoreboard.getScore() >= 1)
+        {
+            scoreboard.addScore(-1)
+            //I think this is what determines the size of the rocket
+            rocket.laserSize = rocket.laserSize + 1
+            rocket.boxSize = rocket.boxSize + 1
+        }
+        //this is the code that came along in the tutorial
+        /*
+        var alertView = UIAlertView();
+        alertView.addButtonWithTitle("OK");
+        alertView.title = "Alert";
+        alertView.message = "Button Pressed!!!";
+        alertView.show();
+        */
+    }
+    //Here this button increases the speed of the ship for a cost.
+    func buttonPressedTwo(sender: UIButton!)
+    {
+        if(scoreboard.getScore() >= 1)
+        {
+            scoreboard.addScore(-1)
+            let additionVariable: CGFloat = 1
+            rocket.speedTwo = rocket.speedTwo + additionVariable
+        }
+    }
+    //Here this button should increase the velocity of the lasers for a cost.
+    func buttonPressedThree(sender: UIButton!)
+    {
+        if(scoreboard.getScore() >= 1)
+        {
+            scoreboard.addScore(-1)
+            rocket.velocity = rocket.velocity + (50/1.0)
         }
     }
 

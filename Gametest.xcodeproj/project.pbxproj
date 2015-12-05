@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		017F4DA11C138968003BC7AA /* Enemy-Explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 017F4DA01C138968003BC7AA /* Enemy-Explosion.wav */; };
+		017F4DA61C138984003BC7AA /* Laser.wav in Resources */ = {isa = PBXBuildFile; fileRef = 017F4DA21C138984003BC7AA /* Laser.wav */; };
+		017F4DA71C138984003BC7AA /* Pause.wav in Resources */ = {isa = PBXBuildFile; fileRef = 017F4DA31C138984003BC7AA /* Pause.wav */; };
+		017F4DA81C138984003BC7AA /* Player-Death.wav in Resources */ = {isa = PBXBuildFile; fileRef = 017F4DA41C138984003BC7AA /* Player-Death.wav */; };
+		017F4DA91C138984003BC7AA /* Start.wav in Resources */ = {isa = PBXBuildFile; fileRef = 017F4DA51C138984003BC7AA /* Start.wav */; };
 		0180BD511C0A7E8300B42979 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 0180BD501C0A7E8300B42979 /* info.png */; };
 		0180BD531C0A802C00B42979 /* FAQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180BD521C0A802C00B42979 /* FAQ.swift */; };
 		01C0BA691C0977E000EB0E6C /* Background.sks in Resources */ = {isa = PBXBuildFile; fileRef = 01C0BA671C0977E000EB0E6C /* Background.sks */; };
@@ -39,15 +44,15 @@
 		54ECDC1F1A64E99400860C5E /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ECDC1B1A64E99400860C5E /* home.png */; };
 		54ECDC211A64E99400860C5E /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ECDC1D1A64E99400860C5E /* settings.png */; };
 		55AD86821A8E831E00839E28 /* game.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 55AD86811A8E831E00839E28 /* game.atlas */; };
-		A6CB18E31C12328000028653 /* Enemy-Explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = A6CB18DE1C12328000028653 /* Enemy-Explosion.wav */; };
-		A6CB18E41C12328000028653 /* Laser.wav in Resources */ = {isa = PBXBuildFile; fileRef = A6CB18DF1C12328000028653 /* Laser.wav */; };
-		A6CB18E51C12328000028653 /* Pause.wav in Resources */ = {isa = PBXBuildFile; fileRef = A6CB18E01C12328000028653 /* Pause.wav */; };
-		A6CB18E61C12328000028653 /* Player-Death.wav in Resources */ = {isa = PBXBuildFile; fileRef = A6CB18E11C12328000028653 /* Player-Death.wav */; };
-		A6CB18E71C12328000028653 /* Start.wav in Resources */ = {isa = PBXBuildFile; fileRef = A6CB18E21C12328000028653 /* Start.wav */; };
 		EB8A47DF1A979AE300CF6272 /* GCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8A47DE1A979AE300CF6272 /* GCHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		017F4DA01C138968003BC7AA /* Enemy-Explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Enemy-Explosion.wav"; path = "Code/sounds/Enemy-Explosion.wav"; sourceTree = SOURCE_ROOT; };
+		017F4DA21C138984003BC7AA /* Laser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Laser.wav; path = Code/sounds/Laser.wav; sourceTree = SOURCE_ROOT; };
+		017F4DA31C138984003BC7AA /* Pause.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Pause.wav; path = Code/sounds/Pause.wav; sourceTree = SOURCE_ROOT; };
+		017F4DA41C138984003BC7AA /* Player-Death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Player-Death.wav"; path = "Code/sounds/Player-Death.wav"; sourceTree = SOURCE_ROOT; };
+		017F4DA51C138984003BC7AA /* Start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Start.wav; path = Code/sounds/Start.wav; sourceTree = SOURCE_ROOT; };
 		0180BD501C0A7E8300B42979 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		0180BD521C0A802C00B42979 /* FAQ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQ.swift; sourceTree = "<group>"; };
 		01C0BA671C0977E000EB0E6C /* Background.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Background.sks; path = ../../Background.sks; sourceTree = "<group>"; };
@@ -82,11 +87,6 @@
 		54ECDC1B1A64E99400860C5E /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		54ECDC1D1A64E99400860C5E /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		55AD86811A8E831E00839E28 /* game.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = game.atlas; sourceTree = "<group>"; };
-		A6CB18DE1C12328000028653 /* Enemy-Explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Enemy-Explosion.wav"; path = "../../../Archive/Enemy-Explosion.wav"; sourceTree = "<group>"; };
-		A6CB18DF1C12328000028653 /* Laser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Laser.wav; path = ../../../Archive/Laser.wav; sourceTree = "<group>"; };
-		A6CB18E01C12328000028653 /* Pause.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Pause.wav; path = ../../../Archive/Pause.wav; sourceTree = "<group>"; };
-		A6CB18E11C12328000028653 /* Player-Death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Player-Death.wav"; path = "../../../Archive/Player-Death.wav"; sourceTree = "<group>"; };
-		A6CB18E21C12328000028653 /* Start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Start.wav; path = ../../../Archive/Start.wav; sourceTree = "<group>"; };
 		EB8A47DE1A979AE300CF6272 /* GCHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -196,11 +196,11 @@
 		54BC17781AC1ECE1000A7FED /* sounds */ = {
 			isa = PBXGroup;
 			children = (
-				A6CB18DE1C12328000028653 /* Enemy-Explosion.wav */,
-				A6CB18DF1C12328000028653 /* Laser.wav */,
-				A6CB18E01C12328000028653 /* Pause.wav */,
-				A6CB18E11C12328000028653 /* Player-Death.wav */,
-				A6CB18E21C12328000028653 /* Start.wav */,
+				017F4DA01C138968003BC7AA /* Enemy-Explosion.wav */,
+				017F4DA21C138984003BC7AA /* Laser.wav */,
+				017F4DA31C138984003BC7AA /* Pause.wav */,
+				017F4DA41C138984003BC7AA /* Player-Death.wav */,
+				017F4DA51C138984003BC7AA /* Start.wav */,
 			);
 			name = sounds;
 			path = images;
@@ -295,19 +295,19 @@
 				01C0BA6A1C0977E000EB0E6C /* spark.png in Resources */,
 				55AD86821A8E831E00839E28 /* game.atlas in Resources */,
 				54BC178E1AC1FABF000A7FED /* soundoff.png in Resources */,
-				A6CB18E71C12328000028653 /* Start.wav in Resources */,
+				017F4DA91C138984003BC7AA /* Start.wav in Resources */,
+				017F4DA11C138968003BC7AA /* Enemy-Explosion.wav in Resources */,
 				54ECDC211A64E99400860C5E /* settings.png in Resources */,
 				540324391A4B8B5300B61880 /* Images.xcassets in Resources */,
 				540324371A4B8B5300B61880 /* Main.storyboard in Resources */,
 				54BC178F1AC1FABF000A7FED /* soundon.png in Resources */,
 				01C0BA691C0977E000EB0E6C /* Background.sks in Resources */,
 				54ECDC1F1A64E99400860C5E /* home.png in Resources */,
+				017F4DA61C138984003BC7AA /* Laser.wav in Resources */,
+				017F4DA81C138984003BC7AA /* Player-Death.wav in Resources */,
+				017F4DA71C138984003BC7AA /* Pause.wav in Resources */,
 				54A317941B3A037A00D8CB16 /* LaunchScreen.storyboard in Resources */,
-				A6CB18E41C12328000028653 /* Laser.wav in Resources */,
-				A6CB18E61C12328000028653 /* Player-Death.wav in Resources */,
-				A6CB18E51C12328000028653 /* Pause.wav in Resources */,
 				0180BD511C0A7E8300B42979 /* info.png in Resources */,
-				A6CB18E31C12328000028653 /* Enemy-Explosion.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
