@@ -17,6 +17,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
     var bgMusic:AVAudioPlayer = AVAudioPlayer()
+    //testchange
 
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
