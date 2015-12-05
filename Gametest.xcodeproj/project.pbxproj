@@ -126,8 +126,8 @@
 		5403242A1A4B8B5300B61880 /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				54BC17781AC1ECE1000A7FED /* sounds */,
-				540324511A4B8C0D00B61880 /* images */,
+				54BC17781AC1ECE1000A7FED /* Sounds */,
+				540324511A4B8C0D00B61880 /* Images */,
 				540324311A4B8B5300B61880 /* GameScene.swift */,
 				547BDB821A60A21B009F1B50 /* Menu */,
 				547B0DAD1A5F5C9600B3985C /* Sprites */,
@@ -155,7 +155,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		540324511A4B8C0D00B61880 /* images */ = {
+		540324511A4B8C0D00B61880 /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				01C0BA671C0977E000EB0E6C /* Background.sks */,
@@ -166,6 +166,7 @@
 				54ECDC1D1A64E99400860C5E /* settings.png */,
 				55AD86811A8E831E00839E28 /* game.atlas */,
 			);
+			name = Images;
 			path = images;
 			sourceTree = "<group>";
 		};
@@ -193,7 +194,7 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
-		54BC17781AC1ECE1000A7FED /* sounds */ = {
+		54BC17781AC1ECE1000A7FED /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
 				017F4DA01C138968003BC7AA /* Enemy-Explosion.wav */,
@@ -202,7 +203,7 @@
 				017F4DA41C138984003BC7AA /* Player-Death.wav */,
 				017F4DA51C138984003BC7AA /* Start.wav */,
 			);
-			name = sounds;
+			name = Sounds;
 			path = images;
 			sourceTree = "<group>";
 		};
