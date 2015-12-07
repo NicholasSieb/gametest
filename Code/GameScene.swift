@@ -273,8 +273,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
               
                 }
-                //alien.setDisabled()
-               // removeAliens = true
+                //remove
             //}
             if removeEnemies {
                 if !enemy.isDisabled() {
@@ -322,7 +321,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(scoreboard.getScore() >= 1 && isGameOver == false)
         {
             scoreboard.addScore(-1)
-            //I think this is what determines the size of the rocket
             rocket.laserSize = rocket.laserSize + 1
             rocket.boxSize = rocket.boxSize + 1
         }
