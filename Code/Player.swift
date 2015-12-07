@@ -19,7 +19,7 @@ class Rocket: Sprite {
 
     init(x: CGFloat, y: CGFloat) {
         super.init(named: "rocket", x: x, y: y)
-        self.setScale(2.5)
+        self.setScale(2.0)
         fire()
     }
 

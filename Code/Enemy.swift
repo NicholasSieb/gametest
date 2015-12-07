@@ -10,7 +10,8 @@ class Enemy: Sprite {
     init(x: CGFloat, y: CGFloat, startAtTop: Bool) {
         super.init(named: "enemy", x: x, y: y)
         self.startAtTop = startAtTop
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 80, height: 80))
+        self.setScale(0.8)
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 60, height: 60))
         self.physicsBody!.dynamic = true
         self.physicsBody!.collisionBitMask = 0x0
         self.physicsBody!.contactTestBitMask = 0x0
