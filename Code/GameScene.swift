@@ -21,6 +21,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let button = UIButton()
     let buttonTwo = UIButton()
     let buttonThree = UIButton()
+    let buttonFour = UIButton()
+    //Here are variables for delaying the shooting
+    var canShoot = true
+    var reloadSpeed = 0.5
 
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
@@ -36,9 +40,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self
         view.showsPhysics = true
-        //Here we add the button to the game.
-        createButtons()
-        
     }
 
     var currentPosition: CGPoint!
@@ -83,6 +84,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //speed = 1
             paused = false
             removeDialog()
+            removeUpgradeButtons()
         } else {
             if !isGameOver {
                 
@@ -97,6 +99,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 pause.removeThis()
                 pausemenu = PopupMenu(size: size, title: "Paused", label: "Continue?", id: "pause")
                 pausemenu.addTo(self)
+                //Here we add the upgrade buttons to the game.
+                createUpgradeButtons()
             }
         }
     }
@@ -201,8 +205,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !isGameOver {
                 if currentlyTouching {
                     rocket.moveTo(currentPosition.x, y: currentPosition.y)
-                    //test bullets
-                    rocket.shoot(rocket.position.x, y1: rocket.position.y, x2: currentPosition.x, y2: currentPosition.y)
+                    //Here we determine whether we can shoot or not. Once we fire, we immediately disallow us to shoot anymore until the appropriate amount of time has been waited out.
+                    if(canShoot == true)
+                    {
+                        canShoot = false
+                        //Here is a timer. It triggers the function "canShootAgain", and takes "shootSpeed" amount of seconds to execute.
+                        var timer = NSTimer.scheduledTimerWithTimeInterval(reloadSpeed, target: self, selector: "canShootAgain", userInfo: nil, repeats: false)
+                        rocket.shoot(rocket.position.x, y1: rocket.position.y, x2: currentPosition.x, y2: currentPosition.y)
+                    }
                 }
               
             }
@@ -290,8 +300,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    //Here is code that will add a button to the screen.
-    func createButtons () {
+    //Here we add the upgrade buttons to the pause menu.
+    func createUpgradeButtons () {
         //let button = UIButton();
         //let buttonTwo = UIButton();
         //Here we describe the button's title
@@ -302,18 +312,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         button.setImage(image, forState: .Normal)
         buttonTwo.setImage(image, forState: .Normal)
         buttonThree.setImage(image, forState: .Normal)
+        buttonFour.setImage(image, forState: .Normal)
         //Here we add the position and size of the button
         button.frame = CGRectMake(0, 50, 50, 50) //x,y,width,height
         buttonTwo.frame = CGRectMake(0, 100, 50, 50)
         buttonThree.frame = CGRectMake(0, 150, 50, 50)
+        buttonFour.frame = CGRectMake(0, 200, 50, 50)
         //Here we add the button to the game
         self.view!.addSubview(button)
         self.view!.addSubview(buttonTwo)
         self.view!.addSubview(buttonThree)
+        self.view!.addSubview(buttonFour)
         //Here we add functionality to the button
         button.addTarget(self, action: "buttonPressed:", forControlEvents: .TouchUpInside)
         buttonTwo.addTarget(self, action: "buttonPressedTwo:", forControlEvents: .TouchUpInside)
         buttonThree.addTarget(self, action: "buttonPressedThree:", forControlEvents: .TouchUpInside)
+        buttonFour.addTarget(self, action: "buttonPressedFour:", forControlEvents: .TouchUpInside)
+    }
+    //Here we remove the upgrade buttons from the pause menu
+    func removeUpgradeButtons()
+    {
+        button.removeFromSuperview()
+        buttonTwo.removeFromSuperview()
+        buttonThree.removeFromSuperview()
+        buttonFour.removeFromSuperview()
     }
     
     //Here this button increases the size of the laser for a cost.
@@ -351,6 +373,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreboard.addScore(-1)
             rocket.velocity = rocket.velocity + (50/1.0)
         }
+    }
+    //Here this button decreases the reload speed
+    func buttonPressedFour(sender: UIButton!)
+    {
+        if(scoreboard.getScore() >= 1 && isGameOver == false)
+        {
+            scoreboard.addScore(-1)
+            //We check for this, because we can't have negative time! So don't reduce it below 0!
+            if(reloadSpeed > 0.1)
+            {
+                reloadSpeed = reloadSpeed - 0.1
+            }
+        }
+    }
+    
+    func canShootAgain()
+    {
+        canShoot = true
     }
 
 
