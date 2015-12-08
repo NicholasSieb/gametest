@@ -39,10 +39,16 @@ class Rocket: Sprite {
     //move lasers here so it's easier to modify (for upgrades possibly)
     func shoot(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat){
         //this version passes in player loc and touch loc
+       // if(fabs(y1-y2)>20 || fabs(x1-x2)>20){
+        
+        var dx: CGFloat, dy: CGFloat
+        // Compute vector components in direction of the touch
+        dx = x2 - self.position.x
+        dy = y2 - self.position.y + 50
+        if (dx >= 10 || dx <= -10) && (dy >= 10 || dy <= 10) {
         let laser = SKSpriteNode()
         laser.color = laserColor
         laser.size = CGSize(width: laserSize, height: laserSize)
-        
         laser.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: boxSize, height: boxSize))
         laser.physicsBody!.dynamic = true
         laser.physicsBody!.usesPreciseCollisionDetection = true
@@ -83,8 +89,8 @@ class Rocket: Sprite {
         let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
         let removeAction = SKAction.removeFromParent()
         laser.runAction(SKAction.sequence([moveAction, removeAction]))
-        
-        
+      //  }
+        }
     }
 
     func moveTo(x: CGFloat, y: CGFloat) {
