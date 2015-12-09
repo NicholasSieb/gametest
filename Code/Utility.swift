@@ -45,8 +45,8 @@ struct Utility {
                 }
             case "faq":
                  FAQ(size: size).addTo(main)
-            case "home":
-                break;
+           // case "home":
+            //    break;
             case "back":
                 let parent = touched.parent
                 if parent?.name == "back"{
