@@ -1,7 +1,7 @@
 import SpriteKit
 
 
-class Rocket: Sprite {
+class Player: Sprite {
     var fireArray = Array<SKTexture>();
     var laserColor = UIColor.redColor()
     var laserSize = 5

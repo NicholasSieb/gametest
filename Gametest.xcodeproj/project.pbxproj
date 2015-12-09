@@ -12,10 +12,10 @@
 		017F4DA71C138984003BC7AA /* Pause.wav in Resources */ = {isa = PBXBuildFile; fileRef = 017F4DA31C138984003BC7AA /* Pause.wav */; };
 		017F4DA81C138984003BC7AA /* Player-Death.wav in Resources */ = {isa = PBXBuildFile; fileRef = 017F4DA41C138984003BC7AA /* Player-Death.wav */; };
 		017F4DA91C138984003BC7AA /* Start.wav in Resources */ = {isa = PBXBuildFile; fileRef = 017F4DA51C138984003BC7AA /* Start.wav */; };
-		0180BD511C0A7E8300B42979 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 0180BD501C0A7E8300B42979 /* info.png */; };
 		0180BD531C0A802C00B42979 /* FAQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180BD521C0A802C00B42979 /* FAQ.swift */; };
 		01C0BA691C0977E000EB0E6C /* Background.sks in Resources */ = {isa = PBXBuildFile; fileRef = 01C0BA671C0977E000EB0E6C /* Background.sks */; };
 		01C0BA6A1C0977E000EB0E6C /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C0BA681C0977E000EB0E6C /* spark.png */; };
+		01C417F31C18DB2E00565E43 /* faq.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C417F21C18DB2E00565E43 /* faq.png */; };
 		5403242E1A4B8B5300B61880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5403242D1A4B8B5300B61880 /* AppDelegate.swift */; };
 		540324321A4B8B5300B61880 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540324311A4B8B5300B61880 /* GameScene.swift */; };
 		540324341A4B8B5300B61880 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540324331A4B8B5300B61880 /* GameViewController.swift */; };
@@ -53,10 +53,10 @@
 		017F4DA31C138984003BC7AA /* Pause.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Pause.wav; path = Code/sounds/Pause.wav; sourceTree = SOURCE_ROOT; };
 		017F4DA41C138984003BC7AA /* Player-Death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Player-Death.wav"; path = "Code/sounds/Player-Death.wav"; sourceTree = SOURCE_ROOT; };
 		017F4DA51C138984003BC7AA /* Start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Start.wav; path = Code/sounds/Start.wav; sourceTree = SOURCE_ROOT; };
-		0180BD501C0A7E8300B42979 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		0180BD521C0A802C00B42979 /* FAQ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQ.swift; sourceTree = "<group>"; };
 		01C0BA671C0977E000EB0E6C /* Background.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Background.sks; path = ../../Background.sks; sourceTree = "<group>"; };
 		01C0BA681C0977E000EB0E6C /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = ../../spark.png; sourceTree = "<group>"; };
+		01C417F21C18DB2E00565E43 /* faq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = faq.png; sourceTree = "<group>"; };
 		540324281A4B8B5300B61880 /* Gametest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gametest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5403242C1A4B8B5300B61880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5403242D1A4B8B5300B61880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 				01C0BA681C0977E000EB0E6C /* spark.png */,
 				54BC17851AC1F910000A7FED /* buttons */,
 				54ECDC1B1A64E99400860C5E /* home.png */,
-				0180BD501C0A7E8300B42979 /* info.png */,
+				01C417F21C18DB2E00565E43 /* faq.png */,
 				54ECDC1D1A64E99400860C5E /* settings.png */,
 				55AD86811A8E831E00839E28 /* game.atlas */,
 			);
@@ -295,6 +295,7 @@
 			files = (
 				01C0BA6A1C0977E000EB0E6C /* spark.png in Resources */,
 				55AD86821A8E831E00839E28 /* game.atlas in Resources */,
+				01C417F31C18DB2E00565E43 /* faq.png in Resources */,
 				54BC178E1AC1FABF000A7FED /* soundoff.png in Resources */,
 				017F4DA91C138984003BC7AA /* Start.wav in Resources */,
 				017F4DA11C138968003BC7AA /* Enemy-Explosion.wav in Resources */,
@@ -308,7 +309,6 @@
 				017F4DA81C138984003BC7AA /* Player-Death.wav in Resources */,
 				017F4DA71C138984003BC7AA /* Pause.wav in Resources */,
 				54A317941B3A037A00D8CB16 /* LaunchScreen.storyboard in Resources */,
-				0180BD511C0A7E8300B42979 /* info.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

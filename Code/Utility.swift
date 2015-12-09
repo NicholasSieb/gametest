@@ -34,8 +34,6 @@ struct Utility {
                 toggle(name, sprite: touched as! SKSpriteNode, main: main)
             }
             switch name {
-            
-            
             case "back":
                 let parent = touched.parent
                 if parent?.name == "back" {
@@ -45,8 +43,19 @@ struct Utility {
                     touched.removeFromParent()
                     parent?.removeFromParent()
                 }
-            case "howto":
-                touched.removeFromParent()
+            case "faq":
+                 FAQ(size: size).addTo(main)
+            case "home":
+                break;
+            case "back":
+                let parent = touched.parent
+                if parent?.name == "back"{
+                    let superp = parent?.parent
+                    superp?.removeFromParent()
+                } else {
+                    touched.removeFromParent()
+                    parent?.removeFromParent()
+                }
             case "settings":
                 let parent = touched.parent! as SKNode
                 touched.removeFromParent()

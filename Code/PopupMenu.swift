@@ -9,7 +9,8 @@ class PopupMenu {
         self.menu = SKNode()
         menu.zPosition = 5
         Button(x: width / 2, y: height / 3, width: width / 3, height: height / 6, label: label, id: id).addTo(menu)
-        Sprite(named: "info", x:14*width / 15, y: 4 * height / 5, size: CGSizeMake(height / 12, height / 12)).addTo(menu)
+        Sprite(named: "faq", x:14*width / 15, y: 4 * height / 5, size: CGSizeMake(height / 12, height / 12)).addTo(menu)
+        //Sprite(named: "home", x: 3 * width / 4, y: height / 3 - height / 26, scale: 0.5).addTo(menu)
         let options = Sprite(named: "settings", x: 51 * width / 60, y: 4 * height / 5, size: CGSizeMake(height / 12, height / 12))
         options.addTo(menu)
         addTitle(title, position: CGPointMake(width / 2, 3 * height / 5))

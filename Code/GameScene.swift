@@ -9,7 +9,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var removeEnemies = false
     var doFireLaser = false
     var scoreboard: Scoreboard!
-    var rocket: Rocket!
+    var rocket: Player!
     var pause: Pause!
     var laserSize = 5;
     var laserColor = UIColor.greenColor();
@@ -24,8 +24,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let buttonFour = UIButton()
     //Here are variables for delaying the shooting
     var canShoot = true
-    var reloadSpeed = 0.5
-
+    var reloadSpeed = 0.3
+    
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
         Background(size: size).addTo(self)
@@ -33,7 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coolBackGround?.position = CGPointMake(size.width/2, size.height)
         coolBackGround!.zPosition = 0
         addChild(coolBackGround!)
-        rocket = Rocket(x: size.width / 2, y: size.height / 2).addTo(self) as! Rocket
+        rocket = Player(x: size.width / 2, y: size.height / 2).addTo(self) as! Player
         scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
         scoreboard.viewController = self.viewController
         pause = Pause(size: size, x: size.width - 50, y: size.height - size.height / 6).addTo(self)
@@ -41,10 +41,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         view.showsPhysics = true
     }
-
+    
     var currentPosition: CGPoint!
     var currentlyTouching = false
-
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else {return}
         currentPosition = touch.locationInNode(self)
@@ -65,17 +65,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             currentlyTouching = true
         }
     }
-
+    
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else {return}
         currentPosition = touch.locationInNode(self)
     }
-
+    
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-            currentlyTouching = false
+        currentlyTouching = false
         
     }
-
+    
     var pausemenu: PopupMenu!
     func pauseGame() {
         if gamePaused {
@@ -89,10 +89,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !isGameOver {
                 
                 if Options.option.get("sound"){
-                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Pause", withExtension: "wav")!
-                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-                bgMusic.prepareToPlay()
-                bgMusic.play()
+                    let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Pause", withExtension: "wav")!
+                    do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
+                    bgMusic.prepareToPlay()
+                    bgMusic.play()
                 }
                 gamePaused = true
                 //speed = 0
@@ -104,7 +104,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-
+    
     func removeDialog() {
         if pausemenu != nil {
             pausemenu.removeThis()
@@ -114,37 +114,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //physics stuff
     
- //   func didBeginContact(contact: SKPhysicsContact){
- //       if contact as SKPhysicsContact? != nil{
- //           self.contactQueue.append(contact)
- //       }
- //   }
+    //   func didBeginContact(contact: SKPhysicsContact){
+    //       if contact as SKPhysicsContact? != nil{
+    //           self.contactQueue.append(contact)
+    //       }
+    //   }
     
-  func didBeginContact(contact: SKPhysicsContact){
-    var firstBody: SKPhysicsBody
-    //var secondBody: SKPhysicsBody
-    
-    firstBody = contact.bodyA
-    if (firstBody.node?.name == "enemy"){
-    let toChange = firstBody.node as? Enemy
-    toChange?.shot = true
-    toChange?.removeFromParent()
-    scoreboard.addScore(1)
-    //secondBody = contact.bodyB
-       print("collision detected")
-        if Options.option.get("sound"){
-        let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
-        do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-        bgMusic.prepareToPlay()
-        bgMusic.play()
+    func didBeginContact(contact: SKPhysicsContact){
+        var firstBody: SKPhysicsBody
+        //var secondBody: SKPhysicsBody
+        
+        firstBody = contact.bodyA
+        if (firstBody.node?.name == "enemy"){
+            let toChange = firstBody.node as? Enemy
+            toChange?.shot = true
+            toChange?.removeFromParent()
+            scoreboard.addScore(1)
+            //secondBody = contact.bodyB
+            //  print("collision detected")
+            if Options.option.get("sound"){
+                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
+                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
+                bgMusic.prepareToPlay()
+                bgMusic.play()
+            }
         }
+        
+        
     }
     
     
-    //print(contact.bodyA)
-    }
-    
-
     
     //func to shoot the lasers
     //move lasers here so it's easier to modify (for upgrades possibly)
@@ -152,7 +151,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let laser = SKSpriteNode()
         laser.color = laserColor
         laser.size = CGSize(width: laserSize, height: laserSize)
-        
         laser.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 30, height: 30))
         laser.physicsBody!.dynamic = true
         laser.physicsBody!.usesPreciseCollisionDetection = true
@@ -186,10 +184,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //actions
         if Options.option.get("sound"){
-        let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Laser", withExtension: "wav")!
-        do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-        bgMusic.prepareToPlay()
-        bgMusic.play()
+            let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Laser", withExtension: "wav")!
+            do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
+            bgMusic.prepareToPlay()
+            bgMusic.play()
         }
         let velocity = (1200/1.0)
         let realMoveDuration = Double(self.size.width) / velocity
@@ -199,7 +197,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
     }
-
+    
     override func update(currentTime: CFTimeInterval) {
         if !gamePaused {
             if !isGameOver {
@@ -214,7 +212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         rocket.shoot(rocket.position.x, y1: rocket.position.y, x2: currentPosition.x, y2: currentPosition.y)
                     }
                 }
-              
+                
             }
             spawnEnemies(true)
             spawnEnemies(false)
@@ -222,8 +220,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
     }
-
-
+    
+    
     func spawnEnemies(startAtTop: Bool) {
         if random() % 1000 < enemySpawnRate {
             let randomX = 10 + random() % Int(size.width) - 10
@@ -233,9 +231,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
     }
-
-   
-
+    
+    
+    
     func gameOver() {
         if Options.option.get("sound") {
             //play dead sound
@@ -248,7 +246,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         PopupMenu(size: size, title: "Too bad ;(", label: "Play", id: "gameover").addTo(self)
         
     }
-
+    
     func resetGame() {
         let gameScene = GameScene(size: size)
         gameScene.viewController = self.viewController
@@ -256,7 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
         view?.presentScene(gameScene, transition: reveal)
     }
-
+    
     func enumerateEnemies() {
         self.enumerateChildNodesWithName("enemy") {
             node, stop in
@@ -268,7 +266,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             removeEnemies = false
         }
     }
-
+    
     func enemyAI(enemy: Enemy) {
         let y = enemy.position.y
         //check if player connected with enemy
@@ -279,11 +277,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //add checking if enemy was shot
             if !enemy.isDisabled() {
                 if(enemy.shot){
-                 removeEnemies = true
+                    removeEnemies = true
                 }
-              
-                }
-                //remove
+                
+            }
+            //remove
             //}
             if removeEnemies {
                 if !enemy.isDisabled() {
@@ -392,7 +390,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         canShoot = true
     }
-
-
- 
+    
+    
+    
 }
