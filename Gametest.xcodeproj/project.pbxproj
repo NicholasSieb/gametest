@@ -44,6 +44,10 @@
 		54ECDC1F1A64E99400860C5E /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ECDC1B1A64E99400860C5E /* home.png */; };
 		54ECDC211A64E99400860C5E /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ECDC1D1A64E99400860C5E /* settings.png */; };
 		55AD86821A8E831E00839E28 /* game.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 55AD86811A8E831E00839E28 /* game.atlas */; };
+		C804658E1C18E1AD00391F72 /* shipSpeed.png in Resources */ = {isa = PBXBuildFile; fileRef = C804658D1C18E1AD00391F72 /* shipSpeed.png */; };
+		C80465901C18E52000391F72 /* reloadSpeed.png in Resources */ = {isa = PBXBuildFile; fileRef = C804658F1C18E52000391F72 /* reloadSpeed.png */; };
+		C80465921C18EBC400391F72 /* laserVelocity.png in Resources */ = {isa = PBXBuildFile; fileRef = C80465911C18EBC400391F72 /* laserVelocity.png */; };
+		C80465941C18F21C00391F72 /* laserSize.png in Resources */ = {isa = PBXBuildFile; fileRef = C80465931C18F21C00391F72 /* laserSize.png */; };
 		EB8A47DF1A979AE300CF6272 /* GCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8A47DE1A979AE300CF6272 /* GCHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +91,10 @@
 		54ECDC1B1A64E99400860C5E /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		54ECDC1D1A64E99400860C5E /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		55AD86811A8E831E00839E28 /* game.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = game.atlas; sourceTree = "<group>"; };
+		C804658D1C18E1AD00391F72 /* shipSpeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shipSpeed.png; sourceTree = "<group>"; };
+		C804658F1C18E52000391F72 /* reloadSpeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reloadSpeed.png; sourceTree = "<group>"; };
+		C80465911C18EBC400391F72 /* laserVelocity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laserVelocity.png; sourceTree = "<group>"; };
+		C80465931C18F21C00391F72 /* laserSize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laserSize.png; sourceTree = "<group>"; };
 		EB8A47DE1A979AE300CF6272 /* GCHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,6 +166,10 @@
 		540324511A4B8C0D00B61880 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C80465931C18F21C00391F72 /* laserSize.png */,
+				C80465911C18EBC400391F72 /* laserVelocity.png */,
+				C804658F1C18E52000391F72 /* reloadSpeed.png */,
+				C804658D1C18E1AD00391F72 /* shipSpeed.png */,
 				01C0BA671C0977E000EB0E6C /* Background.sks */,
 				01C0BA681C0977E000EB0E6C /* spark.png */,
 				54BC17851AC1F910000A7FED /* buttons */,
@@ -258,7 +270,7 @@
 				TargetAttributes = {
 					540324271A4B8B5300B61880 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = P7X7D425JW;
+						DevelopmentTeam = V6F2BC98PU;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -295,12 +307,15 @@
 			files = (
 				01C0BA6A1C0977E000EB0E6C /* spark.png in Resources */,
 				55AD86821A8E831E00839E28 /* game.atlas in Resources */,
+				C80465921C18EBC400391F72 /* laserVelocity.png in Resources */,
 				54BC178E1AC1FABF000A7FED /* soundoff.png in Resources */,
 				017F4DA91C138984003BC7AA /* Start.wav in Resources */,
 				017F4DA11C138968003BC7AA /* Enemy-Explosion.wav in Resources */,
 				54ECDC211A64E99400860C5E /* settings.png in Resources */,
 				540324391A4B8B5300B61880 /* Images.xcassets in Resources */,
+				C804658E1C18E1AD00391F72 /* shipSpeed.png in Resources */,
 				540324371A4B8B5300B61880 /* Main.storyboard in Resources */,
+				C80465901C18E52000391F72 /* reloadSpeed.png in Resources */,
 				54BC178F1AC1FABF000A7FED /* soundon.png in Resources */,
 				01C0BA691C0977E000EB0E6C /* Background.sks in Resources */,
 				54ECDC1F1A64E99400860C5E /* home.png in Resources */,
@@ -308,6 +323,7 @@
 				017F4DA81C138984003BC7AA /* Player-Death.wav in Resources */,
 				017F4DA71C138984003BC7AA /* Pause.wav in Resources */,
 				54A317941B3A037A00D8CB16 /* LaunchScreen.storyboard in Resources */,
+				C80465941C18F21C00391F72 /* laserSize.png in Resources */,
 				0180BD511C0A7E8300B42979 /* info.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -24,7 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let buttonFour = UIButton()
     //Here are variables for delaying the shooting
     var canShoot = true
-    var reloadSpeed = 0.5
+    var reloadSpeed = 0.0
 
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
@@ -309,15 +309,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //button.setTitleColor(UIColor.blueColor(), forState: .Normal)
         //Here we give the button an image
         let image = UIImage(named: "spark.png")! as UIImage
-        button.setImage(image, forState: .Normal)
-        buttonTwo.setImage(image, forState: .Normal)
-        buttonThree.setImage(image, forState: .Normal)
-        buttonFour.setImage(image, forState: .Normal)
+        let laserSizeButtonImage = UIImage(named: "laserSize.png")! as UIImage
+        let shipSpeedButtonImage = UIImage(named: "shipSpeed.png")! as UIImage
+        let reloadSpeedButtonImage = UIImage(named: "reloadSpeed.png")! as UIImage
+        let laserVelocityButtonImage = UIImage(named: "laserVelocity.png")! as UIImage
+        button.setImage(laserSizeButtonImage, forState: .Normal)
+        buttonTwo.setImage(shipSpeedButtonImage, forState: .Normal)
+        buttonThree.setImage(reloadSpeedButtonImage, forState: .Normal)
+        buttonFour.setImage(laserVelocityButtonImage, forState: .Normal)
         //Here we add the position and size of the button
-        button.frame = CGRectMake(0, 50, 50, 50) //x,y,width,height
-        buttonTwo.frame = CGRectMake(0, 100, 50, 50)
-        buttonThree.frame = CGRectMake(0, 150, 50, 50)
-        buttonFour.frame = CGRectMake(0, 200, 50, 50)
+        button.frame = CGRectMake(0, 75, 50, 50) //x,y,width,height
+        buttonTwo.frame = CGRectMake(0, 125, 50, 50)
+        buttonThree.frame = CGRectMake(0, 175, 50, 50)
+        buttonFour.frame = CGRectMake(0, 225, 50, 50)
         //Here we add the button to the game
         self.view!.addSubview(button)
         self.view!.addSubview(buttonTwo)
