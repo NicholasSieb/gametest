@@ -458,7 +458,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     ///Here this button increases the size of the laser for a cost.
     func buttonPressed(sender: UIButton!) {
         //check if there is score to spend
-        if(scoreboard.getScore() >= 1 && isGameOver == false)
+        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.laserSize < 15)
         {
             scoreboard.addScore(-1)
             rocket.laserSize = rocket.laserSize + 1
@@ -476,8 +476,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     ///Here this button increases the speed of the ship for a cost.
     func buttonPressedTwo(sender: UIButton!)
     {
-        //check if there is score to spend
-        if(scoreboard.getScore() >= 1 && isGameOver == false)
+        //check if there is score to spend and speed is not at it's limit
+        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.speedTwo < 40)
         {
             scoreboard.addScore(-1)
             let additionVariable: CGFloat = 1
@@ -488,7 +488,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func buttonPressedThree(sender: UIButton!)
     {
         //check if score to spend
-        if(scoreboard.getScore() >= 1 && isGameOver == false)
+        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 250)
         {
             scoreboard.addScore(-1)
             rocket.velocity = rocket.velocity + (50/1.0)
