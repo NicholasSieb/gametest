@@ -6,6 +6,9 @@ class Enemy: Sprite {
     var disabled: Bool = false
     //speed of enemy movement
     let vel: CGFloat = 4
+    var dir: [CGFloat] = [0,0]
+    var currAngle = CGFloat(0)
+    let radius: CGFloat = 2
     //set collision category
     let kEnemyCategory: UInt32 = 0x1 << 0
     var shot: Bool = false
@@ -47,16 +50,34 @@ class Enemy: Sprite {
         if height == nil {
             return
         }
+        //action if enemy is desabled
         if isDisabled() || position.y > height! - 200 || position.y < 200 {
             move()
-        } else {
-            var dx = point.x - self.position.x
-            var dy = point.y - self.position.y
-            let mag = sqrt(dx * dx + dy * dy)
-            // Normalize and scale
-            dx = dx / mag * vel
-            dy = dy / mag * vel
-            moveBy(dx, dy: dy)
+        }
+        //else send enemy randomly toward the rocket
+        else {
+            var playDir = [point.x - self.position.x, point.y - self.position.y]
+            let mag = sqrt(playDir[0] * playDir[0] + playDir[1] * playDir[1])
+            // Normalize
+            playDir[0] = playDir[0] / mag
+            playDir[1] = playDir[1] / mag
+            
+            
+            //compute direction
+            //initial state
+            if (self.dir[0] == 0 && self.dir[1] == 0){
+                self.dir = playDir
+                self.currAngle = atan2(self.dir[1], self.dir[0]) % (2*3.1415)
+            }
+            else {
+                self.currAngle = (self.currAngle + (0.05)) % (2*3.1415)
+                self.dir = [self.radius*cos(self.currAngle), self.radius*sin(self.currAngle)];
+            }
+            
+            //combine the two vectors and add in velocity
+            var final = [vel * (playDir[0] + self.dir[0])/2,vel * (playDir[1] + self.dir[1])/2]
+            
+            moveBy(final[0], dy: final[1])
         }
     }
     ///Move helper function

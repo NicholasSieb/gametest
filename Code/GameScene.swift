@@ -396,6 +396,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             //update enemy movement
             enemy.moveTo(CGPointMake(rocket.position.x, rocket.position.y))
+            
         } else {
             //game is over still move enemy tho
             enemy.move()
