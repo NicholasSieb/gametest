@@ -8,7 +8,7 @@ protocol GameSceneDelegate {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var viewController: GameViewController?
-    let enemySpawnRate = 5
+    var enemySpawnRate = 5
     var isGameOver = false
     var gamePaused = false
     var removeEnemies = false
@@ -56,6 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self
         view.showsPhysics = true
+        _ = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
     }
     
     var currentPosition: CGPoint!
@@ -271,6 +272,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    func increaseSpawn(){
+        if(!gamePaused){
+        enemySpawnRate = enemySpawnRate + 1
+        print(enemySpawnRate)
+        }
+    }
+    
     override func update(currentTime: CFTimeInterval) {
         if !gamePaused {
             if !isGameOver {
@@ -315,6 +323,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         explodePlayer(rocket.position)
         rocket.removeFromParent()
         pause.removeThis()
+        enemySpawnRate = 5
         PopupMenu(size: size, title: "Too bad ;(", label: "Play", id: "gameover").addTo(self)
         if scoreboard.isHighscore() {
             addChild(scoreboard.getHighscoreLabel(size))
