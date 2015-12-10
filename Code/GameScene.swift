@@ -168,9 +168,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact){
         var firstBody: SKPhysicsBody
-        //var secondBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
         
         firstBody = contact.bodyA
+        secondBody = contact.bodyB
         if (firstBody.node?.name == "enemy"){
             let toChange = firstBody.node as? Enemy
             explode((toChange?.position)!)
@@ -186,6 +187,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 bgMusic.play()
             }
         }
+        
+        if (secondBody.node?.name == "enemy"){
+            let toChange = secondBody.node as? Enemy
+            explode((toChange?.position)!)
+            toChange?.shot = true
+            toChange?.removeFromParent()
+            scoreboard.addScore(1)
+            //secondBody = contact.bodyB
+            //  print("collision detected")
+            if Options.option.get("sound"){
+                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
+                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
+                bgMusic.prepareToPlay()
+                bgMusic.play()
+            }
+        }
+
         
         
     }
