@@ -3,6 +3,7 @@ import SpriteKit
 
 class Player: Sprite {
     var fireArray = Array<SKTexture>();
+    //variables for laser modification
     var laserColor = UIColor.redColor()
     var laserSize = 5
     var boxSize = 30
@@ -10,20 +11,28 @@ class Player: Sprite {
     var speedTwo: CGFloat = 12
     //Here is the variable we use to determine the laser's speed
     var velocity = (200/1.0)
+    //set collision info
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
 
     
     
 
-
+    /// Creates player sprite
+    ///
+    /// - parameter x, x starting coord
+    /// - parameter y, y starting coord
+    /// - Usage Sprite constructor
     init(x: CGFloat, y: CGFloat) {
         super.init(named: "ship", x: x, y: y)
         self.setScale(1.4)
         //fire()
         exhaust()
     }
-
+    /// Creates fire trail animation under player
+    ///
+    /// - Warning deprecated, use exhaust instead
+    /// - Usage player.fire()
     func fire() {
         for index in 0 ... 2 {
             fireArray.append(SKTexture(imageNamed: "fire\(index)"))
@@ -34,7 +43,9 @@ class Player: Sprite {
         let animateAction = SKAction.animateWithTextures(self.fireArray, timePerFrame: 0.10);
         fire.runAction(SKAction.repeatActionForever(animateAction))
     }
-    
+    /// Creates exhaust trails under player
+    ///
+    /// - Usage player.exhaust()
     func exhaust(){
         let emitterNode = SKEmitterNode(fileNamed: "EngineExhaust.sks")
         emitterNode?.position = CGPoint(x: 0.5, y: -18.3)
@@ -44,9 +55,14 @@ class Player: Sprite {
         
     }
     
-    
-    //func to shoot the lasers
-    //move lasers here so it's easier to modify (for upgrades possibly)
+
+     /// This function handles creation of laser sprites
+     ///
+     /// - Usage player.shoot(x1,y1,x2,y2)
+     /// - parameter x1 x coord of player
+     /// - parameter y1 y coord of player
+     /// - parameter x2 x coord of touch
+     /// - parameter y2 y coord of touch
     func shoot(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat){
         //this version passes in player loc and touch loc
        // if(fabs(y1-y2)>20 || fabs(x1-x2)>20){
@@ -102,7 +118,11 @@ class Player: Sprite {
       //  }
         }
     }
-
+    /// Handles updating movement of player
+    ///
+    /// - Usage player.moveTo(x,y)
+    /// - parameter x, x coord of touch
+    /// - parameter y, y coord of touch
     func moveTo(x: CGFloat, y: CGFloat) {
         let speed: CGFloat = speedTwo
         var dx: CGFloat, dy: CGFloat

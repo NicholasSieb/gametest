@@ -1,6 +1,12 @@
 import SpriteKit
 
 class Sprite: SKSpriteNode {
+    /// Creates generic Sprite
+    ///
+    /// - parameter named, texture to use
+    /// - parameter x, x starting coord
+    /// - parameter y, y starting coord
+    /// - Usage Sprite constructor
     init(named: String, x: CGFloat, y: CGFloat) {
         let texture = SKTexture(imageNamed: named)
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
@@ -22,7 +28,7 @@ class Sprite: SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    /// Adds Sprite to parent
     func addTo(parentNode: SKNode) -> Sprite {
         parentNode.addChild(self)
         return self

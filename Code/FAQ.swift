@@ -4,7 +4,10 @@ import SpriteKit
 
 class FAQ{
     var faq: SKSpriteNode
-    
+    /// Creates faq Sprites
+    ///
+    /// - parameter size, size of scene
+    /// - Usage Sprite constructor
     init(size: CGSize) {
         let x = size.width / 2
         let y = size.height / 2
@@ -21,7 +24,11 @@ class FAQ{
         bt.button.zPosition = 10
         addPause(x, y: y)
     }
-    
+    /// Adds text to sprite
+    ///
+    /// - parameter x, x coord
+    /// - parameter y, y coord
+    /// - Usage addPause(x,y)
     func addPause(x: CGFloat, y: CGFloat) {
         Player(x: -550, y: 300).addTo(faq)
         addText("Avoid enemies", size: 60, x: -650, y: 0)
@@ -34,7 +41,13 @@ class FAQ{
         addText("Upgrade using score", size: 60, x: x - 350, y: 0)
         addText("to get stronger", size: 60, x: x - 350, y: -100)
     }
-    
+    /// Helper function to create text label
+    ///
+    /// - paramter text, String to use
+    /// - size, font size
+    /// - parameter x, x coord
+    /// - parameter y, y coord
+    /// - Usage addText("String", size: , x: , y:, )
     func addText(text: String, size: CGFloat, x: CGFloat, y: CGFloat) {
         let label = SKLabelNode(text: text)
         label.fontSize = size
@@ -44,7 +57,7 @@ class FAQ{
         label.zPosition = 3000
         faq.addChild(label)
     }
-    
+    /// adds Sprite to GameScene
     func addTo(parentNode: SKScene) -> FAQ {
         parentNode.addChild(faq)
         return self

@@ -4,7 +4,9 @@ class Explosion: Sprite {
     required init(x: CGFloat, y: CGFloat) {
         super.init(named: "shockwave", x: x, y: y)
     }
-
+    /// Creates explosion animation
+    ///
+    /// - Warning DEPRECATED, use explode() in GameScene
     func boom(main: GameScene) {
         self.runAction(
         SKAction.sequence([
