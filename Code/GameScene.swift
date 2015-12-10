@@ -272,16 +272,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    /// Increases spawn rate of enemies
+    ///
+    /// - Usage called using timer
     func increaseSpawn(){
+        //Don't increase spawn if game is paused
         if(!gamePaused){
         enemySpawnRate = enemySpawnRate + 1
-        print(enemySpawnRate)
+        //print(enemySpawnRate)
         }
     }
     
+    ///Main loop of GameScene, advance time in the game
     override func update(currentTime: CFTimeInterval) {
         if !gamePaused {
             if !isGameOver {
+                //If user is touching, move the player and attempt to fire
                 if currentlyTouching {
                     rocket.moveTo(currentPosition.x, y: currentPosition.y)
                     //Here we determine whether we can shoot or not. Once we fire, we immediately disallow us to shoot anymore until the appropriate amount of time has been waited out.
@@ -295,18 +301,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 
             }
+            //Perform check to spawn enemies
             spawnEnemies(true)
             spawnEnemies(false)
+            //enumerate enemies for handling
             enumerateEnemies()
             
         }
     }
     
-    
+    /// Decides if enemy should be spawned, then does so
+    ///
+    /// - parameter startAtTop, choose starting position
     func spawnEnemies(startAtTop: Bool) {
+        //get number 0-1000 and check if spawnRate is higher
         if random() % 1000 < enemySpawnRate {
+            //set a random spawn location
             let randomX = 10 + random() % Int(size.width) - 10
             let startY = startAtTop.boolValue ? size.height : 0
+            //construct enemy
             let enemy = Enemy(x: CGFloat(randomX), y: startY, startAtTop: startAtTop).addTo(self)
             enemy.zPosition = 2
             
@@ -314,12 +327,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    
+    /// Function to end game when player is killed
     func gameOver() {
+        //check if sound enabled
         if Options.option.get("sound") {
             //play dead sound
         }
         isGameOver = true
+        //create explosion
         explodePlayer(rocket.position)
         rocket.removeFromParent()
         pause.removeThis()
@@ -331,6 +346,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    /// Reset game to play again
     func resetGame() {
         let gameScene = GameScene(size: size)
         gameScene.viewController = self.viewController
@@ -339,11 +355,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view?.presentScene(gameScene, transition: reveal)
     }
     
+    ///Put enemies into list to be able to apply actions to them
     func enumerateEnemies() {
         self.enumerateChildNodesWithName("enemy") {
             node, stop in
             let enemy = node as! Enemy
-            
+            //run AI function
             self.enemyAI(enemy)
         }
         if (removeEnemies) {
@@ -351,6 +368,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    /// Functions to update actions of enemy
+    ///
+    /// - parameter enemy, enemy to update
+    /// - usage called during enumeration
     func enemyAI(enemy: Enemy) {
         let y = enemy.position.y
         //check if player connected with enemy
@@ -373,16 +394,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     //scoreboard.addScore(1)
                 }
             }
+            //update enemy movement
             enemy.moveTo(CGPointMake(rocket.position.x, rocket.position.y))
         } else {
+            //game is over still move enemy tho
             enemy.move()
         }
+        //check enemy bounds
         if y < 0 || y > size.height {
             enemy.removeFromParent()
         }
     }
     
-    //Here we add the upgrade buttons to the pause menu.
+    ///Here we add the upgrade buttons to the pause menu.
     func createUpgradeButtons () {
         //let button = UIButton();
         //let buttonTwo = UIButton();
@@ -390,7 +414,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //button.setTitle("Add", forState: .Normal)
         //button.setTitleColor(UIColor.blueColor(), forState: .Normal)
         //Here we give the button an image
-        let image = UIImage(named: "spark.png")! as UIImage
+        //let image = UIImage(named: "spark.png")! as UIImage
         let laserSizeButtonImage = UIImage(named: "laserSize.png")! as UIImage
         let shipSpeedButtonImage = UIImage(named: "shipSpeed.png")! as UIImage
         let reloadSpeedButtonImage = UIImage(named: "reloadSpeed.png")! as UIImage
@@ -413,14 +437,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view!.addSubview(buttonThree)
         self.view!.addSubview(buttonFour)
         self.view!.addSubview(buttonFive)
-        //Here we add functionality to the button
+        //Here we add functionality to the buttons
         button.addTarget(self, action: "buttonPressed:", forControlEvents: .TouchUpInside)
         buttonTwo.addTarget(self, action: "buttonPressedTwo:", forControlEvents: .TouchUpInside)
         buttonThree.addTarget(self, action: "buttonPressedThree:", forControlEvents: .TouchUpInside)
         buttonFour.addTarget(self, action: "buttonPressedFour:", forControlEvents: .TouchUpInside)
         buttonFive.addTarget(self, action: "buttonPressedFive:", forControlEvents: .TouchUpInside)
     }
-    //Here we remove the upgrade buttons from the pause menu
+    ///Here we remove the upgrade buttons from the pause menu
     func removeUpgradeButtons()
     {
         button.removeFromSuperview()
@@ -430,8 +454,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buttonFive.removeFromSuperview()
     }
     
-    //Here this button increases the size of the laser for a cost.
+    ///Here this button increases the size of the laser for a cost.
     func buttonPressed(sender: UIButton!) {
+        //check if there is score to spend
         if(scoreboard.getScore() >= 1 && isGameOver == false)
         {
             scoreboard.addScore(-1)
@@ -447,9 +472,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         alertView.show();
         */
     }
-    //Here this button increases the speed of the ship for a cost.
+    ///Here this button increases the speed of the ship for a cost.
     func buttonPressedTwo(sender: UIButton!)
     {
+        //check if there is score to spend
         if(scoreboard.getScore() >= 1 && isGameOver == false)
         {
             scoreboard.addScore(-1)
@@ -457,16 +483,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             rocket.speedTwo = rocket.speedTwo + additionVariable
         }
     }
-    //Here this button should increase the velocity of the lasers for a cost.
+    ///Here this button should increase the velocity of the lasers for a cost.
     func buttonPressedThree(sender: UIButton!)
     {
+        //check if score to spend
         if(scoreboard.getScore() >= 1 && isGameOver == false)
         {
             scoreboard.addScore(-1)
             rocket.velocity = rocket.velocity + (50/1.0)
         }
     }
-    //Here this button decreases the reload speed
+    ///Here this button decreases the reload speed
     func buttonPressedFour(sender: UIButton!)
     {
         if(scoreboard.getScore() >= 1 && isGameOver == false)
@@ -479,8 +506,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    //go home screen
+    ///go to home screen
     func buttonPressedFive(sender: UIButton!){
+        //create homeScene and remove unneeded things
         removeUpgradeButtons()
         let homeScene = MainMenuScene(size: size)
         homeScene.scaleMode = scaleMode
@@ -488,6 +516,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         homeScene.viewController = self.viewController
         view?.presentScene(homeScene, transition: reveal)    }
     
+    ///helper function for shooting delays
     func canShootAgain()
     {
         canShoot = true

@@ -2,7 +2,13 @@ import SpriteKit
 
 class PopupMenu {
     var menu: SKNode
-
+    /// Creates popupmenu sprite
+    ///
+    /// - parameter size size of width and height
+    /// - parameter title
+    /// - parameter label
+    /// - parameter id
+    /// - Usage Sprite constructor
     init(size: CGSize, title: String, label: String, id: String) {
         let width = size.width
         let height = size.height
@@ -17,6 +23,7 @@ class PopupMenu {
         addTitle(title, position: CGPointMake(width / 2, 3 * height / 5))
     }
 
+    ///helper function to add Title
     func addTitle(title: String, position: CGPoint) {
         let node = SKLabelNode(text: title)
         node.fontName = "Helvetica-Bold"
@@ -25,7 +32,8 @@ class PopupMenu {
         node.position = position
         menu.addChild(node)
     }
-
+    
+    ///add to parent
     func addTo(parentNode: SKScene) -> PopupMenu {
         parentNode.addChild(menu)
         return self

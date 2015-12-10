@@ -6,7 +6,9 @@ import StoreKit
 
 class GameViewController: UIViewController {
     var product_id: String?
-
+    ///Default viewdDidLoad method
+    ///Debugging options such as fps, node, physics toggled
+    ///set Scene properties and then present it
     override func viewDidLoad() {
         super.viewDidLoad()
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -23,19 +25,19 @@ class GameViewController: UIViewController {
         scene.viewController = self
         skView.presentScene(scene)
     }
-
+    
     func viewControllerForPresentingModalView() -> UIViewController {
         return self
     }
-
+    ///sets rotation property
     override func shouldAutorotate() -> Bool {
         return true
     }
-
+    ///Sets status bar to hidden (fullscreen)
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
+    ///Opens gamecenter to view scores
     func openGC() {
         GCHelper.sharedInstance.showGameCenter(self, viewState: .Default)
     }

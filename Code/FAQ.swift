@@ -43,7 +43,7 @@ class FAQ{
     }
     /// Helper function to create text label
     ///
-    /// - paramter text, String to use
+    /// - parameter text, String to use
     /// - size, font size
     /// - parameter x, x coord
     /// - parameter y, y coord

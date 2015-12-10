@@ -1,9 +1,12 @@
 import SpriteKit
 
 class Enemy: Sprite {
+    //determines starting position
     var startAtTop: Bool!
     var disabled: Bool = false
+    //speed of enemy movement
     let vel: CGFloat = 4
+    //set collision category
     let kEnemyCategory: UInt32 = 0x1 << 0
     var shot: Bool = false
     /// Creates enemy sprite

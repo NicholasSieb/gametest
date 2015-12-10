@@ -4,7 +4,7 @@ import AVFoundation
 class MainMenuScene: SKScene {
     var viewController: GameViewController?
     var bgMusic:AVAudioPlayer = AVAudioPlayer()
-
+    /// standard SKScene function to setup view
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
         var emitterNode = emitterStars(SKColor.lightGrayColor(), starSpeedY: 50, starsPerSecond: 1, starScaleFactor: 0.2)
@@ -18,7 +18,13 @@ class MainMenuScene: SKScene {
         self.addChild(emitterNode)
         PopupMenu(size: size, title: "Game Test for 407", label: "Play", id: "start").addTo(self)
     }
-    
+    /// Helper function to create a star emitterNode
+    ///
+    /// - parameter color, color to use
+    /// - parameter startSpeedY, speed for stars to fall at
+    /// - parameter starsPerSecond birthrate of particles
+    /// - parameter starScaleFactor size of stars
+    /// - return emitterNode that creates stars
     func emitterStars(color: SKColor, starSpeedY: CGFloat, starsPerSecond: CGFloat, starScaleFactor: CGFloat) -> SKEmitterNode{
         let time = size.height * UIScreen.mainScreen().scale / starSpeedY
         let emitterNode = SKEmitterNode()
@@ -35,24 +41,29 @@ class MainMenuScene: SKScene {
         
         return emitterNode
     }
-
+    ///Standard touchesBegan function of SKScene
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
             let touched = self.nodeAtPoint(touch.locationInNode(self))
             guard let name = touched.name else {
                 return;
             }
+            ///Switch operating on name of touched object
             switch name {
+            ///Start pressed move to GameScene
             case "start":
                 let gameScene = GameScene(size: size)
                 gameScene.scaleMode = scaleMode
                 let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
                 gameScene.viewController = self.viewController
                 view?.presentScene(gameScene, transition: reveal)
+                if Options.option.get("sound"){
                 let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Start", withExtension: "wav")!
                 do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
                 bgMusic.prepareToPlay()
                 bgMusic.play()
+                }
+            ///leaderboard touched, open Gamecenter
             case "score":
                 viewController?.openGC()
             default:

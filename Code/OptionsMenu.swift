@@ -1,6 +1,11 @@
 import SpriteKit
 
 class OptionsMenu {
+    /// Creates options sprite
+    ///
+    /// - parameter menu, options node to use
+    /// - parameter size
+    /// - Usage Sprite constructor
     init(menu: SKNode, size: CGSize) {
         let options = ["sound"]
         var pos: CGFloat = 51
@@ -9,7 +14,7 @@ class OptionsMenu {
             pos -= 5
         }
     }
-
+    ///Add an option to menu
     func addOption(menu: SKNode, size: CGSize, option: String, pos: CGFloat) {
         let height = size.height
         let isOn = Options.option.get(option) ? "on" : "off"

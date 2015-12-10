@@ -28,7 +28,11 @@ struct Utility {
     }
     
 
-    
+    /// Helper function to determine what to do on buttonPress
+    ///
+    /// - parameter main, Scene
+    /// - parameter touched, SKNode touched
+    /// - parameter score String
     static func pressButton(main: SKScene, touched: SKNode, score: String) {
         let size = main.size
         if let name = touched.name {
@@ -36,6 +40,7 @@ struct Utility {
                 toggle(name, sprite: touched as! SKSpriteNode, main: main)
             }
             switch name {
+            ///Back button pressed, remove current view and return to prev
             case "back":
                 let parent = touched.parent
                 if parent?.name == "back" {
@@ -45,17 +50,10 @@ struct Utility {
                     touched.removeFromParent()
                     parent?.removeFromParent()
                 }
+            ///Add FAQ Sprite to scene
             case "faq":
                  FAQ(size: size).addTo(main)
-            case "back":
-                let parent = touched.parent
-                if parent?.name == "back"{
-                    let superp = parent?.parent
-                    superp?.removeFromParent()
-                } else {
-                    touched.removeFromParent()
-                    parent?.removeFromParent()
-                }
+            ///open settings menu
             case "settings":
                 let parent = touched.parent! as SKNode
                 touched.removeFromParent()
@@ -65,7 +63,11 @@ struct Utility {
             }
         }
     }
-
+    /// Function to toggle an option on or off
+    ///
+    /// - parameter option setting to toggle
+    /// - parameter sprite sprite to replace
+    /// - parameter main scene
     static func toggle(option: String, sprite: SKSpriteNode, main: SKScene) {
         let opt = option.stringByReplacingOccurrencesOfString("option_", withString: "")
         

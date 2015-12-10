@@ -14,12 +14,14 @@ class Sprite: SKSpriteNode {
         self.setScale(2)
         self.name = named
     }
-
+    
+    ///additional constructor
     convenience init(named: String, x: CGFloat, y: CGFloat, scale: CGFloat) {
         self.init(named: named, x: x, y: y)
         self.setScale(scale)
     }
-
+    
+    ///addtional constructor
     convenience init(named: String, x: CGFloat, y: CGFloat, size: CGSize) {
         self.init(named: named, x: x, y: y)
         self.size = size

@@ -71,6 +71,7 @@ class Player: Sprite {
         // Compute vector components in direction of the touch
         dx = x2 - self.position.x
         dy = y2 - self.position.y + 50
+        //Avoid shooting when ship isn't moving much/at all
         if (dx >= 10 || dx <= -10) && (dy >= 10 || dy <= 10) {
         let laser = SKSpriteNode()
         laser.color = laserColor
@@ -96,7 +97,6 @@ class Player: Sprite {
         
         //add a laser
         self.parent?.addChild(laser)
-        //self.addChild(laser)
         
         //get direction to shoot in
         let direction = Utility.vecNormalize(offset)
@@ -107,10 +107,10 @@ class Player: Sprite {
         //add shoot amount to curr pos
         let realDest = Utility.vecAdd(shootAmount, b: laser.position)
         
-        //actions
-    
-        
         //let velocity = (300/1.0)
+            
+        //actions
+        
         let realMoveDuration = Double(self.size.width) / velocity
         let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
         let removeAction = SKAction.removeFromParent()

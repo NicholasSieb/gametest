@@ -14,7 +14,7 @@ class Background {
 
     
     
-    
+    ///adds sprite to parent
     func addTo(parentNode: SKNode) -> SKNode {
         parentNode.addChild(background)
         return background
