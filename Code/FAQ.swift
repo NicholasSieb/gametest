@@ -23,8 +23,8 @@ class FAQ{
     }
     
     func addPause(x: CGFloat, y: CGFloat) {
-        Player(x: -550, y: 250).addTo(faq)
-        addText("Avoid enemies", size: 80, x: -650, y: 0)
+        Player(x: -550, y: 300).addTo(faq)
+        addText("Avoid enemies", size: 60, x: -650, y: 0)
         addText("Ship follows touches", size: 60, x: -650, y: 100)
         addText("Upgrades:", size: 60, x: x - 350, y: 100)
         addText("Info", size: 130, x: 0, y: y - 400)

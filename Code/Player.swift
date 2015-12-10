@@ -9,7 +9,7 @@ class Player: Sprite {
     //Here is the variable we use to increase the user's ship speed
     var speedTwo: CGFloat = 12
     //Here is the variable we use to determine the laser's speed
-    var velocity = (300/1.0)
+    var velocity = (200/1.0)
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
 
