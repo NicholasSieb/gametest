@@ -40,6 +40,7 @@ class FAQ{
         label.position = CGPointMake(x, y)
         label.fontName = "Helvetica-Bold"
         label.name = "howto"
+        label.zPosition = 3000
         faq.addChild(label)
     }
     

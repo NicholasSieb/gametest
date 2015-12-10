@@ -393,10 +393,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buttonFour.setImage(laserVelocityButtonImage, forState: .Normal)
         buttonFive.setImage(homeImage, forState: .Normal)
         //Here we add the position and size of the button
-        button.frame = CGRectMake(0, 75, 50, 50) //x,y,width,height
-        buttonTwo.frame = CGRectMake(0, 125, 50, 50)
-        buttonThree.frame = CGRectMake(0, 175, 50, 50)
-        buttonFour.frame = CGRectMake(0, 225, 50, 50)
+        button.frame = CGRectMake(235, 125, 25, 25) //x,y,width,height
+        buttonTwo.frame = CGRectMake(260, 125, 25, 25)
+        buttonThree.frame = CGRectMake(285, 125, 25, 25)
+        buttonFour.frame = CGRectMake(310, 125, 25, 25)
         buttonFive.frame = CGRectMake(395, 200, 64, 64)
         //Here we add the button to the game
         self.view!.addSubview(button)
