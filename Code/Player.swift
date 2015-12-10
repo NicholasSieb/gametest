@@ -18,9 +18,10 @@ class Player: Sprite {
 
 
     init(x: CGFloat, y: CGFloat) {
-        super.init(named: "rocket", x: x, y: y)
-        self.setScale(2.0)
-        fire()
+        super.init(named: "ship", x: x, y: y)
+        self.setScale(1.4)
+        //fire()
+        exhaust()
     }
 
     func fire() {
@@ -28,10 +29,19 @@ class Player: Sprite {
             fireArray.append(SKTexture(imageNamed: "fire\(index)"))
         }
         let fire = SKSpriteNode(texture: fireArray[0]);
-        fire.anchorPoint = CGPoint(x: 0.5, y: 1.3)
+        fire.anchorPoint = CGPoint(x: 0.5, y:1.3)
         self.addChild(fire)
         let animateAction = SKAction.animateWithTextures(self.fireArray, timePerFrame: 0.10);
         fire.runAction(SKAction.repeatActionForever(animateAction))
+    }
+    
+    func exhaust(){
+        let emitterNode = SKEmitterNode(fileNamed: "EngineExhaust.sks")
+        emitterNode?.position = CGPoint(x: 0.5, y: -18.3)
+        emitterNode?.setScale(0.6)
+        self.addChild(emitterNode!)
+        //self.runAction(SKAction.waitForDuration(1), completion: { emitterNode!.removeFromParent()})
+        
     }
     
     
