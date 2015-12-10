@@ -30,10 +30,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
         Background(size: size).addTo(self)
-        let coolBackGround = SKEmitterNode(fileNamed: "Background")
-        coolBackGround?.position = CGPointMake(size.width/2, size.height)
-        coolBackGround!.zPosition = 0
-        addChild(coolBackGround!)
+        //let coolBackGround = SKEmitterNode(fileNamed: "Background")
+        //coolBackGround?.position = CGPointMake(size.width/2, size.height)
+       // coolBackGround!.zPosition = 0
+        //addChild(coolBackGround!)
+        var emitterNode = emitterStars(SKColor.lightGrayColor(), starSpeedY: 50, starsPerSecond: 1, starScaleFactor: 0.2)
+        emitterNode.zPosition = -10
+        self.addChild(emitterNode)
+        emitterNode = emitterStars(SKColor.grayColor(), starSpeedY: 30, starsPerSecond: 2, starScaleFactor: 0.1)
+        emitterNode.zPosition = -11
+        self.addChild(emitterNode)
+        emitterNode = emitterStars(SKColor.darkGrayColor(), starSpeedY: 15, starsPerSecond: 4, starScaleFactor: 0.05)
+        emitterNode.zPosition = -12
+        self.addChild(emitterNode)
         rocket = Player(x: size.width / 2, y: size.height / 2).addTo(self) as! Player
         scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
         scoreboard.viewController = self.viewController
@@ -125,11 +134,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     func explode(point: CGPoint){
-        var emitterNode = SKEmitterNode(fileNamed: "EnemyExplosion.sks")
+        let emitterNode = SKEmitterNode(fileNamed: "EnemyExplosion.sks")
         emitterNode!.particlePosition = point
         self.addChild(emitterNode!)
         self.runAction(SKAction.waitForDuration(2), completion: { emitterNode!.removeFromParent()})
         
+    }
+    
+    func emitterStars(color: SKColor, starSpeedY: CGFloat, starsPerSecond: CGFloat, starScaleFactor: CGFloat) -> SKEmitterNode{
+        let time = size.height * UIScreen.mainScreen().scale / starSpeedY
+        let emitterNode = SKEmitterNode()
+        emitterNode.particleTexture = SKTexture(imageNamed: "Star")
+        emitterNode.particleBirthRate = starsPerSecond
+        emitterNode.particleColor = color
+        emitterNode.particleSpeed = starSpeedY * -1
+        emitterNode.particleScale = starScaleFactor
+        emitterNode.particleLifetime = time
+        emitterNode.position = CGPoint(x: size.width/2, y: size.height)
+        emitterNode.particlePositionRange = CGVector(dx: size.width, dy: 0)
+        
+        emitterNode.advanceSimulationTime(NSTimeInterval(time))
+        
+        return emitterNode
     }
     
     func didBeginContact(contact: SKPhysicsContact){

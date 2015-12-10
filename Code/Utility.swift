@@ -27,6 +27,8 @@ struct Utility {
         return CGPointMake(a.x / length, a.y / length)
     }
     
+
+    
     static func pressButton(main: SKScene, touched: SKNode, score: String) {
         let size = main.size
         if let name = touched.name {

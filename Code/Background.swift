@@ -5,7 +5,7 @@ class Background {
 
     var size: CGSize
     init(size: CGSize) {
-        background.zPosition = -1
+        background.zPosition = -15
         self.size = size
     }
 

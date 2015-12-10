@@ -7,11 +7,33 @@ class MainMenuScene: SKScene {
 
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
-        let coolBackGround = SKEmitterNode(fileNamed: "Background")
-        coolBackGround?.position = CGPointMake(size.width/2, size.height)
-        coolBackGround!.zPosition = 0
-        addChild(coolBackGround!)
+        var emitterNode = emitterStars(SKColor.lightGrayColor(), starSpeedY: 50, starsPerSecond: 1, starScaleFactor: 0.2)
+        emitterNode.zPosition = -10
+        self.addChild(emitterNode)
+        emitterNode = emitterStars(SKColor.grayColor(), starSpeedY: 30, starsPerSecond: 2, starScaleFactor: 0.1)
+        emitterNode.zPosition = -11
+        self.addChild(emitterNode)
+        emitterNode = emitterStars(SKColor.darkGrayColor(), starSpeedY: 15, starsPerSecond: 4, starScaleFactor: 0.05)
+        emitterNode.zPosition = -12
+        self.addChild(emitterNode)
         PopupMenu(size: size, title: "Game Test for 407", label: "Play", id: "start").addTo(self)
+    }
+    
+    func emitterStars(color: SKColor, starSpeedY: CGFloat, starsPerSecond: CGFloat, starScaleFactor: CGFloat) -> SKEmitterNode{
+        let time = size.height * UIScreen.mainScreen().scale / starSpeedY
+        let emitterNode = SKEmitterNode()
+        emitterNode.particleTexture = SKTexture(imageNamed: "Star")
+        emitterNode.particleBirthRate = starsPerSecond
+        emitterNode.particleColor = color
+        emitterNode.particleSpeed = starSpeedY * -1
+        emitterNode.particleScale = starScaleFactor
+        emitterNode.particleLifetime = time
+        emitterNode.position = CGPoint(x: size.width/2, y: size.height)
+        emitterNode.particlePositionRange = CGVector(dx: size.width, dy: 0)
+        
+        emitterNode.advanceSimulationTime(NSTimeInterval(time))
+        
+        return emitterNode
     }
 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
