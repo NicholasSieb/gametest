@@ -91,22 +91,23 @@ class Enemy: Sprite {
     
     /// Functions to update actions of enemy
     ///
+    /// - parameter scene to get y bound
     /// - parameter isGameOver to let us know when game is over
     /// - parameter x, rocket x position
     /// - parameter y, rocket y position
     /// - usage called during enumeration
     func enemyAI(scene: SKScene, isGameOver: Bool, x: CGFloat, y: CGFloat) {
-        let y = scene.position.y
+        let sceney = scene.position.y
         //check if player connected with enemy
         if !isGameOver {
             //update enemy movement
-            self.moveTo(CGPointMake(x, y))
+            moveTo(CGPointMake(x, y))
         } else {
             //game is over still move enemy tho
-            self.move()
+            move()
         }
         //check enemy bounds
-        if y < 0 || y > size.height {
+        if sceney < 0 || sceney > size.height {
             self.removeFromParent()
         }
     }

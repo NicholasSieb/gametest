@@ -379,8 +379,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node, stop in
             let enemy = node as! Enemy
             //run AI function
-            self.enemyAI(enemy)
-            //enemy.enemyAI(self, isGameOver: self.isGameOver, x: self.rocket.position.x, y: self.rocket.position.y)
+            //self.enemyAI(enemy)
+            enemy.enemyAI(self, isGameOver: self.isGameOver, x: self.rocket.position.x, y: self.rocket.position.y)
         }
         if (removeEnemies) {
             removeEnemies = false
