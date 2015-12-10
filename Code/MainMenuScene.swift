@@ -7,6 +7,10 @@ class MainMenuScene: SKScene {
 
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
+        let coolBackGround = SKEmitterNode(fileNamed: "Background")
+        coolBackGround?.position = CGPointMake(size.width/2, size.height)
+        coolBackGround!.zPosition = 0
+        addChild(coolBackGround!)
         PopupMenu(size: size, title: "Game Test for 407", label: "Play", id: "start").addTo(self)
     }
 

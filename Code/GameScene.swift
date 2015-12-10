@@ -123,6 +123,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //       }
     //   }
     
+    
+    func explode(point: CGPoint){
+        var emitterNode = SKEmitterNode(fileNamed: "EnemyExplosion.sks")
+        emitterNode!.particlePosition = point
+        self.addChild(emitterNode!)
+        self.runAction(SKAction.waitForDuration(2), completion: { emitterNode!.removeFromParent()})
+        
+    }
+    
     func didBeginContact(contact: SKPhysicsContact){
         var firstBody: SKPhysicsBody
         //var secondBody: SKPhysicsBody
@@ -130,6 +139,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         firstBody = contact.bodyA
         if (firstBody.node?.name == "enemy"){
             let toChange = firstBody.node as? Enemy
+            explode((toChange?.position)!)
             toChange?.shot = true
             toChange?.removeFromParent()
             scoreboard.addScore(1)
@@ -211,7 +221,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     {
                         canShoot = false
                         //Here is a timer. It triggers the function "canShootAgain", and takes "shootSpeed" amount of seconds to execute.
-                        var timer = NSTimer.scheduledTimerWithTimeInterval(reloadSpeed, target: self, selector: "canShootAgain", userInfo: nil, repeats: false)
+                        _ = NSTimer.scheduledTimerWithTimeInterval(reloadSpeed, target: self, selector: "canShootAgain", userInfo: nil, repeats: false)
                         rocket.shoot(rocket.position.x, y1: rocket.position.y, x2: currentPosition.x, y2: currentPosition.y)
                     }
                 }

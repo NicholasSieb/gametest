@@ -23,6 +23,8 @@ class Enemy: Sprite {
         disabled = true
         self.texture = SKTexture(imageNamed: "enemydisabled")
     }
+    
+
 
     func isDisabled() -> Bool {
         return disabled

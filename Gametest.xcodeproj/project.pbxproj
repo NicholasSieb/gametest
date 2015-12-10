@@ -16,6 +16,8 @@
 		01C0BA691C0977E000EB0E6C /* Background.sks in Resources */ = {isa = PBXBuildFile; fileRef = 01C0BA671C0977E000EB0E6C /* Background.sks */; };
 		01C0BA6A1C0977E000EB0E6C /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C0BA681C0977E000EB0E6C /* spark.png */; };
 		01C417F31C18DB2E00565E43 /* faq.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C417F21C18DB2E00565E43 /* faq.png */; };
+		01C417F61C190C5300565E43 /* EnemyExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 01C417F41C190C5300565E43 /* EnemyExplosion.sks */; };
+		01C417F71C190C5300565E43 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 01C417F51C190C5300565E43 /* spark.png */; };
 		5403242E1A4B8B5300B61880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5403242D1A4B8B5300B61880 /* AppDelegate.swift */; };
 		540324321A4B8B5300B61880 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540324311A4B8B5300B61880 /* GameScene.swift */; };
 		540324341A4B8B5300B61880 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540324331A4B8B5300B61880 /* GameViewController.swift */; };
@@ -61,6 +63,8 @@
 		01C0BA671C0977E000EB0E6C /* Background.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Background.sks; path = ../../Background.sks; sourceTree = "<group>"; };
 		01C0BA681C0977E000EB0E6C /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = ../../spark.png; sourceTree = "<group>"; };
 		01C417F21C18DB2E00565E43 /* faq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = faq.png; sourceTree = "<group>"; };
+		01C417F41C190C5300565E43 /* EnemyExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EnemyExplosion.sks; sourceTree = "<group>"; };
+		01C417F51C190C5300565E43 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		540324281A4B8B5300B61880 /* Gametest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gametest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5403242C1A4B8B5300B61880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5403242D1A4B8B5300B61880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 		540324511A4B8C0D00B61880 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				01C417F41C190C5300565E43 /* EnemyExplosion.sks */,
+				01C417F51C190C5300565E43 /* spark.png */,
 				C80465931C18F21C00391F72 /* laserSize.png */,
 				C80465911C18EBC400391F72 /* laserVelocity.png */,
 				C804658F1C18E52000391F72 /* reloadSpeed.png */,
@@ -309,13 +315,14 @@
 				55AD86821A8E831E00839E28 /* game.atlas in Resources */,
 				01C417F31C18DB2E00565E43 /* faq.png in Resources */,
 				C80465921C18EBC400391F72 /* laserVelocity.png in Resources */,
-
+				01C417F61C190C5300565E43 /* EnemyExplosion.sks in Resources */,
 				54BC178E1AC1FABF000A7FED /* soundoff.png in Resources */,
 				017F4DA91C138984003BC7AA /* Start.wav in Resources */,
 				017F4DA11C138968003BC7AA /* Enemy-Explosion.wav in Resources */,
 				54ECDC211A64E99400860C5E /* settings.png in Resources */,
 				540324391A4B8B5300B61880 /* Images.xcassets in Resources */,
 				C804658E1C18E1AD00391F72 /* shipSpeed.png in Resources */,
+				01C417F71C190C5300565E43 /* spark.png in Resources */,
 				540324371A4B8B5300B61880 /* Main.storyboard in Resources */,
 				C80465901C18E52000391F72 /* reloadSpeed.png in Resources */,
 				54BC178F1AC1FABF000A7FED /* soundon.png in Resources */,
@@ -326,7 +333,6 @@
 				017F4DA71C138984003BC7AA /* Pause.wav in Resources */,
 				54A317941B3A037A00D8CB16 /* LaunchScreen.storyboard in Resources */,
 				C80465941C18F21C00391F72 /* laserSize.png in Resources */,
-				0180BD511C0A7E8300B42979 /* info.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
