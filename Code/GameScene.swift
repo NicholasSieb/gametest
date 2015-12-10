@@ -178,11 +178,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBeginContact(contact: SKPhysicsContact){
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
+        //print("collision detected")
         
         firstBody = contact.bodyA
         secondBody = contact.bodyB
-        if (firstBody.node?.name == "enemy"){
+        
+        //check laser enemy collision
+        if (firstBody.node?.name == "enemy" && secondBody.node?.name == "laser"){
             let toChange = firstBody.node as? Enemy
+            explode((toChange?.position)!)
+            toChange?.shot = true
+            toChange?.removeFromParent()
+            scoreboard.addScore(1)
+            //secondBody = contact.bodyB
+            
+            if Options.option.get("sound"){
+                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
+                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
+                bgMusic.prepareToPlay()
+                bgMusic.play()
+            }
+        }
+        
+        //check laser enemy collision
+        if (secondBody.node?.name == "enemy" && firstBody.node?.name == "laser"){
+            let toChange = secondBody.node as? Enemy
             explode((toChange?.position)!)
             toChange?.shot = true
             toChange?.removeFromParent()
@@ -197,20 +217,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        if (secondBody.node?.name == "enemy"){
-            let toChange = secondBody.node as? Enemy
-            explode((toChange?.position)!)
-            toChange?.shot = true
-            toChange?.removeFromParent()
-            scoreboard.addScore(1)
-            //secondBody = contact.bodyB
-            //  print("collision detected")
-            if Options.option.get("sound"){
-                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
-                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-                bgMusic.prepareToPlay()
-                bgMusic.play()
-            }
+        //check ship enemy collision
+        if (secondBody.node?.name == "ship" && firstBody.node?.name == "enemy"){
+            gameOver()
+        
+        
+        }
+        
+        //check ship enemy collision
+        if (firstBody.node?.name == "ship" && secondBody.node?.name == "enemy"){
+            gameOver()
+            
+            
         }
 
         
@@ -362,6 +380,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let enemy = node as! Enemy
             //run AI function
             self.enemyAI(enemy)
+            //enemy.enemyAI(self, isGameOver: self.isGameOver, x: self.rocket.position.x, y: self.rocket.position.y)
         }
         if (removeEnemies) {
             removeEnemies = false
@@ -376,24 +395,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let y = enemy.position.y
         //check if player connected with enemy
         if !isGameOver {
-            if CGRectIntersectsRect(CGRectInset(enemy.frame, 25, 25), CGRectInset(rocket.frame, 10, 10)) {
-                gameOver()
-            }
-            //add checking if enemy was shot
-            if !enemy.isDisabled() {
-                if(enemy.shot){
-                    removeEnemies = true
-                }
-                
-            }
-            //remove
-            //}
-            if removeEnemies {
-                if !enemy.isDisabled() {
-                    //add score for killing enemy
-                    //scoreboard.addScore(1)
-                }
-            }
             //update enemy movement
             enemy.moveTo(CGPointMake(rocket.position.x, rocket.position.y))
             

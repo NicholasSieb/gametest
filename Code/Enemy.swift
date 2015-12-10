@@ -88,6 +88,28 @@ class Enemy: Sprite {
     func moveBy(dx: CGFloat, dy: CGFloat) {
         self.position = CGPointMake(self.position.x + dx, self.position.y + dy)
     }
+    
+    /// Functions to update actions of enemy
+    ///
+    /// - parameter isGameOver to let us know when game is over
+    /// - parameter x, rocket x position
+    /// - parameter y, rocket y position
+    /// - usage called during enumeration
+    func enemyAI(scene: SKScene, isGameOver: Bool, x: CGFloat, y: CGFloat) {
+        let y = scene.position.y
+        //check if player connected with enemy
+        if !isGameOver {
+            //update enemy movement
+            self.moveTo(CGPointMake(x, y))
+        } else {
+            //game is over still move enemy tho
+            self.move()
+        }
+        //check enemy bounds
+        if y < 0 || y > size.height {
+            self.removeFromParent()
+        }
+    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

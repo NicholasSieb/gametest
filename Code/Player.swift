@@ -14,6 +14,7 @@ class Player: Sprite {
     //set collision info
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
+    let kPlayerCategory: UInt32 = 0x1 << 2
 
     
     
@@ -26,6 +27,13 @@ class Player: Sprite {
     init(x: CGFloat, y: CGFloat) {
         super.init(named: "ship", x: x, y: y)
         self.setScale(1.4)
+        //set physics properties
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 50, height: 50))
+        self.physicsBody!.dynamic = true
+        self.physicsBody!.collisionBitMask = 0x0
+        self.physicsBody!.contactTestBitMask = 0x0
+        self.physicsBody!.categoryBitMask = kPlayerCategory
+        self.physicsBody!.contactTestBitMask = kEnemyCategory
         //fire()
         exhaust()
     }
@@ -89,6 +97,8 @@ class Player: Sprite {
         let projLoc = CGPointMake(x1, y1)
         
         laser.position = projLoc
+            
+        laser.name = "laser"
         
         
         //calculate offset of location to projectile
