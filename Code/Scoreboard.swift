@@ -18,6 +18,12 @@ class Scoreboard {
 
     func highScore() {
        //todo with Gc implement
+        if score > NSUserDefaults.standardUserDefaults().integerForKey("highscore"){
+            NSUserDefaults.standardUserDefaults().setInteger(score, forKey: "highscore")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            isHighScore = true
+            GCHelper.sharedInstance.reportLeaderboardIdentifier("leaderBoardID", score: score)
+        }
     }
 
     func addTo(parentNode: GameScene) -> Scoreboard {
