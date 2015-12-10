@@ -53,6 +53,8 @@ class MainMenuScene: SKScene {
                 do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
                 bgMusic.prepareToPlay()
                 bgMusic.play()
+            case "score":
+                viewController?.openGC()
             default:
                 Utility.pressButton(self, touched: touched, score: "-1")
             }

@@ -1,5 +1,10 @@
 import SpriteKit
 import AVFoundation
+import GameKit
+
+protocol GameSceneDelegate {
+    func gameOver()
+}
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var viewController: GameViewController?
@@ -17,6 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
     var bgMusic:AVAudioPlayer = AVAudioPlayer()
+    var gameCenterDelegate : GameSceneDelegate?
     //here is the button code
     let button = UIButton()
     let buttonTwo = UIButton()
@@ -68,6 +74,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 pauseGame()
             case "home":
                 resetGame()
+            case "score":
+                viewController?.openGC()
             default:
                 currentlyTouching = true
                 
@@ -308,6 +316,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rocket.removeFromParent()
         pause.removeThis()
         PopupMenu(size: size, title: "Too bad ;(", label: "Play", id: "gameover").addTo(self)
+        if scoreboard.isHighscore() {
+            addChild(scoreboard.getHighscoreLabel(size))
+        }
         
     }
     
@@ -386,7 +397,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buttonTwo.frame = CGRectMake(0, 125, 50, 50)
         buttonThree.frame = CGRectMake(0, 175, 50, 50)
         buttonFour.frame = CGRectMake(0, 225, 50, 50)
-        buttonFive.frame = CGRectMake(500, 125, 50, 50)
+        buttonFive.frame = CGRectMake(395, 200, 64, 64)
         //Here we add the button to the game
         self.view!.addSubview(button)
         self.view!.addSubview(buttonTwo)

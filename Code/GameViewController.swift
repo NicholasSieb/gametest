@@ -35,7 +35,10 @@ class GameViewController: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-
+    
+    func openGC() {
+        GCHelper.sharedInstance.showGameCenter(self, viewState: .Default)
+    }
 
 
 

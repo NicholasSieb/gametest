@@ -13,6 +13,7 @@ class PopupMenu {
         //Sprite(named: "home", x: 3 * width / 4, y: height / 3 - height / 26, scale: 0.5).addTo(menu)
         let options = Sprite(named: "settings", x: 51 * width / 60, y: 4 * height / 5, size: CGSizeMake(height / 12, height / 12))
         options.addTo(menu)
+        Sprite(named: "score", x: width / 4, y: height / 3, size: CGSizeMake(height / 6, height / 6)).addTo(menu)
         addTitle(title, position: CGPointMake(width / 2, 3 * height / 5))
     }
 
