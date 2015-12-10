@@ -391,6 +391,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     ///
     /// - parameter enemy, enemy to update
     /// - usage called during enumeration
+    /// - important Now called from Enemy class
     func enemyAI(enemy: Enemy) {
         let y = enemy.position.y
         //check if player connected with enemy

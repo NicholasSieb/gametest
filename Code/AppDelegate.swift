@@ -10,7 +10,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ///default method of AppDelegate
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject:AnyObject]?) -> Bool {
         ///install Crashlytics framework
-        Fabric.with([Crashlytics()])
+        Fabric.with([Crashlytics.self])
+
         ///Attempt to authenticate user
         GCHelper.sharedInstance.authenticateLocalUser()
         return true

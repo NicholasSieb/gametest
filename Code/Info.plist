@@ -23,7 +23,7 @@
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
-		<string>5dab386aae7cdc92e5cbafb6b6cd742f0f4bfddb</string>
+		<string>4d1b9dcac7f5fad15894564711bb4fd5a49fdbb3</string>
 		<key>Kits</key>
 		<array>
 			<dict>
@@ -37,9 +37,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
-	<array>
-		<string>timeburner.otf</string>
-	</array>
+	<array/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
