@@ -2,18 +2,10 @@
 
 TODO:
 
-Add gesture or button for laser action
+Ramping Difficulty
 
 Multiplayer
 
-Options - option system implemented but what options do we want besides sound, info
+Upgrade system //done but needs some work (explaining and sprites)
 
-More detailed menu
-
-Upgrade system //done but needs some work
-
-Better sprites
-
-Particle effects
-
-Apple Gamecenter support
+Apple Gamecenter support - Begun, but need testing with actual iPhone
