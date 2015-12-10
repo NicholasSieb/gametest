@@ -141,6 +141,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    func explodePlayer(point: CGPoint){
+        let emitterNode = SKEmitterNode(fileNamed: "PlayerExplosion.sks")
+        emitterNode!.particlePosition = point
+        self.addChild(emitterNode!)
+        self.runAction(SKAction.waitForDuration(2), completion: { emitterNode!.removeFromParent()})
+        
+    }
+    
     func emitterStars(color: SKColor, starSpeedY: CGFloat, starsPerSecond: CGFloat, starScaleFactor: CGFloat) -> SKEmitterNode{
         let time = size.height * UIScreen.mainScreen().scale / starSpeedY
         let emitterNode = SKEmitterNode()
@@ -278,8 +286,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //play dead sound
         }
         isGameOver = true
-        let exp = Explosion(x: rocket.position.x, y: rocket.position.y).addTo(self) as! Explosion
-        exp.boom(self)
+        explodePlayer(rocket.position)
         rocket.removeFromParent()
         pause.removeThis()
         PopupMenu(size: size, title: "Too bad ;(", label: "Play", id: "gameover").addTo(self)
