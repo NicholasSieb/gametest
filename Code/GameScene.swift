@@ -22,10 +22,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let buttonTwo = UIButton()
     let buttonThree = UIButton()
     let buttonFour = UIButton()
+    let buttonFive = UIButton()
     //Here are variables for delaying the shooting
     var canShoot = true
     var reloadSpeed = 0.3
-
+    //var viewController2: MainMenuScene?
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
         Background(size: size).addTo(self)
@@ -56,6 +57,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 resetGame()
             case "pause":
                 pauseGame()
+            case "home":
+                resetGame()
             default:
                 currentlyTouching = true
                 
@@ -311,25 +314,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let shipSpeedButtonImage = UIImage(named: "shipSpeed.png")! as UIImage
         let reloadSpeedButtonImage = UIImage(named: "reloadSpeed.png")! as UIImage
         let laserVelocityButtonImage = UIImage(named: "laserVelocity.png")! as UIImage
+        let homeImage = UIImage(named: "home.png")! as UIImage
         button.setImage(laserSizeButtonImage, forState: .Normal)
         buttonTwo.setImage(shipSpeedButtonImage, forState: .Normal)
         buttonThree.setImage(reloadSpeedButtonImage, forState: .Normal)
         buttonFour.setImage(laserVelocityButtonImage, forState: .Normal)
+        buttonFive.setImage(homeImage, forState: .Normal)
         //Here we add the position and size of the button
         button.frame = CGRectMake(0, 75, 50, 50) //x,y,width,height
         buttonTwo.frame = CGRectMake(0, 125, 50, 50)
         buttonThree.frame = CGRectMake(0, 175, 50, 50)
         buttonFour.frame = CGRectMake(0, 225, 50, 50)
+        buttonFive.frame = CGRectMake(500, 125, 50, 50)
         //Here we add the button to the game
         self.view!.addSubview(button)
         self.view!.addSubview(buttonTwo)
         self.view!.addSubview(buttonThree)
         self.view!.addSubview(buttonFour)
+        self.view!.addSubview(buttonFive)
         //Here we add functionality to the button
         button.addTarget(self, action: "buttonPressed:", forControlEvents: .TouchUpInside)
         buttonTwo.addTarget(self, action: "buttonPressedTwo:", forControlEvents: .TouchUpInside)
         buttonThree.addTarget(self, action: "buttonPressedThree:", forControlEvents: .TouchUpInside)
         buttonFour.addTarget(self, action: "buttonPressedFour:", forControlEvents: .TouchUpInside)
+        buttonFive.addTarget(self, action: "buttonPressedFive:", forControlEvents: .TouchUpInside)
     }
     //Here we remove the upgrade buttons from the pause menu
     func removeUpgradeButtons()
@@ -338,6 +346,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buttonTwo.removeFromSuperview()
         buttonThree.removeFromSuperview()
         buttonFour.removeFromSuperview()
+        buttonFive.removeFromSuperview()
     }
     
     //Here this button increases the size of the laser for a cost.
@@ -389,6 +398,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+    //go home screen
+    func buttonPressedFive(sender: UIButton!){
+        removeUpgradeButtons()
+        let homeScene = MainMenuScene(size: size)
+        homeScene.scaleMode = scaleMode
+        let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
+        homeScene.viewController = self.viewController
+        view?.presentScene(homeScene, transition: reveal)    }
     
     func canShootAgain()
     {
