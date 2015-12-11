@@ -8,33 +8,54 @@ protocol GameSceneDelegate {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var viewController: GameViewController?
-    var enemySpawnRate = 5
-    var isGameOver = false
-    var gamePaused = false
-    var removeEnemies = false
-    var doFireLaser = false
-    var scoreboard: Scoreboard!
+
+    //The player
     var rocket: Player!
-    var pause: Pause!
-    var joystickOne: Joystick!
-    var joystickTwo: Joystick!
+    var currentPosition: CGPoint!
+    var currentlyTouching = false
+    
+    //laser variables
     var laserSize = 5;
     var laserColor = UIColor.greenColor();
+    var canShoot = true
+    var reloadSpeed = 0.3
+    var doFireLaser = false
+    
+    //enemy variables
+    var removeEnemies = false
+    var enemySpawnRate = 5
+    
+    //game state variables
+    var gameCenterDelegate : GameSceneDelegate?
+    var scoreboard: Scoreboard!
+    var isGameOver = false
+
+    //pause variables
+    var pausemenu: PopupMenu!
+    var gamePaused = false
+    var pause: Pause!
+    
+    //contact variables
     var contactQueue = Array<SKPhysicsContact>()
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
-    var bgMusic:AVAudioPlayer = AVAudioPlayer()
-    var gameCenterDelegate : GameSceneDelegate?
-    //here is the button code
+  
+    
+    //the update buttons
     let button = UIButton()
     let buttonTwo = UIButton()
     let buttonThree = UIButton()
     let buttonFour = UIButton()
     let buttonFive = UIButton()
-    //Here are variables for delaying the shooting
-    var canShoot = true
-    var reloadSpeed = 0.3
-    //var viewController2: MainMenuScene?
+    
+    //the joysticks
+    var joystickOne: Joystick!
+    var joystickTwo: Joystick!
+    
+    //the sound player
+    var bgMusic:AVAudioPlayer = AVAudioPlayer()
+
+    //initial scene setup
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
         Background(size: size).addTo(self)
@@ -69,9 +90,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(joystickOne)
         self.addChild(joystickTwo)
     }
-    
-    var currentPosition: CGPoint!
-    var currentlyTouching = false
 
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -109,7 +127,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    var pausemenu: PopupMenu!
     func pauseGame() {
         if gamePaused {
             
@@ -145,30 +162,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    //physics stuff
-    
-    //   func didBeginContact(contact: SKPhysicsContact){
-    //       if contact as SKPhysicsContact? != nil{
-    //           self.contactQueue.append(contact)
-    //       }
-    //   }
-    
-    
-    func explode(point: CGPoint){
-        let emitterNode = SKEmitterNode(fileNamed: "EnemyExplosion.sks")
-        emitterNode!.particlePosition = point
-        self.addChild(emitterNode!)
-        self.runAction(SKAction.waitForDuration(2), completion: { emitterNode!.removeFromParent()})
+    //places an explosion sprite at point and cycles through the action
+    func explode(point: CGPoint, player: Bool){
+        var emitterNode: SKEmitterNode
+        if(player){
+            emitterNode = SKEmitterNode(fileNamed: "PlayerExplosion.sks")!
+        }
+        else {
+            emitterNode = SKEmitterNode(fileNamed: "EnemyExplosion.sks")!
+        }
+        emitterNode.particlePosition = point
+        self.addChild(emitterNode)
+        self.runAction(SKAction.waitForDuration(2), completion: { emitterNode.removeFromParent()})
         
     }
     
-    func explodePlayer(point: CGPoint){
-        let emitterNode = SKEmitterNode(fileNamed: "PlayerExplosion.sks")
-        emitterNode!.particlePosition = point
-        self.addChild(emitterNode!)
-        self.runAction(SKAction.waitForDuration(2), completion: { emitterNode!.removeFromParent()})
-        
-    }
+//DEPRICATED CAN WE REMOVE?
+//    func explodePlayer(point: CGPoint, player: Bool){
+//        let emitterNode = SKEmitterNode(fileNamed: "PlayerExplosion.sks")
+//        emitterNode!.particlePosition = point
+//        self.addChild(emitterNode!)
+//        self.runAction(SKAction.waitForDuration(2), completion: { emitterNode!.removeFromParent()})
+//        
+//    }
     
     func emitterStars(color: SKColor, starSpeedY: CGFloat, starsPerSecond: CGFloat, starScaleFactor: CGFloat) -> SKEmitterNode{
         let time = size.height * UIScreen.mainScreen().scale / starSpeedY
@@ -198,7 +214,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser enemy collision
         if (firstBody.node?.name == "enemy" && secondBody.node?.name == "laser"){
             let toChange = firstBody.node as? Enemy
-            explode((toChange?.position)!)
+            explode((toChange?.position)!, player: false)
             toChange?.shot = true
             toChange?.removeFromParent()
             scoreboard.addScore(1)
@@ -215,7 +231,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser enemy collision
         if (secondBody.node?.name == "enemy" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Enemy
-            explode((toChange?.position)!)
+            explode((toChange?.position)!, player: false)
             toChange?.shot = true
             toChange?.removeFromParent()
             scoreboard.addScore(1)
@@ -246,7 +262,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
     }
-    
     
     
     //func to shoot the lasers
@@ -388,7 +403,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         isGameOver = true
         //create explosion
-        explodePlayer(rocket.position)
+        explode(rocket.position, player: true)
         rocket.removeFromParent()
         pause.removeThis()
         enemySpawnRate = 5
@@ -446,13 +461,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     ///Here we add the upgrade buttons to the pause menu.
     func createUpgradeButtons () {
-        //let button = UIButton();
-        //let buttonTwo = UIButton();
-        //Here we describe the button's title
-        //button.setTitle("Add", forState: .Normal)
-        //button.setTitleColor(UIColor.blueColor(), forState: .Normal)
-        //Here we give the button an image
-        //let image = UIImage(named: "spark.png")! as UIImage
         let laserSizeButtonImage = UIImage(named: "laserSize.png")! as UIImage
         let shipSpeedButtonImage = UIImage(named: "shipSpeed.png")! as UIImage
         let reloadSpeedButtonImage = UIImage(named: "reloadSpeed.png")! as UIImage
@@ -476,15 +484,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view!.addSubview(buttonFour)
         self.view!.addSubview(buttonFive)
         //Here we add functionality to the buttons
-        button.addTarget(self, action: "buttonPressed:", forControlEvents: .TouchUpInside)
-        buttonTwo.addTarget(self, action: "buttonPressedTwo:", forControlEvents: .TouchUpInside)
-        buttonThree.addTarget(self, action: "buttonPressedThree:", forControlEvents: .TouchUpInside)
-        buttonFour.addTarget(self, action: "buttonPressedFour:", forControlEvents: .TouchUpInside)
-        buttonFive.addTarget(self, action: "buttonPressedFive:", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: "laserSizePressed:", forControlEvents: .TouchUpInside)
+        buttonTwo.addTarget(self, action: "shipSpeedPressed:", forControlEvents: .TouchUpInside)
+        buttonThree.addTarget(self, action: "laserVelPressed:", forControlEvents: .TouchUpInside)
+        buttonFour.addTarget(self, action: "reloadSpeedPressed:", forControlEvents: .TouchUpInside)
+        buttonFive.addTarget(self, action: "homePressed:", forControlEvents: .TouchUpInside)
     }
     ///Here we remove the upgrade buttons from the pause menu
-    func removeUpgradeButtons()
-    {
+    func removeUpgradeButtons(){
         button.removeFromSuperview()
         buttonTwo.removeFromSuperview()
         buttonThree.removeFromSuperview()
@@ -493,7 +500,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     ///Here this button increases the size of the laser for a cost.
-    func buttonPressed(sender: UIButton!) {
+    func laserSizePressed(sender: UIButton!) {
         //check if there is score to spend
         if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.laserSize < 15)
         {
@@ -501,20 +508,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             rocket.laserSize = rocket.laserSize + 1
             rocket.boxSize = rocket.boxSize + 1
         }
-        //this is the code that came along in the tutorial
-        /*
-        var alertView = UIAlertView();
-        alertView.addButtonWithTitle("OK");
-        alertView.title = "Alert";
-        alertView.message = "Button Pressed!!!";
-        alertView.show();
-        */
     }
     ///Here this button increases the speed of the ship for a cost.
-    func buttonPressedTwo(sender: UIButton!)
+    func shipSpeedPressed(sender: UIButton!)
     {
         //check if there is score to spend and speed is not at it's limit
-        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.speedTwo < 40)
+        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.speedTwo < 20)
         {
             scoreboard.addScore(-1)
             let additionVariable: CGFloat = 1
@@ -522,17 +521,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     ///Here this button should increase the velocity of the lasers for a cost.
-    func buttonPressedThree(sender: UIButton!)
+    func laserVelPressed(sender: UIButton!)
     {
         //check if score to spend
-        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 250)
+        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 200)
         {
             scoreboard.addScore(-1)
-            rocket.velocity = rocket.velocity + (50/1.0)
+            rocket.velocity = rocket.velocity + (20/1.0)
         }
     }
     ///Here this button decreases the reload speed
-    func buttonPressedFour(sender: UIButton!)
+    func reloadSpeedPressed(sender: UIButton!)
     {
         if(scoreboard.getScore() >= 1 && isGameOver == false)
         {
@@ -544,8 +543,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+    
     ///go to home screen
-    func buttonPressedFive(sender: UIButton!){
+    func homePressed(sender: UIButton!){
         //create homeScene and remove unneeded things
         removeUpgradeButtons()
         let homeScene = MainMenuScene(size: size)
