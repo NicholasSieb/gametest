@@ -89,7 +89,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         _ = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
         
         //create the upgrade buttons
-        createUpgradeButtons()
+        createUpgradeButtons(size)
         
         //Test Joystick
         joystickOne = Joystick()
@@ -469,18 +469,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     ///Here we create the upgrade buttons, called once.
-    func createUpgradeButtons () {
+    func createUpgradeButtons(size: CGSize) {
         button.setImage(laserSizeButtonImage, forState: .Normal)
         buttonTwo.setImage(shipSpeedButtonImage, forState: .Normal)
         buttonThree.setImage(reloadSpeedButtonImage, forState: .Normal)
         buttonFour.setImage(laserVelocityButtonImage, forState: .Normal)
         buttonFive.setImage(homeImage, forState: .Normal)
         //Here we add the position and size of the button
-        button.frame = CGRectMake(235, 125, 25, 25) //x,y,width,height
-        buttonTwo.frame = CGRectMake(260, 125, 25, 25)
-        buttonThree.frame = CGRectMake(285, 125, 25, 25)
-        buttonFour.frame = CGRectMake(310, 125, 25, 25)
-        buttonFive.frame = CGRectMake(395, 200, 64, 64)
+        let wid = UIScreen.mainScreen().bounds.width
+        let heig = UIScreen.mainScreen().bounds.height
+        let sz = CGFloat(30)
+        //let heigh = self.frame.height
+        button.frame = CGRectMake(wid/2 - 3.5*sz, 40 - sz, sz, sz) //x,y,width,height
+        buttonTwo.frame = CGRectMake(wid/2 - 1.5*sz, 40 - sz, sz, sz)
+        buttonThree.frame = CGRectMake(wid/2 + 0.5*sz, 40 - sz, sz, sz)
+        buttonFour.frame = CGRectMake(wid/2 + 2.5*sz, 40 - sz, sz, sz)
+        buttonFive.frame = CGRectMake(7*wid/10, 7*heig/11, 64, 64)
         //Here we add functionality to the buttons
         button.addTarget(self, action: "laserSizePressed:", forControlEvents: .TouchUpInside)
         buttonTwo.addTarget(self, action: "shipSpeedPressed:", forControlEvents: .TouchUpInside)
@@ -517,8 +521,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     ///Here this button increases the speed of the ship for a cost.
-    func shipSpeedPressed(sender: UIButton!)
-    {
+    func shipSpeedPressed(sender: UIButton!){
         //check if there is score to spend and speed is not at it's limit
         if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.speedTwo < 20)
         {
@@ -528,8 +531,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     ///Here this button should increase the velocity of the lasers for a cost.
-    func laserVelPressed(sender: UIButton!)
-    {
+    func laserVelPressed(sender: UIButton!){
         //check if score to spend
         if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 200)
         {
@@ -538,16 +540,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     ///Here this button decreases the reload speed
-    func reloadSpeedPressed(sender: UIButton!)
-    {
-        if(scoreboard.getScore() >= 1 && isGameOver == false)
-        {
+    func reloadSpeedPressed(sender: UIButton!){
+        //checks if there are points to spend, if the game is still going, and if we are above the limit
+        if(scoreboard.getScore() >= 1 && isGameOver == false && reloadSpeed > 0.2){
             scoreboard.addScore(-1)
-            //We check for this, because we can't have negative time! So don't reduce it below 0!
-            if(reloadSpeed > 0.1)
-            {
-                reloadSpeed = reloadSpeed - 0.1
-            }
+            reloadSpeed = reloadSpeed - 0.1
         }
     }
     
@@ -562,8 +559,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view?.presentScene(homeScene, transition: reveal)    }
     
     ///helper function for shooting delays
-    func canShootAgain()
-    {
+    func canShootAgain(){
         canShoot = true
     }
     
