@@ -103,7 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        guard let touch = touches.first else {return}
+        for touch in touches{
         currentPosition = touch.locationInNode(self)
         
         let touched = self.nodeAtPoint(currentPosition)
@@ -163,11 +163,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else {
             currentlyTouching = true
         }
+        }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        guard let touch = touches.first else {return}
+        for touch in touches {
         currentPosition = touch.locationInNode(self)
+        }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
