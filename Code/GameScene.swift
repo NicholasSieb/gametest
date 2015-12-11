@@ -319,13 +319,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !isGameOver {
                 
                 if (self.joystickOne.velocity.x != 0 || self.joystickOne.velocity.y != 0) {
-                    rocket.position = CGPointMake(rocket.position.x + 0.1 * self.joystickOne.velocity.x, rocket.position.y + 0.1 * self.joystickOne.velocity.y)
+                    rocket.position = CGPointMake(rocket.position.x + 0.15 * self.joystickOne.velocity.x, rocket.position.y + 0.15 * self.joystickOne.velocity.y)
                 }
                 
                 if (self.joystickOne.velocity.x != 0 || joystickOne.velocity.y != 0){
                     rocket.zRotation = self.joystickOne.angularVelocity
                 }
                 
+                if (self.joystickTwo.velocity.x != 0 || self.joystickTwo.velocity.y != 0) {
+                    
+                    if(canShoot == true)
+                    {
+                        canShoot = false
+                        //Here is a timer. It triggers the function "canShootAgain", and takes "shootSpeed" amount of seconds to execute.
+                        _ = NSTimer.scheduledTimerWithTimeInterval(reloadSpeed, target: self, selector: "canShootAgain", userInfo: nil, repeats: false)
+                        rocket.shootJoy(rocket.position.x, y1: rocket.position.y, x2: self.joystickTwo.selectorNode.position.x, y2: self.joystickTwo.selectorNode.position.y)
+                    }
+                    
+                }
+                
+                //print("x position is\(self.joystickTwo.selectorNode.position.x)")
+                //print("y position is\(self.joystickTwo.selectorNode.position.y)")
                 //If user is touching, move the player and attempt to fire
                 if currentlyTouching {
                     rocket.moveTo(currentPosition.x, y: currentPosition.y)

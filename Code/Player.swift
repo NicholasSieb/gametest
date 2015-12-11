@@ -113,9 +113,11 @@ class Player: Sprite {
         
         //move endpoint of triangle far (offscreen hopefully)
         let shootAmount = Utility.vecMult(direction, b: 1000)
+            
         
         //add shoot amount to curr pos
         let realDest = Utility.vecAdd(shootAmount, b: laser.position)
+        
         
         //let velocity = (300/1.0)
             
@@ -150,6 +152,67 @@ class Player: Sprite {
         }
     }
     
+    /// This function handles creation of laser sprites JOYSTICK EDITION
+    ///
+    /// - Usage player.shoot(x1,y1,x2,y2)
+    /// - parameter x1 x coord of player
+    /// - parameter y1 y coord of player
+    /// - parameter x2 x coord of touch
+    /// - parameter y2 y coord of touch
+    func shootJoy(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat){
+        //this version passes in player loc and touch loc
+        // if(fabs(y1-y2)>20 || fabs(x1-x2)>20){
+        
+        //Avoid shooting when ship isn't moving much/at all
+        
+            let laser = SKSpriteNode()
+            laser.color = laserColor
+            laser.size = CGSize(width: laserSize, height: laserSize)
+            laser.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: boxSize, height: boxSize))
+            laser.physicsBody!.dynamic = true
+            laser.physicsBody!.usesPreciseCollisionDetection = true
+            laser.physicsBody!.collisionBitMask = 0x0;
+            laser.physicsBody!.velocity = CGVectorMake(0,0);
+            laser.physicsBody!.categoryBitMask = kBulletCategory
+            laser.physicsBody!.contactTestBitMask = kEnemyCategory
+            
+            //get locations touch first then player
+            let location = CGPointMake(x2, y2)
+            let projLoc = CGPointMake(x1, y1)
+            
+            laser.position = projLoc
+            
+            laser.name = "laser"
+            
+            
+            //calculate offset of location to projectile
+            //let offset = Utility.vecSub(location, b: projLoc)
+            
+            
+            //add a laser
+            self.parent?.addChild(laser)
+            
+            //get direction to shoot in
+            let direction = location
+            
+            //move endpoint of triangle far (offscreen hopefully)
+            let shootAmount = Utility.vecMult(direction, b: 50)
+            
+            //add shoot amount to curr pos
+            let realDest = Utility.vecAdd(shootAmount, b: laser.position)
+            print(realDest)
+            //let velocity = (300/1.0)
+            
+            //actions
+            
+            let realMoveDuration = Double(self.size.width) / velocity
+            let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
+            let removeAction = SKAction.removeFromParent()
+            laser.runAction(SKAction.sequence([moveAction, removeAction]))
+            //  }
+        
+    }
+
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
