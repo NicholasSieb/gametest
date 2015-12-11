@@ -193,10 +193,10 @@ class Player: Sprite {
             self.parent?.addChild(laser)
             
             //get direction to shoot in
-            let direction = location
+            let direction = Utility.vecNormalize(location)
             
             //move endpoint of triangle far (offscreen hopefully)
-            let shootAmount = Utility.vecMult(direction, b: 50)
+            let shootAmount = Utility.vecMult(direction, b: 1000)
             
             //add shoot amount to curr pos
             let realDest = Utility.vecAdd(shootAmount, b: laser.position)
