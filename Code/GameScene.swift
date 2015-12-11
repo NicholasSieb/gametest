@@ -332,7 +332,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //construct enemy
             let enemy = Enemy(x: CGFloat(randomX), y: startY, startAtTop: startAtTop).addTo(self)
             enemy.zPosition = 2
-            
         }
     }
     
@@ -400,8 +399,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Here we add functionality to the buttons
         button.addTarget(self, action: "laserSizePressed:", forControlEvents: .TouchUpInside)
         buttonTwo.addTarget(self, action: "shipSpeedPressed:", forControlEvents: .TouchUpInside)
-        buttonThree.addTarget(self, action: "laserVelPressed:", forControlEvents: .TouchUpInside)
-        buttonFour.addTarget(self, action: "reloadSpeedPressed:", forControlEvents: .TouchUpInside)
+        buttonThree.addTarget(self, action: "reloadSpeedPressed:", forControlEvents: .TouchUpInside)
+        buttonFour.addTarget(self, action: "laserVelPressed:", forControlEvents: .TouchUpInside)
         buttonFive.addTarget(self, action: "homePressed:", forControlEvents: .TouchUpInside)
     }
     
@@ -445,7 +444,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     ///Here this button should increase the velocity of the lasers for a cost.
     func laserVelPressed(sender: UIButton!){
         //check if score to spend
-        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 200)
+        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 260)
         {
             scoreboard.addScore(-1)
             rocket.velocity = rocket.velocity + (20/1.0)
@@ -454,9 +453,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     ///Here this button decreases the reload speed
     func reloadSpeedPressed(sender: UIButton!){
         //checks if there are points to spend, if the game is still going, and if we are above the limit
-        if(scoreboard.getScore() >= 1 && isGameOver == false && reloadSpeed > 0.2){
+        if(scoreboard.getScore() >= 1 && isGameOver == false && reloadSpeed >= 1.5){
             scoreboard.addScore(-1)
-            reloadSpeed = reloadSpeed - 0.1
+            reloadSpeed = reloadSpeed - 0.05
         }
     }
     
