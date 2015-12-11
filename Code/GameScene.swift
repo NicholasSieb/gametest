@@ -57,6 +57,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         view.showsPhysics = true
         _ = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
+        
+        
+        //Test Joystick
+        let joystickOne = Joystick()
+        let joystickTwo = Joystick()
+        joystickOne.position = CGPointMake(size.width / 6.5, size.height / 4.2)
+        joystickTwo.position = CGPointMake(size.width - size.width / 6.5, size.height / 4.2)
+        self.addChild(joystickOne)
+        self.addChild(joystickTwo)
     }
     
     var currentPosition: CGPoint!

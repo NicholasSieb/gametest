@@ -4,7 +4,7 @@ import GameKit
 class Scoreboard {
 
     var viewController: GameViewController?
-    let scoreboard = SKLabelNode(text: "Score: 0")
+    let scoreboard = SKLabelNode(text: "Credits: 0")
     var score: Int = 0
     var isHighScore = false
     /// Creates scoreboard sprite
@@ -41,7 +41,7 @@ class Scoreboard {
     /// - parameter score, value to modify score by
     func addScore(score: Int) {
         self.score += score
-        scoreboard.text = "Score: \(self.score)"
+        scoreboard.text = "Credits: \(self.score)"
         highScore()
     }
     /// Function to access score value
