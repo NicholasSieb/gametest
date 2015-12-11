@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GCHelper.sharedInstance.authenticateLocalUser()
         return true
     }
-    ///Atteempt to save options
+    ///Attempt to save options
     func applicationWillResignActive(application: UIApplication) {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(Options.option.getOptions(), forKey: "options")

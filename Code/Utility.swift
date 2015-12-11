@@ -3,24 +3,40 @@ import SpriteKit
 struct Utility {
 
 
-    
+    ///Helper function to add two vectors together
+    /// - parameter a, first vector
+    /// - parameter b, second vector
+    /// - returns result vector
     static func vecAdd(a: CGPoint, b: CGPoint) -> CGPoint {
         return CGPointMake(a.x + b.x, a.y + b.y)
     }
     
+    ///Helper function to subtract a vector from another
+    /// - parameter a, first vector
+    /// - parameter b, second vector
+    /// - returns result vector
     static func vecSub(a: CGPoint, b: CGPoint) -> CGPoint{
         return CGPointMake(a.x - b.x, a.y - b.y)
     }
     
+    ///Helper function to multiply two vectors together
+    /// - parameter a, first vector
+    /// - parameter b, second vector
+    /// - returns result vector
     static func vecMult(a: CGPoint, b: CGFloat) -> CGPoint{
         return CGPointMake(a.x*b, a.y*b)
     }
     
+    ///Helper function to return magnitude of vector
+    /// - parameter a, first vector
+    /// - returns resultant length
     static func vecLength(a: CGPoint) -> CGFloat{
         return CGFloat(sqrt(a.x * a.x + a.y * a.y))
     }
     
-    
+    ///Helper function to normalize a vector
+    /// - parameter a, vector
+    /// - returns result vector
     static func vecNormalize(a: CGPoint) -> CGPoint{
         var length: CGFloat
         length = vecLength(a)

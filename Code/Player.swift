@@ -46,7 +46,6 @@ class Player: Sprite {
         emitterNode?.position = CGPoint(x: 0.5, y: -18.3)
         emitterNode?.setScale(0.6)
         self.addChild(emitterNode!)
-        //self.runAction(SKAction.waitForDuration(1), completion: { emitterNode!.removeFromParent()})
         
     }
     
@@ -59,8 +58,6 @@ class Player: Sprite {
      /// - parameter x2 x coord of touch
      /// - parameter y2 y coord of touch
     func shoot(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat){
-        //this version passes in player loc and touch loc
-       // if(fabs(y1-y2)>20 || fabs(x1-x2)>20){
         
         var dx: CGFloat, dy: CGFloat
         // Compute vector components in direction of the touch
@@ -114,7 +111,7 @@ class Player: Sprite {
         let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
         let removeAction = SKAction.removeFromParent()
         laser.runAction(SKAction.sequence([moveAction, removeAction]))
-      //  }
+            
         }
     }
     /// Handles updating movement of player
@@ -147,10 +144,8 @@ class Player: Sprite {
     /// - parameter x2 x coord of touch
     /// - parameter y2 y coord of touch
     func shootJoy(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat){
-        //this version passes in player loc and touch loc
-        // if(fabs(y1-y2)>20 || fabs(x1-x2)>20){
+        //this version passes in player loc and joystick coords
         
-        //Avoid shooting when ship isn't moving much/at all
         
             let laser = SKSpriteNode()
             laser.color = laserColor
@@ -170,11 +165,6 @@ class Player: Sprite {
             laser.position = projLoc
             
             laser.name = "laser"
-            
-            
-            //calculate offset of location to projectile
-            //let offset = Utility.vecSub(location, b: projLoc)
-            
             
             //add a laser
             self.parent?.addChild(laser)
@@ -196,7 +186,6 @@ class Player: Sprite {
             let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
             let removeAction = SKAction.removeFromParent()
             laser.runAction(SKAction.sequence([moveAction, removeAction]))
-            //  }
         
     }
 
