@@ -47,6 +47,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let buttonThree = UIButton()
     let buttonFour = UIButton()
     let buttonFive = UIButton()
+    var laserSizeUpgradeButton = UpgradeButton(name: "laserSize", x: 700, y: 1350)
+    var shipSpeedUpgradeButton = UpgradeButton(name: "shipSpeed", x: 900, y: 1350)
+    var reloadSpeedUpgradeButton = UpgradeButton(name: "reloadSpeed" ,x: 1100, y: 1350)
+    var laserVelocityUpgradeButton = UpgradeButton(name: "laserVelocity", x: 1300, y: 1350)
     
     //the upgrade images
     let laserSizeButtonImage = UIImage(named: "laserSize.png")! as UIImage
@@ -113,6 +117,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 resetGame()
             case "score":
                 viewController?.openGC()
+                
+                ///increases the size of the laser
+            case "laserSize":
+                //check if there is score to spend
+                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.laserSize < 15)
+                {
+                    scoreboard.addScore(-1)
+                    rocket.laserSize = rocket.laserSize + 1
+                    rocket.boxSize = rocket.boxSize + 1
+                }
+                
+                //increases the speed of the ship
+            case "shipSpeed":
+                //check if there is score to spend and speed is not at it's limit
+                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.speedTwo < 20)
+                {
+                    scoreboard.addScore(-1)
+                    let additionVariable: CGFloat = 1
+                    rocket.speedTwo = rocket.speedTwo + additionVariable
+                }
+                
+                //decreases the reload speed
+            case "reloadSpeed":
+                //checks if there are points to spend, if the game is still going, and if we are above the limit
+                if(scoreboard.getScore() >= 1 && isGameOver == false && reloadSpeed > 0.2){
+                    scoreboard.addScore(-1)
+                    reloadSpeed = reloadSpeed - 0.1
+                }
+                
+                //increases the velocity of the lasers
+            case "laserVelocity":
+                //check if score to spend
+                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 200)
+                {
+                    scoreboard.addScore(-1)
+                    rocket.velocity = rocket.velocity + (20/1.0)
+                }
+                
             default:
                 currentlyTouching = true
                 
@@ -382,11 +424,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     ///Here we create the upgrade buttons, called once.
     func createUpgradeButtons(size: CGSize) {
-        button.setImage(laserSizeButtonImage, forState: .Normal)
-        buttonTwo.setImage(shipSpeedButtonImage, forState: .Normal)
-        buttonThree.setImage(reloadSpeedButtonImage, forState: .Normal)
-        buttonFour.setImage(laserVelocityButtonImage, forState: .Normal)
+        //button.setImage(laserSizeButtonImage, forState: .Normal)
+        //buttonTwo.setImage(shipSpeedButtonImage, forState: .Normal)
+        //buttonThree.setImage(reloadSpeedButtonImage, forState: .Normal)
+        //buttonFour.setImage(laserVelocityButtonImage, forState: .Normal)
         buttonFive.setImage(homeImage, forState: .Normal)
+        laserSizeUpgradeButton.texture = SKTexture(imageNamed: "laserSize.png")
+        shipSpeedUpgradeButton.texture = SKTexture(imageNamed: "shipSpeed.png")
+        reloadSpeedUpgradeButton.texture = SKTexture(imageNamed: "reloadSpeed.png")
+        laserVelocityUpgradeButton.texture = SKTexture(imageNamed: "laserVelocity.png")
         //Here we add the position and size of the button
         let wid = UIScreen.mainScreen().bounds.width
         let heig = UIScreen.mainScreen().bounds.height
@@ -412,6 +458,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view!.addSubview(buttonThree)
         self.view!.addSubview(buttonFour)
         self.view!.addSubview(buttonFive)
+        laserSizeUpgradeButton.addTo(self)
+        shipSpeedUpgradeButton.addTo(self)
+        reloadSpeedUpgradeButton.addTo(self)
+        laserVelocityUpgradeButton.addTo(self)
+
     }
     ///Here we remove the upgrade buttons from the pause menu
     func removeUpgradeButtons(){
@@ -420,6 +471,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buttonThree.removeFromSuperview()
         buttonFour.removeFromSuperview()
         buttonFive.removeFromSuperview()
+        laserSizeUpgradeButton.removeFromParent()
+        shipSpeedUpgradeButton.removeFromParent()
+        reloadSpeedUpgradeButton.removeFromParent()
+        laserVelocityUpgradeButton.removeFromParent()
     }
     
     ///Here this button increases the size of the laser for a cost.

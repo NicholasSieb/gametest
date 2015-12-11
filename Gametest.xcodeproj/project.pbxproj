@@ -56,6 +56,7 @@
 		C80465901C18E52000391F72 /* reloadSpeed.png in Resources */ = {isa = PBXBuildFile; fileRef = C804658F1C18E52000391F72 /* reloadSpeed.png */; };
 		C80465921C18EBC400391F72 /* laserVelocity.png in Resources */ = {isa = PBXBuildFile; fileRef = C80465911C18EBC400391F72 /* laserVelocity.png */; };
 		C80465941C18F21C00391F72 /* laserSize.png in Resources */ = {isa = PBXBuildFile; fileRef = C80465931C18F21C00391F72 /* laserSize.png */; };
+		C8AE239B1C1B8218004998EB /* UpgradeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AE239A1C1B8218004998EB /* UpgradeButton.swift */; };
 		EB8A47DF1A979AE300CF6272 /* GCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8A47DE1A979AE300CF6272 /* GCHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		C804658F1C18E52000391F72 /* reloadSpeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reloadSpeed.png; sourceTree = "<group>"; };
 		C80465911C18EBC400391F72 /* laserVelocity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laserVelocity.png; sourceTree = "<group>"; };
 		C80465931C18F21C00391F72 /* laserSize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laserSize.png; sourceTree = "<group>"; };
+		C8AE239A1C1B8218004998EB /* UpgradeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeButton.swift; sourceTree = "<group>"; };
 		EB8A47DE1A979AE300CF6272 /* GCHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -214,6 +216,7 @@
 				547B0DB01A5F64CE00B3985C /* Background.swift */,
 				01BE6EC91C1A9127006A119A /* Joystick.swift */,
 				01C6F1741C1B69D100739557 /* Boss.swift */,
+				C8AE239A1C1B8218004998EB /* UpgradeButton.swift */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				0180BD531C0A802C00B42979 /* FAQ.swift in Sources */,
 				01C6F1751C1B69D100739557 /* Boss.swift in Sources */,
 				547B0DAC1A5F59BC00B3985C /* Player.swift in Sources */,
+				C8AE239B1C1B8218004998EB /* UpgradeButton.swift in Sources */,
 				540324341A4B8B5300B61880 /* GameViewController.swift in Sources */,
 				547BDB8C1A60C1B1009F1B50 /* Pause.swift in Sources */,
 				541036881A55EFB000FA8BD2 /* Enemy.swift in Sources */,
