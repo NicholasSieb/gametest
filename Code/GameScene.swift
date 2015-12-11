@@ -61,6 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //the sound player
     var bgMusic:AVAudioPlayer = AVAudioPlayer()
+    
 
     //initial scene setup
     override func didMoveToView(view: SKView) {

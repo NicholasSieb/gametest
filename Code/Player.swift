@@ -177,7 +177,7 @@ class Player: Sprite {
             
             //add shoot amount to curr pos
             let realDest = Utility.vecAdd(shootAmount, b: laser.position)
-            print(realDest)
+            //print(realDest)
             //let velocity = (300/1.0)
             
             //actions

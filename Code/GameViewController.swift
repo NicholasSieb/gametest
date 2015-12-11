@@ -24,6 +24,7 @@ class GameViewController: UIViewController {
         scene.scaleMode = .AspectFill
         scene.viewController = self
         skView.presentScene(scene)
+        skView.multipleTouchEnabled = true
     }
     
     func viewControllerForPresentingModalView() -> UIViewController {
