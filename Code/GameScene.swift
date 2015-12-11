@@ -48,6 +48,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let buttonFour = UIButton()
     let buttonFive = UIButton()
     
+    //the upgrade images
+    let laserSizeButtonImage = UIImage(named: "laserSize.png")! as UIImage
+    let shipSpeedButtonImage = UIImage(named: "shipSpeed.png")! as UIImage
+    let reloadSpeedButtonImage = UIImage(named: "reloadSpeed.png")! as UIImage
+    let laserVelocityButtonImage = UIImage(named: "laserVelocity.png")! as UIImage
+    let homeImage = UIImage(named: "home.png")! as UIImage
+    
     //the joysticks
     var joystickOne: Joystick!
     var joystickTwo: Joystick!
@@ -81,6 +88,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view.showsPhysics = true
         _ = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
         
+        //create the upgrade buttons
+        createUpgradeButtons()
         
         //Test Joystick
         joystickOne = Joystick()
@@ -150,7 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 pausemenu = PopupMenu(size: size, title: "Paused", label: "Continue?", id: "pause")
                 pausemenu.addTo(self)
                 //Here we add the upgrade buttons to the game.
-                createUpgradeButtons()
+                addUpgradeButtons()
             }
         }
     }
@@ -459,13 +468,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    ///Here we add the upgrade buttons to the pause menu.
+    ///Here we create the upgrade buttons, called once.
     func createUpgradeButtons () {
-        let laserSizeButtonImage = UIImage(named: "laserSize.png")! as UIImage
-        let shipSpeedButtonImage = UIImage(named: "shipSpeed.png")! as UIImage
-        let reloadSpeedButtonImage = UIImage(named: "reloadSpeed.png")! as UIImage
-        let laserVelocityButtonImage = UIImage(named: "laserVelocity.png")! as UIImage
-        let homeImage = UIImage(named: "home.png")! as UIImage
         button.setImage(laserSizeButtonImage, forState: .Normal)
         buttonTwo.setImage(shipSpeedButtonImage, forState: .Normal)
         buttonThree.setImage(reloadSpeedButtonImage, forState: .Normal)
@@ -477,18 +481,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buttonThree.frame = CGRectMake(285, 125, 25, 25)
         buttonFour.frame = CGRectMake(310, 125, 25, 25)
         buttonFive.frame = CGRectMake(395, 200, 64, 64)
-        //Here we add the button to the game
-        self.view!.addSubview(button)
-        self.view!.addSubview(buttonTwo)
-        self.view!.addSubview(buttonThree)
-        self.view!.addSubview(buttonFour)
-        self.view!.addSubview(buttonFive)
         //Here we add functionality to the buttons
         button.addTarget(self, action: "laserSizePressed:", forControlEvents: .TouchUpInside)
         buttonTwo.addTarget(self, action: "shipSpeedPressed:", forControlEvents: .TouchUpInside)
         buttonThree.addTarget(self, action: "laserVelPressed:", forControlEvents: .TouchUpInside)
         buttonFour.addTarget(self, action: "reloadSpeedPressed:", forControlEvents: .TouchUpInside)
         buttonFive.addTarget(self, action: "homePressed:", forControlEvents: .TouchUpInside)
+    }
+    
+    //add the buttons to the game
+    func addUpgradeButtons() {
+        self.view!.addSubview(button)
+        self.view!.addSubview(buttonTwo)
+        self.view!.addSubview(buttonThree)
+        self.view!.addSubview(buttonFour)
+        self.view!.addSubview(buttonFive)
     }
     ///Here we remove the upgrade buttons from the pause menu
     func removeUpgradeButtons(){
