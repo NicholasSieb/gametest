@@ -32,8 +32,8 @@ class Joystick : SKNode {
         
         self.addChild(self.backgroundNode)
         self.addChild(self.selectorNode)
-        self.xScale = 1.8
-        self.yScale = 1.8
+        self.xScale = 2.4
+        self.yScale = 2.4
         
         self.userInteractionEnabled = true
     }
