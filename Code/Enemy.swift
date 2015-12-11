@@ -3,7 +3,6 @@ import SpriteKit
 class Enemy: Sprite {
     //determines starting position
     var startAtTop: Bool!
-    var disabled: Bool = false
     //speed of enemy movement
     let vel: CGFloat = 4
     var dir: [CGFloat] = [0,0]
@@ -11,7 +10,6 @@ class Enemy: Sprite {
     let radius: CGFloat = 2
     //set collision category
     let kEnemyCategory: UInt32 = 0x1 << 0
-    var shot: Bool = false
     /// Creates enemy sprite
     ///
     /// - parameter x, x starting coord
@@ -30,17 +28,7 @@ class Enemy: Sprite {
         self.physicsBody!.categoryBitMask = kEnemyCategory
         self.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(1, duration: 1)))
     }
-    /// Deprecated method consider removal
-    func setDisabled() {
-        disabled = true
-        self.texture = SKTexture(imageNamed: "enemydisabled")
-    }
-    
 
-    /// Deprecated method consider removal
-    func isDisabled() -> Bool {
-        return disabled
-    }
     /// Handles updating movement of enemy
     ///
     /// - Usage enemy.moveTo(point)
@@ -50,10 +38,7 @@ class Enemy: Sprite {
         if height == nil {
             return
         }
-        //action if enemy is desabled
-        if isDisabled() || position.y > height! - 200 || position.y < 200 {
-            move()
-        }
+        
         //else send enemy randomly toward the rocket
         else {
             var playDir = [point.x - self.position.x, point.y - self.position.y]

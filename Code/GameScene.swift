@@ -66,10 +66,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
         Background(size: size).addTo(self)
-        //let coolBackGround = SKEmitterNode(fileNamed: "Background")
-        //coolBackGround?.position = CGPointMake(size.width/2, size.height)
-       // coolBackGround!.zPosition = 0
-        //addChild(coolBackGround!)
         var emitterNode = emitterStars(SKColor.lightGrayColor(), starSpeedY: 50, starsPerSecond: 1, starScaleFactor: 0.2)
         emitterNode.zPosition = -10
         self.addChild(emitterNode)
@@ -185,15 +181,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.runAction(SKAction.waitForDuration(2), completion: { emitterNode.removeFromParent()})
         
     }
-    
-//DEPRICATED CAN WE REMOVE?
-//    func explodePlayer(point: CGPoint, player: Bool){
-//        let emitterNode = SKEmitterNode(fileNamed: "PlayerExplosion.sks")
-//        emitterNode!.particlePosition = point
-//        self.addChild(emitterNode!)
-//        self.runAction(SKAction.waitForDuration(2), completion: { emitterNode!.removeFromParent()})
-//        
-//    }
+ 
     
     func emitterStars(color: SKColor, starSpeedY: CGFloat, starsPerSecond: CGFloat, starScaleFactor: CGFloat) -> SKEmitterNode{
         let time = size.height * UIScreen.mainScreen().scale / starSpeedY
@@ -224,7 +212,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (firstBody.node?.name == "enemy" && secondBody.node?.name == "laser"){
             let toChange = firstBody.node as? Enemy
             explode((toChange?.position)!, player: false)
-            toChange?.shot = true
             toChange?.removeFromParent()
             scoreboard.addScore(1)
             //secondBody = contact.bodyB
@@ -241,7 +228,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (secondBody.node?.name == "enemy" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Enemy
             explode((toChange?.position)!, player: false)
-            toChange?.shot = true
             toChange?.removeFromParent()
             scoreboard.addScore(1)
             //secondBody = contact.bodyB
@@ -272,59 +258,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    
-    //func to shoot the lasers
-    //move lasers here so it's easier to modify (for upgrades possibly)
-    func shoot(x: CGFloat, y: CGFloat){
-        let laser = SKSpriteNode()
-        laser.color = laserColor
-        laser.size = CGSize(width: laserSize, height: laserSize)
-        laser.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 30, height: 30))
-        laser.physicsBody!.dynamic = true
-        laser.physicsBody!.usesPreciseCollisionDetection = true
-        laser.physicsBody!.collisionBitMask = 0x0;
-        laser.physicsBody!.velocity = CGVectorMake(0,0);
-        laser.physicsBody!.categoryBitMask = kBulletCategory
-        laser.physicsBody!.contactTestBitMask = kEnemyCategory
-        
-        //get locations
-        let location = CGPointMake(currentPosition.x, currentPosition.y)
-        let projLoc = CGPointMake(rocket.position.x, rocket.position.y)
-        
-        laser.position = projLoc
-        
-        
-        //calculate offset of location to projectile
-        let offset = Utility.vecSub(location, b: projLoc)
-        
-        
-        //add a laser
-        self.addChild(laser)
-        
-        //get direction to shoot in
-        let direction = Utility.vecNormalize(offset)
-        
-        //move endpoint of triangle far (offscreen hopefully)
-        let shootAmount = Utility.vecMult(direction, b: 1000)
-        
-        //add shoot amount to curr pos
-        let realDest = Utility.vecAdd(shootAmount, b: laser.position)
-        
-        //actions
-        if Options.option.get("sound"){
-            let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Laser", withExtension: "wav")!
-            do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-            bgMusic.prepareToPlay()
-            bgMusic.play()
-        }
-        let velocity = (1200/1.0)
-        let realMoveDuration = Double(self.size.width) / velocity
-        let moveAction = SKAction.moveTo(realDest, duration: realMoveDuration)
-        let removeAction = SKAction.removeFromParent()
-        laser.runAction(SKAction.sequence([moveAction, removeAction]))
-        
-        
-    }
     
     /// Increases spawn rate of enemies
     ///
@@ -446,27 +379,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    /// Functions to update actions of enemy
-    ///
-    /// - parameter enemy, enemy to update
-    /// - usage called during enumeration
-    /// - important Now called from Enemy class
-    func enemyAI(enemy: Enemy) {
-        let y = enemy.position.y
-        //check if player connected with enemy
-        if !isGameOver {
-            //update enemy movement
-            enemy.moveTo(CGPointMake(rocket.position.x, rocket.position.y))
-            
-        } else {
-            //game is over still move enemy tho
-            enemy.move()
-        }
-        //check enemy bounds
-        if y < 0 || y > size.height {
-            enemy.removeFromParent()
-        }
-    }
     
     ///Here we create the upgrade buttons, called once.
     func createUpgradeButtons(size: CGSize) {
