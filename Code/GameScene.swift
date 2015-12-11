@@ -97,6 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         joystickTwo = Joystick()
         joystickOne.position = CGPointMake(size.width / 6.5, size.height / 4.2)
         joystickTwo.position = CGPointMake(size.width - size.width / 6.5, size.height / 4.2)
+        //joystickTwo.position = CGPointMake(size.width - size.width / 2.5, size.height / 4.2)
         self.addChild(joystickOne)
         self.addChild(joystickTwo)
     }
