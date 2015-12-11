@@ -21,10 +21,11 @@ class GameViewController: UIViewController {
         skView.showsNodeCount = true
         skView.showsPhysics = true
         skView.ignoresSiblingOrder = true
+        skView.multipleTouchEnabled = true
+        skView.exclusiveTouch = false
         scene.scaleMode = .AspectFill
         scene.viewController = self
         skView.presentScene(scene)
-        skView.multipleTouchEnabled = true
     }
     
     func viewControllerForPresentingModalView() -> UIViewController {
