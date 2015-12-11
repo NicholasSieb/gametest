@@ -16,6 +16,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreboard: Scoreboard!
     var rocket: Player!
     var pause: Pause!
+    var joystickOne: Joystick!
+    var joystickTwo: Joystick!
     var laserSize = 5;
     var laserColor = UIColor.greenColor();
     var contactQueue = Array<SKPhysicsContact>()
@@ -60,8 +62,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         //Test Joystick
-        let joystickOne = Joystick()
-        let joystickTwo = Joystick()
+        joystickOne = Joystick()
+        joystickTwo = Joystick()
         joystickOne.position = CGPointMake(size.width / 6.5, size.height / 4.2)
         joystickTwo.position = CGPointMake(size.width - size.width / 6.5, size.height / 4.2)
         self.addChild(joystickOne)
@@ -70,6 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var currentPosition: CGPoint!
     var currentlyTouching = false
+
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else {return}
@@ -314,6 +317,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(currentTime: CFTimeInterval) {
         if !gamePaused {
             if !isGameOver {
+                
+                if (self.joystickOne.velocity.x != 0 || self.joystickOne.velocity.y != 0) {
+                    rocket.position = CGPointMake(rocket.position.x + 0.1 * self.joystickOne.velocity.x, rocket.position.y + 0.1 * self.joystickOne.velocity.y)
+                }
+                
+                if (self.joystickOne.velocity.x != 0 || joystickOne.velocity.y != 0){
+                    rocket.zRotation = self.joystickOne.angularVelocity
+                }
+                
                 //If user is touching, move the player and attempt to fire
                 if currentlyTouching {
                     rocket.moveTo(currentPosition.x, y: currentPosition.y)
