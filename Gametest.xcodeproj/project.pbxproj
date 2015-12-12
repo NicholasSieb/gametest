@@ -52,6 +52,8 @@
 		54ECDC1F1A64E99400860C5E /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ECDC1B1A64E99400860C5E /* home.png */; };
 		54ECDC211A64E99400860C5E /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ECDC1D1A64E99400860C5E /* settings.png */; };
 		55AD86821A8E831E00839E28 /* game.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 55AD86811A8E831E00839E28 /* game.atlas */; };
+		A6A9CCFB1C1CC3D900A8A286 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A9CCFA1C1CC3D900A8A286 /* ServiceManager.swift */; };
+		A6A9CCFF1C1CCDDD00A8A286 /* ConnectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A9CCFE1C1CCDDD00A8A286 /* ConnectionMenu.swift */; };
 		C804658E1C18E1AD00391F72 /* shipSpeed.png in Resources */ = {isa = PBXBuildFile; fileRef = C804658D1C18E1AD00391F72 /* shipSpeed.png */; };
 		C80465901C18E52000391F72 /* reloadSpeed.png in Resources */ = {isa = PBXBuildFile; fileRef = C804658F1C18E52000391F72 /* reloadSpeed.png */; };
 		C80465921C18EBC400391F72 /* laserVelocity.png in Resources */ = {isa = PBXBuildFile; fileRef = C80465911C18EBC400391F72 /* laserVelocity.png */; };
@@ -107,6 +109,8 @@
 		54ECDC1B1A64E99400860C5E /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		54ECDC1D1A64E99400860C5E /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		55AD86811A8E831E00839E28 /* game.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = game.atlas; sourceTree = "<group>"; };
+		A6A9CCFA1C1CC3D900A8A286 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
+		A6A9CCFE1C1CCDDD00A8A286 /* ConnectionMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionMenu.swift; sourceTree = "<group>"; };
 		C804658D1C18E1AD00391F72 /* shipSpeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shipSpeed.png; sourceTree = "<group>"; };
 		C804658F1C18E52000391F72 /* reloadSpeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reloadSpeed.png; sourceTree = "<group>"; };
 		C80465911C18EBC400391F72 /* laserVelocity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laserVelocity.png; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 				54BC17781AC1ECE1000A7FED /* Sounds */,
 				540324511A4B8C0D00B61880 /* Images */,
 				540324311A4B8B5300B61880 /* GameScene.swift */,
+				A6A9CCFA1C1CC3D900A8A286 /* ServiceManager.swift */,
 				547BDB821A60A21B009F1B50 /* Menu */,
 				547B0DAD1A5F5C9600B3985C /* Sprites */,
 				541036891A55EFD200FA8BD2 /* Sprite.swift */,
@@ -223,6 +228,7 @@
 			children = (
 				540A9B151B1534F200A8F6E0 /* FadeText.swift */,
 				54ECDC111A632A1600860C5E /* PopupMenu.swift */,
+				A6A9CCFE1C1CCDDD00A8A286 /* ConnectionMenu.swift */,
 				54C242F81AC8C26C005385C2 /* OptionsMenu.swift */,
 				54ECDC131A64376800860C5E /* Button.swift */,
 				547BDB8B1A60C1B1009F1B50 /* Pause.swift */,
@@ -294,7 +300,7 @@
 				TargetAttributes = {
 					540324271A4B8B5300B61880 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = KZ5Y22JK7H;
+						DevelopmentTeam = P7X7D425JW;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -388,10 +394,12 @@
 				54ECDC141A64376800860C5E /* Button.swift in Sources */,
 				EB8A47DF1A979AE300CF6272 /* GCHelper.swift in Sources */,
 				54C242F51AC8AEE8005385C2 /* Options.swift in Sources */,
+				A6A9CCFB1C1CC3D900A8A286 /* ServiceManager.swift in Sources */,
 				540324321A4B8B5300B61880 /* GameScene.swift in Sources */,
 				54C242F91AC8C26C005385C2 /* OptionsMenu.swift in Sources */,
 				0180BD531C0A802C00B42979 /* FAQ.swift in Sources */,
 				01C6F1751C1B69D100739557 /* Boss.swift in Sources */,
+				A6A9CCFF1C1CCDDD00A8A286 /* ConnectionMenu.swift in Sources */,
 				547B0DAC1A5F59BC00B3985C /* Player.swift in Sources */,
 				540324341A4B8B5300B61880 /* GameViewController.swift in Sources */,
 				547BDB8C1A60C1B1009F1B50 /* Pause.swift in Sources */,
@@ -513,7 +521,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Code/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.uw407.gametest;
+				PRODUCT_BUNDLE_IDENTIFIER = PhiKappaTheta.gametest;
 				PRODUCT_NAME = Gametest;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -533,7 +541,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Code/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.uw407.gametest;
+				PRODUCT_BUNDLE_IDENTIFIER = PhiKappaTheta.gametest;
 				PRODUCT_NAME = Gametest;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
