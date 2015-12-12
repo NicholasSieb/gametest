@@ -85,7 +85,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         joystickTwo = Joystick()
         joystickOne.position = CGPointMake(size.width / 6.5, size.height / 3.8)
         joystickTwo.position = CGPointMake(size.width - size.width / 6.5, size.height / 3.8)
-        //joystickTwo.position = CGPointMake(size.width - size.width / 2.5, size.height / 4.2)
         self.addChild(joystickOne)
         self.addChild(joystickTwo)
     }
@@ -300,16 +299,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
+        //check ship enemy collision
+        if (secondBody.node?.name == "ship" && firstBody.node?.name == "boss"){
+            gameOver()
+            
+            
+        }
+        
+        //check ship enemy collision
+        if (firstBody.node?.name == "ship" && secondBody.node?.name == "boss"){
+            gameOver()
+            
+            
+        }
+        
         //check laser boss collision
         if (secondBody.node?.name == "boss" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Boss
-            if (toChange?.health != 0){
+            if (toChange?.health >= 0){
                 toChange?.health = (toChange?.health)! - 1
             }
             else {
             explode((toChange?.position)!, player: false)
             toChange?.removeFromParent()
-            scoreboard.addScore(5)
+            scoreboard.addScore(3)
             //secondBody = contact.bodyB
             //  print("collision detected")
             if Options.option.get("sound"){
@@ -324,8 +337,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser boss collision
         if (firstBody.node?.name == "boss" && secondBody.node?.name == "laser"){
             let toChange = firstBody.node as? Boss
-            if (toChange?.health != 0){
+            if (toChange?.health >= 0){
                 toChange?.health = (toChange?.health)! - 1
+                toChange?.alpha = (toChange?.alpha)! - 0.05
             }
             else {
             explode((toChange?.position)!, player: false)
@@ -363,7 +377,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(currentTime: CFTimeInterval) {
         if !gamePaused {
             if !isGameOver {
-                print(rocket.position.y)
                 if (self.joystickOne.velocity.x != 0 || self.joystickOne.velocity.y != 0) {
                     //if (rocket.position.x <= 0 || rocket.position.y < 0 || rocket.position.x >= self.size.width || rocket.position.y >= self.size.height){
                     //} else {

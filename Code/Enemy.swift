@@ -21,6 +21,7 @@ class Enemy: Sprite {
         self.startAtTop = startAtTop
         self.setScale(0.8)
         //set physics properties
+        //self.physicsBody = SKPhysicsBody.init(texture: self.texture!, size: self.size)
         self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 60, height: 60))
         self.physicsBody!.dynamic = true
         self.physicsBody!.collisionBitMask = 0x0

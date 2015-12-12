@@ -29,12 +29,13 @@ class Player: Sprite {
         super.init(named: "ship", x: x, y: y)
         self.setScale(1.4)
         //set physics properties
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 50, height: 50))
+        self.physicsBody = SKPhysicsBody.init(texture: self.texture!, size: self.size)
+        //self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 50, height: 50))
         self.physicsBody!.dynamic = true
         self.physicsBody!.collisionBitMask = 0x0
         self.physicsBody!.contactTestBitMask = 0x0
         self.physicsBody!.categoryBitMask = kPlayerCategory
-        self.physicsBody!.contactTestBitMask = kEnemyCategory
+        self.physicsBody!.contactTestBitMask = kEnemyCategory | kBossCategory
         exhaust()
     }
  
