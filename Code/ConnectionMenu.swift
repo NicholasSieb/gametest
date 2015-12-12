@@ -1,6 +1,6 @@
 import SpriteKit
 
-class PopupMenu {
+class ConnectionMenu {
     var menu: SKNode
     /// Creates popupmenu sprite
     ///
@@ -25,7 +25,7 @@ class PopupMenu {
         addTitle(title, position: CGPointMake(width / 2, 3 * height / 5))
         
     }
-
+    
     ///helper function to add Title
     func addTitle(title: String, position: CGPoint) {
         let node = SKLabelNode(text: title)
@@ -37,11 +37,11 @@ class PopupMenu {
     }
     
     ///add to parent
-    func addTo(parentNode: SKScene) -> PopupMenu {
+    func addTo(parentNode: SKScene) -> ConnectionMenu {
         parentNode.addChild(menu)
         return self
     }
-
+    
     func removeThis() {
         menu.removeFromParent()
     }

@@ -66,6 +66,14 @@ class MainMenuScene: SKScene {
             ///leaderboard touched, open Gamecenter
             case "score":
                 viewController?.openGC()
+            case "connect" :
+                let gameScene = GameScene(size: size)
+                gameScene.scaleMode = scaleMode
+                gameScene.connected = true
+                let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
+                gameScene.viewController = self.viewController
+                view?.presentScene(gameScene, transition: reveal)
+                break
             default:
                 Utility.pressButton(self, touched: touched, score: "-1")
             }

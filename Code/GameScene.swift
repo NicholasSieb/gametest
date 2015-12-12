@@ -8,6 +8,10 @@ protocol GameSceneDelegate {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var viewController: GameViewController?
+    
+    let service = ServiceManager()
+    var connected = false
+    var partnered = false
 
     //The player
     var rocket: Player!
@@ -57,6 +61,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //initial scene setup
     override func didMoveToView(view: SKView) {
+        if(connected){
+            service.delegate = self
+        }
+        else {
+            buildGame(view)
+        }
+    }
+    
+    func buildGame(view: SKView) {
         backgroundColor = UIColor.blackColor()
         Background(size: size).addTo(self)
         var emitterNode = emitterStars(SKColor.lightGrayColor(), starSpeedY: 50, starsPerSecond: 1, starScaleFactor: 0.2)
@@ -204,6 +217,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.joystickTwo.hidden = true
             }
         }
+        
     }
     
     func removeDialog() {
@@ -318,6 +332,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     ///Main loop of GameScene, advance time in the game
     override func update(currentTime: CFTimeInterval) {
+        if (self.connected){
+            if(self.partnered){
+                NSLog("Connected")
+                buildGame(self.view!)
+                self.connected = false
+            }
+            else {
+                //NSLog("Connecting")
+            }
+            
+        }
+        else {
+            doUpdate()
+        }
+    
+    }
+    
+    func doUpdate(){
         if !gamePaused {
             if !isGameOver {
                 
@@ -471,6 +503,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         canShoot = true
     }
     
+    func sendUpdate() {
+        
+    }
     
+    func connect(y: Bool){
+        self.partnered = y
+    }
     
 }
+
+extension GameScene : ServiceManagerDelegate {
+    
+    func connectedDevicesChanged(manager: ServiceManager, connectedDevices: [String]) {
+        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+        }
+    }
+    
+    func Changed(manager: ServiceManager, string: String) {
+        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+            self.sendUpdate()
+        }
+    }
+    
+    func connected(manager: ServiceManager, con: Bool){
+        NSLog(String(con))
+        self.connect(con)
+    }
+    
+}
+
+
+
+
+
+
+
