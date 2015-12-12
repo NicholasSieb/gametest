@@ -39,25 +39,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var contactQueue = Array<SKPhysicsContact>()
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
-  
-    
-    //the update buttons
-    let button = UIButton()
-    let buttonTwo = UIButton()
-    let buttonThree = UIButton()
-    let buttonFour = UIButton()
-    let buttonFive = UIButton()
-    var laserSizeUpgradeButton = UpgradeButton(name: "laserSize", x: 700, y: 1350)
-    var shipSpeedUpgradeButton = UpgradeButton(name: "shipSpeed", x: 900, y: 1350)
-    var reloadSpeedUpgradeButton = UpgradeButton(name: "reloadSpeed" ,x: 1100, y: 1350)
-    var laserVelocityUpgradeButton = UpgradeButton(name: "laserVelocity", x: 1300, y: 1350)
-    
-    //the upgrade images
-    let laserSizeButtonImage = UIImage(named: "laserSize.png")! as UIImage
-    let shipSpeedButtonImage = UIImage(named: "shipSpeed.png")! as UIImage
-    let reloadSpeedButtonImage = UIImage(named: "reloadSpeed.png")! as UIImage
-    let laserVelocityButtonImage = UIImage(named: "laserVelocity.png")! as UIImage
-    let homeImage = UIImage(named: "home.png")! as UIImage
     
     //the joysticks
     var joystickOne: Joystick!
@@ -427,57 +408,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     ///Here we create the upgrade buttons, called once.
     func createUpgradeButtons(size: CGSize) {
-        //button.setImage(laserSizeButtonImage, forState: .Normal)
-        //buttonTwo.setImage(shipSpeedButtonImage, forState: .Normal)
-        //buttonThree.setImage(reloadSpeedButtonImage, forState: .Normal)
-        //buttonFour.setImage(laserVelocityButtonImage, forState: .Normal)
-        buttonFive.setImage(homeImage, forState: .Normal)
-        laserSizeUpgradeButton.texture = SKTexture(imageNamed: "laserSize.png")
-        shipSpeedUpgradeButton.texture = SKTexture(imageNamed: "shipSpeed.png")
-        reloadSpeedUpgradeButton.texture = SKTexture(imageNamed: "reloadSpeed.png")
-        laserVelocityUpgradeButton.texture = SKTexture(imageNamed: "laserVelocity.png")
-        //Here we add the position and size of the button
-        let wid = UIScreen.mainScreen().bounds.width
-        let heig = UIScreen.mainScreen().bounds.height
-        let sz = CGFloat(30)
-        //let heigh = self.frame.height
-        button.frame = CGRectMake(wid/2 - 3.5*sz, 40 - sz, sz, sz) //x,y,width,height
-        buttonTwo.frame = CGRectMake(wid/2 - 1.5*sz, 40 - sz, sz, sz)
-        buttonThree.frame = CGRectMake(wid/2 + 0.5*sz, 40 - sz, sz, sz)
-        buttonFour.frame = CGRectMake(wid/2 + 2.5*sz, 40 - sz, sz, sz)
-        buttonFive.frame = CGRectMake(7*wid/10, 7*heig/11, 64, 64)
-        //Here we add functionality to the buttons
-        button.addTarget(self, action: "laserSizePressed:", forControlEvents: .TouchUpInside)
-        buttonTwo.addTarget(self, action: "shipSpeedPressed:", forControlEvents: .TouchUpInside)
-        buttonThree.addTarget(self, action: "reloadSpeedPressed:", forControlEvents: .TouchUpInside)
-        buttonFour.addTarget(self, action: "laserVelPressed:", forControlEvents: .TouchUpInside)
-        buttonFive.addTarget(self, action: "homePressed:", forControlEvents: .TouchUpInside)
+        //scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
+        let homeButton = UpgradeButton(named: "home", x: 400, y: size.height - size.height / 5).addTo(self)
+        homeButton.xScale = 0.3
+        homeButton.yScale = 0.3
     }
     
     //add the buttons to the game
     func addUpgradeButtons() {
-        self.view!.addSubview(button)
-        self.view!.addSubview(buttonTwo)
-        self.view!.addSubview(buttonThree)
-        self.view!.addSubview(buttonFour)
-        self.view!.addSubview(buttonFive)
-        laserSizeUpgradeButton.addTo(self)
-        shipSpeedUpgradeButton.addTo(self)
-        reloadSpeedUpgradeButton.addTo(self)
-        laserVelocityUpgradeButton.addTo(self)
+        
 
     }
     ///Here we remove the upgrade buttons from the pause menu
     func removeUpgradeButtons(){
-        button.removeFromSuperview()
-        buttonTwo.removeFromSuperview()
-        buttonThree.removeFromSuperview()
-        buttonFour.removeFromSuperview()
-        buttonFive.removeFromSuperview()
-        laserSizeUpgradeButton.removeFromParent()
-        shipSpeedUpgradeButton.removeFromParent()
-        reloadSpeedUpgradeButton.removeFromParent()
-        laserVelocityUpgradeButton.removeFromParent()
+        
     }
     
     ///Here this button increases the size of the laser for a cost.
