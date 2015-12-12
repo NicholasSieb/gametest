@@ -240,6 +240,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.runAction(SKAction.waitForDuration(2), completion: { emitterNode.removeFromParent()})
         
     }
+    
+    func explodeLaser(point: CGPoint){
+        var emitterNode: SKEmitterNode
+        emitterNode = SKEmitterNode(fileNamed: "EnemyExplosion.sks")!
+        emitterNode.particlePosition = point
+        emitterNode.particleScale = 0.25
+        self.addChild(emitterNode)
+        self.runAction(SKAction.waitForDuration(0.9), completion: { emitterNode.removeFromParent()})
+        
+    }
  
     
     func emitterStars(color: SKColor, starSpeedY: CGFloat, starsPerSecond: CGFloat, starScaleFactor: CGFloat) -> SKEmitterNode{
@@ -270,6 +280,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser enemy collision
         if (firstBody.node?.name == "enemy" && secondBody.node?.name == "laser"){
             let toChange = firstBody.node as? Enemy
+            let laser = secondBody.node
+            explodeLaser(laser!.position)
+            laser?.removeFromParent()
             explode((toChange?.position)!, player: false)
             toChange?.removeFromParent()
             scoreboard.addScore(1)
@@ -286,6 +299,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser enemy collision
         if (secondBody.node?.name == "enemy" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Enemy
+            let laser = secondBody.node
+            explodeLaser(laser!.position)
+            laser?.removeFromParent()
             explode((toChange?.position)!, player: false)
             toChange?.removeFromParent()
             scoreboard.addScore(1)
@@ -330,6 +346,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser boss collision
         if (secondBody.node?.name == "boss" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Boss
+            let laser = secondBody.node
+            explodeLaser(laser!.position)
+            laser?.removeFromParent()
             if (toChange?.health >= 0){
                 toChange?.health = (toChange?.health)! - 1
             }
@@ -351,6 +370,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser boss collision
         if (firstBody.node?.name == "boss" && secondBody.node?.name == "laser"){
             let toChange = firstBody.node as? Boss
+            let laser = secondBody.node
+            explodeLaser(laser!.position)
+            laser?.removeFromParent()
             if (toChange?.health >= 0){
                 toChange?.health = (toChange?.health)! - 1
                 toChange?.alpha = (toChange?.alpha)! - 0.05
