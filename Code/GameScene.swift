@@ -88,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self
         view.showsPhysics = true
-        _ = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
+        _ = NSTimer.scheduledTimerWithTimeInterval(35, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
         
         //create the upgrade buttons
         createUpgradeButtons(size)
@@ -98,7 +98,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         joystickTwo = Joystick()
         joystickOne.position = CGPointMake(size.width / 6.5, size.height / 3.8)
         joystickTwo.position = CGPointMake(size.width - size.width / 6.5, size.height / 3.8)
-        //joystickTwo.position = CGPointMake(size.width - size.width / 2.5, size.height / 4.2)
         self.addChild(joystickOne)
         self.addChild(joystickTwo)
     }
@@ -313,6 +312,64 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             
         }
+        
+        //check ship enemy collision
+        if (secondBody.node?.name == "ship" && firstBody.node?.name == "boss"){
+            gameOver()
+            
+            
+        }
+        
+        //check ship enemy collision
+        if (firstBody.node?.name == "ship" && secondBody.node?.name == "boss"){
+            gameOver()
+            
+            
+        }
+        
+        //check laser boss collision
+        if (secondBody.node?.name == "boss" && firstBody.node?.name == "laser"){
+            let toChange = secondBody.node as? Boss
+            if (toChange?.health >= 0){
+                toChange?.health = (toChange?.health)! - 1
+            }
+            else {
+            explode((toChange?.position)!, player: false)
+            toChange?.removeFromParent()
+            scoreboard.addScore(3)
+            //secondBody = contact.bodyB
+            //  print("collision detected")
+            if Options.option.get("sound"){
+                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
+                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
+                bgMusic.prepareToPlay()
+                bgMusic.play()
+            }
+            }
+        }
+        
+        //check laser boss collision
+        if (firstBody.node?.name == "boss" && secondBody.node?.name == "laser"){
+            let toChange = firstBody.node as? Boss
+            if (toChange?.health >= 0){
+                toChange?.health = (toChange?.health)! - 1
+                toChange?.alpha = (toChange?.alpha)! - 0.05
+            }
+            else {
+            explode((toChange?.position)!, player: false)
+            toChange?.removeFromParent()
+            scoreboard.addScore(5)
+            //secondBody = contact.bodyB
+            //  print("collision detected")
+            if Options.option.get("sound"){
+                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
+                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
+                bgMusic.prepareToPlay()
+                bgMusic.play()
+            }
+            }
+        }
+
 
         
         
@@ -352,9 +409,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func doUpdate(){
         if !gamePaused {
             if !isGameOver {
-                
                 if (self.joystickOne.velocity.x != 0 || self.joystickOne.velocity.y != 0) {
+                    //if (rocket.position.x <= 0 || rocket.position.y < 0 || rocket.position.x >= self.size.width || rocket.position.y >= self.size.height){
+                    //} else {
+                    if (rocket.position.x + 0.15 * self.joystickOne.velocity.x < 0 || rocket.position.x + 0.15 * self.joystickOne.velocity.x > self.size.width){
+                        
+                    }
+                    else if (rocket.position.y + 0.15 * self.joystickOne.velocity.y < 180 || rocket.position.y + 0.15 * self.joystickOne.velocity.y > self.size.height - 180){
+                        
+                    } else {
                     rocket.position = CGPointMake(rocket.position.x + 0.15 * self.joystickOne.velocity.x, rocket.position.y + 0.15 * self.joystickOne.velocity.y)
+                    }
+                
                 }
                 
                 if (self.joystickOne.velocity.x != 0 || joystickOne.velocity.y != 0){
@@ -394,6 +460,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             spawnEnemies(false)
             //enumerate enemies for handling
             enumerateEnemies()
+            enumerateBosses()
             
         }
     }
@@ -410,6 +477,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //construct enemy
             let enemy = Enemy(x: CGFloat(randomX), y: startY, startAtTop: startAtTop).addTo(self)
             enemy.zPosition = 2
+        }
+        if random() % 1000 < enemySpawnRate/5 {
+            //set a random spawn location
+            let randomX = 10 + random() % Int(size.width) - 10
+            let startY = startAtTop.boolValue ? size.height : 0
+            //construct enemy
+            let boss = Boss(x: CGFloat(randomX), y: startY, startAtTop: startAtTop).addTo(self)
+            boss.zPosition = 2
         }
     }
     
@@ -450,6 +525,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //run AI function
             //self.enemyAI(enemy)
             enemy.enemyAI(self, isGameOver: self.isGameOver, x: self.rocket.position.x, y: self.rocket.position.y)
+        }
+        if (removeEnemies) {
+            removeEnemies = false
+        }
+    }
+    
+    ///Put enemies into list to be able to apply actions to them
+    func enumerateBosses() {
+        self.enumerateChildNodesWithName("boss") {
+            node, stop in
+            let boss = node as! Boss
+            //run AI function
+            //self.enemyAI(enemy)
+            boss.enemyAI(self, isGameOver: self.isGameOver, x: self.rocket.position.x, y: self.rocket.position.y)
         }
         if (removeEnemies) {
             removeEnemies = false
