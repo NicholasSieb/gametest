@@ -15,6 +15,7 @@ class Player: Sprite {
     let kBulletCategory: UInt32 = 0x1 << 1
     let kEnemyCategory: UInt32 = 0x1 << 0
     let kPlayerCategory: UInt32 = 0x1 << 2
+    let kBossCategory: UInt32 = 0x1 << 3
 
     
     
@@ -34,7 +35,6 @@ class Player: Sprite {
         self.physicsBody!.contactTestBitMask = 0x0
         self.physicsBody!.categoryBitMask = kPlayerCategory
         self.physicsBody!.contactTestBitMask = kEnemyCategory
-        //fire()
         exhaust()
     }
  
@@ -74,7 +74,7 @@ class Player: Sprite {
         laser.physicsBody!.collisionBitMask = 0x0;
         laser.physicsBody!.velocity = CGVectorMake(0,0);
         laser.physicsBody!.categoryBitMask = kBulletCategory
-        laser.physicsBody!.contactTestBitMask = kEnemyCategory
+        laser.physicsBody!.contactTestBitMask = kEnemyCategory | kBossCategory
         
         //get locations touch first then player
         let location = CGPointMake(x2, y2)
@@ -156,7 +156,7 @@ class Player: Sprite {
             laser.physicsBody!.collisionBitMask = 0x0;
             laser.physicsBody!.velocity = CGVectorMake(0,0);
             laser.physicsBody!.categoryBitMask = kBulletCategory
-            laser.physicsBody!.contactTestBitMask = kEnemyCategory
+            laser.physicsBody!.contactTestBitMask = kEnemyCategory | kBossCategory
             
             //get locations touch first then player
             let location = CGPointMake(x2, y2)

@@ -82,7 +82,6 @@ class Enemy: Sprite {
     /// - parameter y, rocket y position
     /// - usage called during enumeration
     func enemyAI(scene: SKScene, isGameOver: Bool, x: CGFloat, y: CGFloat) {
-        let sceney = scene.position.y
         //check if player connected with enemy
         if !isGameOver {
             //update enemy movement
@@ -92,7 +91,7 @@ class Enemy: Sprite {
             move()
         }
         //check enemy bounds
-        if sceney < 0 || sceney > size.height {
+        if self.position.y < 0 || self.position.y > parent?.scene?.size.height {
             self.removeFromParent()
         }
     }
