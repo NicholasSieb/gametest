@@ -19,7 +19,10 @@ class PopupMenu {
         let options = Sprite(named: "settings", x: 51 * width / 60, y: 4 * height / 5, size: CGSizeMake(height / 12, height / 12))
         options.addTo(menu)
         Sprite(named: "score", x: width / 4, y: height / 3, size: CGSizeMake(height / 6, height / 6)).addTo(menu)
+        
+        //Sprite(named: "laserSize", x: size.width/2 - 2*size.width/17,  y: size.height - size.height / 5, size: CGSizeMake(size.height / 6, size.height / 6)).addTo(menu)
         addTitle(title, position: CGPointMake(width / 2, 3 * height / 5))
+        
     }
 
     ///helper function to add Title

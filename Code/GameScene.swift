@@ -47,7 +47,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //the sound player
     var bgMusic:AVAudioPlayer = AVAudioPlayer()
     
-
+    //buttons
+    
+    var homeButton: Sprite!
+    var laserSizeButton: Sprite!
+    var shipSpeedButton: Sprite!
+    var reloadSpeedButton: Sprite!
+    var laserVelocityButton: Sprite!
+    
     //initial scene setup
     override func didMoveToView(view: SKView) {
         backgroundColor = UIColor.blackColor()
@@ -87,6 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches{
         currentPosition = touch.locationInNode(self)
+            
         
         let touched = self.nodeAtPoint(currentPosition)
         if let name = touched.name {
@@ -96,7 +104,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case "pause":
                 pauseGame()
             case "home":
-                resetGame()
+                //create homeScene and remove unneeded things
+                removeUpgradeButtons()
+                let homeScene = MainMenuScene(size: size)
+                homeScene.scaleMode = scaleMode
+                let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
+                homeScene.viewController = self.viewController
+                view?.presentScene(homeScene, transition: reveal)
             case "score":
                 viewController?.openGC()
                 
@@ -167,6 +181,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             paused = false
             removeDialog()
             removeUpgradeButtons()
+            self.joystickOne.hidden = false
+            self.joystickTwo.hidden = false
+            
         } else {
             if !isGameOver {
                 
@@ -182,7 +199,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 pausemenu = PopupMenu(size: size, title: "Paused", label: "Continue?", id: "pause")
                 pausemenu.addTo(self)
                 //Here we add the upgrade buttons to the game.
-                addUpgradeButtons()
+                addUpgradeButtons(pausemenu.menu)
+                self.joystickOne.hidden = true
+                self.joystickTwo.hidden = true
             }
         }
     }
@@ -409,68 +428,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     ///Here we create the upgrade buttons, called once.
     func createUpgradeButtons(size: CGSize) {
         //scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
-        let homeButton = UpgradeButton(named: "home", x: 400, y: size.height - size.height / 5).addTo(self)
-        homeButton.xScale = 0.3
-        homeButton.yScale = 0.3
+        homeButton = Sprite(named: "home", x: size.width - size.width / 4.0, y: size.height / 3)
+        homeButton.xScale = 0.4
+        homeButton.yScale = 0.4
+        homeButton.name = "home"
+        laserSizeButton = Sprite(named: "laserSize", x: size.width/2 - 2*size.width/17,  y: size.height - size.height / 5)
+        laserSizeButton.xScale = 3.0
+        laserSizeButton.yScale = 3.0
+        shipSpeedButton = Sprite(named: "shipSpeed", x: size.width/2 - size.width/25, y: size.height - size.height / 5)
+        shipSpeedButton.xScale = 3.0
+        shipSpeedButton.yScale = 3.0
+        reloadSpeedButton = Sprite(named: "reloadSpeed", x: size.width/2 + size.width/25, y: size.height - size.height / 5)
+        reloadSpeedButton.xScale = 3.0
+        reloadSpeedButton.yScale = 3.0
+        laserVelocityButton = Sprite(named: "laserVelocity", x: size.width/2 + 2*size.width/17, y: size.height - size.height / 5)
+        laserVelocityButton.xScale = 3.0
+        laserVelocityButton.yScale = 3.0
+        
     }
     
     //add the buttons to the game
-    func addUpgradeButtons() {
-        
+    func addUpgradeButtons(node: SKNode) {
+        homeButton.addTo(node)
+        laserSizeButton.addTo(node)
+        shipSpeedButton.addTo(node)
+        reloadSpeedButton.addTo(node)
+        laserVelocityButton.addTo(node)
 
     }
     ///Here we remove the upgrade buttons from the pause menu
     func removeUpgradeButtons(){
-        
+        homeButton.removeFromParent()
+        laserSizeButton.removeFromParent()
+        shipSpeedButton.removeFromParent()
+        reloadSpeedButton.removeFromParent()
+        laserVelocityButton.removeFromParent()
     }
     
-    ///Here this button increases the size of the laser for a cost.
-    func laserSizePressed(sender: UIButton!) {
-        //check if there is score to spend
-        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.laserSize < 15)
-        {
-            scoreboard.addScore(-1)
-            rocket.laserSize = rocket.laserSize + 1
-            rocket.boxSize = rocket.boxSize + 1
-        }
-    }
-    ///Here this button increases the speed of the ship for a cost.
-    func shipSpeedPressed(sender: UIButton!){
-        //check if there is score to spend and speed is not at it's limit
-        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.speedTwo < 20)
-        {
-            scoreboard.addScore(-1)
-            let additionVariable: CGFloat = 1
-            rocket.speedTwo = rocket.speedTwo + additionVariable
-        }
-    }
-    ///Here this button should increase the velocity of the lasers for a cost.
-    func laserVelPressed(sender: UIButton!){
-        //check if score to spend
-        if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 260)
-        {
-            scoreboard.addScore(-1)
-            rocket.velocity = rocket.velocity + (20/1.0)
-        }
-    }
-    ///Here this button decreases the reload speed
-    func reloadSpeedPressed(sender: UIButton!){
-        //checks if there are points to spend, if the game is still going, and if we are above the limit
-        if(scoreboard.getScore() >= 1 && isGameOver == false && reloadSpeed >= 1.5){
-            scoreboard.addScore(-1)
-            reloadSpeed = reloadSpeed - 0.05
-        }
-    }
-    
-    ///go to home screen
-    func homePressed(sender: UIButton!){
-        //create homeScene and remove unneeded things
-        removeUpgradeButtons()
-        let homeScene = MainMenuScene(size: size)
-        homeScene.scaleMode = scaleMode
-        let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
-        homeScene.viewController = self.viewController
-        view?.presentScene(homeScene, transition: reveal)    }
     
     ///helper function for shooting delays
     func canShootAgain(){

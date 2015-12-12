@@ -30,6 +30,11 @@ class FAQ{
     /// - parameter y, y coord
     /// - Usage addPause(x,y)
     func addPause(x: CGFloat, y: CGFloat) {
+        
+        Sprite(named: "laserSize", x: x/6.5 - 8*x/17,  y: y - y / 2.5, scale: 3.0).addTo(faq)
+        Sprite(named: "shipSpeed", x: x/6.5 - x/4, y: y - y / 2.5, scale: 3.0).addTo(faq)
+        Sprite(named: "reloadSpeed", x: x/6.5, y: y - y / 2.5, scale: 3.0).addTo(faq)
+        Sprite(named: "laserVelocity", x: x/6.5 + 4*x/17, y: y - y / 2.5, scale: 3.0).addTo(faq)
         Player(x: -550, y: 300).addTo(faq)
         addText("Avoid enemies", size: 60, x: -650, y: 0)
         addText("Ship follows touches", size: 60, x: -650, y: 100)
