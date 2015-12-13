@@ -9,13 +9,18 @@ class PopupMenu {
     /// - parameter label
     /// - parameter id
     /// - Usage Sprite constructor
-    init(size: CGSize, title: String, label: String, id: String) {
+    init(size: CGSize, title: String, label: String, id: String, connectOption: Bool) {
         let width = size.width
         let height = size.height
         self.menu = SKNode()
         menu.zPosition = 5
-        Button(x: width / 2, y: height / 3, width: width / 3, height: height / 12, label: label, id: id).addTo(menu)
-        Button(x: width / 2, y: 5*height / 24, width: width / 3, height: height / 12, label: "Connect", id: "connect").addTo(menu)
+        if(connectOption){
+            Button(x: width / 2, y: height / 3, width: width / 3, height: height / 12, label: label, id: id).addTo(menu)
+            Button(x: width / 2, y: 5*height / 24, width: width / 3, height: height / 12, label: "Connect", id: "connect").addTo(menu)
+        }
+        else {
+            Button(x: width / 2, y: height / 3, width: width / 3, height: height / 6, label: label, id: id).addTo(menu)
+        }
         Sprite(named: "faq", x:14*width / 15, y: 4 * height / 5, size: CGSizeMake(height / 12, height / 12)).addTo(menu)
         let options = Sprite(named: "settings", x: 51 * width / 60, y: 4 * height / 5, size: CGSizeMake(height / 12, height / 12))
         options.addTo(menu)

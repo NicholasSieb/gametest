@@ -10,8 +10,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var viewController: GameViewController?
     
     let service = ServiceManager()
-    var connected = false
-    var partnered = false
+    var connectClicked = false
+    var partnerState = 0
 
     //The player
     var rocket: Player!
@@ -61,15 +61,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //initial scene setup
     override func didMoveToView(view: SKView) {
-        if(connected){
-            service.delegate = self
-        }
-        else {
-            buildGame(view)
-        }
-    }
-    
-    func buildGame(view: SKView) {
         backgroundColor = UIColor.blackColor()
         Background(size: size).addTo(self)
         var emitterNode = emitterStars(SKColor.lightGrayColor(), starSpeedY: 50, starsPerSecond: 1, starScaleFactor: 0.2)
@@ -81,6 +72,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         emitterNode = emitterStars(SKColor.darkGrayColor(), starSpeedY: 15, starsPerSecond: 4, starScaleFactor: 0.05)
         emitterNode.zPosition = -12
         self.addChild(emitterNode)
+        if(connectClicked){
+            service.delegate = self
+            service.connectState = 1
+        }
+        else {
+            buildGame(view)
+        }
+    }
+    
+    func buildGame(view: SKView) {
         rocket = Player(x: size.width / 2, y: size.height / 2).addTo(self) as! Player
         scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
         scoreboard.viewController = self.viewController
@@ -125,6 +126,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 view?.presentScene(homeScene, transition: reveal)
             case "score":
                 viewController?.openGC()
+                
+            case "connect":
+                connectClicked = true
+                service.connectState = 1
                 
                 ///increases the size of the laser
             case "laserSize":
@@ -208,7 +213,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 gamePaused = true
                 //speed = 0
                 pause.removeThis()
-                pausemenu = PopupMenu(size: size, title: "Paused", label: "Continue?", id: "pause")
+                pausemenu = PopupMenu(size: size, title: "Paused", label: "Continue?", id: "pause", connectOption:  false)
                 pausemenu.addTo(self)
                 //Here we add the upgrade buttons to the game.
                 addUpgradeButtons(pausemenu.menu)
@@ -389,16 +394,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     ///Main loop of GameScene, advance time in the game
     override func update(currentTime: CFTimeInterval) {
-        if (self.connected){
-            if(self.partnered){
-                NSLog("Connected")
-                buildGame(self.view!)
-                self.connected = false
-            }
-            else {
-                //NSLog("Connecting")
-            }
+        if (self.connectClicked){
+            //attempting to connect loop
             
+            //successful connection
+            if(self.partnerState == 1){
+                buildGame(self.view!)
+                self.partnerState = 2
+            }
+            //post connection, mid game
+            else if(self.partnerState == 2){
+                doUpdate()
+            }
+            //post game, in reset screen
+            else if(self.partnerState == 3){
+                resetGame()
+                self.partnerState = 2
+            }
         }
         else {
             doUpdate()
@@ -501,10 +513,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rocket.removeFromParent()
         pause.removeThis()
         enemySpawnRate = 5
-        PopupMenu(size: size, title: "Too bad ;(", label: "Play", id: "gameover").addTo(self)
+        PopupMenu(size: size, title: "Too bad ;(", label: "Play", id: "gameover", connectOption: true).addTo(self)
         if scoreboard.isHighscore() {
             addChild(scoreboard.getHighscoreLabel(size))
         }
+        self.connectClicked = false
+        self.partnerState = 3
+        self.service.session.disconnect()
+        self.service.connectState = 0
         
     }
     
@@ -596,8 +612,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func connect(y: Bool){
-        self.partnered = y
+    func connect(y: Int){
+        if(self.partnerState == 0){
+            self.partnerState = y
+        }
     }
     
 }
@@ -615,7 +633,7 @@ extension GameScene : ServiceManagerDelegate {
         }
     }
     
-    func connected(manager: ServiceManager, con: Bool){
+    func connected(manager: ServiceManager, con: Int){
         NSLog(String(con))
         self.connect(con)
     }

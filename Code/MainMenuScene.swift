@@ -16,7 +16,7 @@ class MainMenuScene: SKScene {
         emitterNode = emitterStars(SKColor.darkGrayColor(), starSpeedY: 15, starsPerSecond: 4, starScaleFactor: 0.05)
         emitterNode.zPosition = -12
         self.addChild(emitterNode)
-        PopupMenu(size: size, title: "Game Test for 407", label: "Play", id: "start").addTo(self)
+        PopupMenu(size: size, title: "Game Test for 407", label: "Play", id: "start", connectOption: true).addTo(self)
     }
     /// Helper function to create a star emitterNode
     ///
@@ -69,7 +69,7 @@ class MainMenuScene: SKScene {
             case "connect" :
                 let gameScene = GameScene(size: size)
                 gameScene.scaleMode = scaleMode
-                gameScene.connected = true
+                gameScene.connectClicked = true
                 let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
                 gameScene.viewController = self.viewController
                 view?.presentScene(gameScene, transition: reveal)

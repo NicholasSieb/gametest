@@ -5,7 +5,7 @@ protocol ServiceManagerDelegate {
     
     func connectedDevicesChanged(manager : ServiceManager, connectedDevices: [String])
     func Changed(manager : ServiceManager, string: String)
-    func connected(manager : ServiceManager, con: Bool)
+    func connected(manager : ServiceManager, con: Int)
     
 }
 
@@ -17,10 +17,14 @@ class ServiceManager : NSObject {
     private let serviceBrowser : MCNearbyServiceBrowser
     var delegate : ServiceManagerDelegate?
     
+    var connectState: Int
+    
     override init() {
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: ServiceType)
         
         self.serviceBrowser = MCNearbyServiceBrowser(peer: myPeerId, serviceType: ServiceType)
+        
+        self.connectState = 0
         
         super.init()
         
@@ -53,7 +57,9 @@ extension ServiceManager : MCNearbyServiceAdvertiserDelegate {
     func advertiser(advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: NSData?, invitationHandler: ((Bool, MCSession) -> Void)) {
         
         NSLog("%@", "didReceiveInvitationFromPeer \(peerID)")
-        invitationHandler(true, self.session)
+        if(connectState == 1){
+            invitationHandler(true, self.session)
+        }
     }
     
 }
@@ -67,7 +73,9 @@ extension ServiceManager : MCNearbyServiceBrowserDelegate {
     func browser(browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         NSLog("%@", "foundPeer: \(peerID)")
         NSLog("%@", "invitePeer: \(peerID)")
-        browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 10)
+        if(connectState == 1){
+            browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 10)
+        }
     }
     
     func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -95,10 +103,10 @@ extension ServiceManager : MCSessionDelegate {
         NSLog("%@", "peer \(peerID) didChangeState: \(state.stringValue())")
         self.delegate?.connectedDevicesChanged(self, connectedDevices: session.connectedPeers.map({$0.displayName}))
         if(state.stringValue() == "Connected"){
-            self.delegate?.connected(self, con: true)
+            self.delegate?.connected(self, con: 1)
         }
         else {
-            self.delegate?.connected(self, con: false)
+            self.delegate?.connected(self, con: 0)
         }
     }
     
