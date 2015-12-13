@@ -1,7 +1,7 @@
 import SpriteKit
 
 class Button {
-    var button: SKSpriteNode
+    var button: SKShapeNode
 
     /// Creates stylish button
     ///
@@ -13,7 +13,11 @@ class Button {
     /// - id name of button
     /// - Usage Sprite constructor
     init(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, label: String, id: String) {
-        button = SKSpriteNode(color: UIColor.redColor(), size: CGSizeMake(width, height))
+        button = SKShapeNode(rectOfSize: CGSizeMake(width, height), cornerRadius: width/20)
+        //button.path = CGPathCreateWithRoundedRect(CGRect(x: x, y: y, width: width, height: height),width/20, height/20, nil)
+        button.strokeColor = UIColor(red: 0.03, green: 0.10, blue: 0.20, alpha: 0.92)
+        button.fillColor = UIColor(red: 0.03, green: 0.10, blue: 0.20, alpha: 0.92)
+        //button = SKSpriteNode(color: UIColor(red: 0.07, green: 0.16, blue: 0.30, alpha: 0.8), size: CGSizeMake(width, height))
         button.position = CGPointMake(x, y);
         button.zPosition = 10
         button.name = id
