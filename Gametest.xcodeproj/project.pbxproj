@@ -55,7 +55,6 @@
 		54ECDC211A64E99400860C5E /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ECDC1D1A64E99400860C5E /* settings.png */; };
 		55AD86821A8E831E00839E28 /* game.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 55AD86811A8E831E00839E28 /* game.atlas */; };
 		A6A9CCFB1C1CC3D900A8A286 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A9CCFA1C1CC3D900A8A286 /* ServiceManager.swift */; };
-		A6A9CCFF1C1CCDDD00A8A286 /* ConnectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A9CCFE1C1CCDDD00A8A286 /* ConnectionMenu.swift */; };
 		C8F812381C1D1B6900EF2718 /* shipSpeed.png in Resources */ = {isa = PBXBuildFile; fileRef = C8F812371C1D1B6900EF2718 /* shipSpeed.png */; };
 		C8F8123A1C1D1DF200EF2718 /* reloadSpeed.png in Resources */ = {isa = PBXBuildFile; fileRef = C8F812391C1D1DF200EF2718 /* reloadSpeed.png */; };
 		C8F812401C1D226E00EF2718 /* laserSize.png in Resources */ = {isa = PBXBuildFile; fileRef = C8F8123F1C1D226E00EF2718 /* laserSize.png */; };
@@ -114,7 +113,6 @@
 		54ECDC1D1A64E99400860C5E /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		55AD86811A8E831E00839E28 /* game.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = game.atlas; sourceTree = "<group>"; };
 		A6A9CCFA1C1CC3D900A8A286 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
-		A6A9CCFE1C1CCDDD00A8A286 /* ConnectionMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionMenu.swift; sourceTree = "<group>"; };
 		C8F812371C1D1B6900EF2718 /* shipSpeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shipSpeed.png; sourceTree = "<group>"; };
 		C8F812391C1D1DF200EF2718 /* reloadSpeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reloadSpeed.png; sourceTree = "<group>"; };
 		C8F8123F1C1D226E00EF2718 /* laserSize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laserSize.png; sourceTree = "<group>"; };
@@ -234,7 +232,6 @@
 			children = (
 				540A9B151B1534F200A8F6E0 /* FadeText.swift */,
 				54ECDC111A632A1600860C5E /* PopupMenu.swift */,
-				A6A9CCFE1C1CCDDD00A8A286 /* ConnectionMenu.swift */,
 				54C242F81AC8C26C005385C2 /* OptionsMenu.swift */,
 				54ECDC131A64376800860C5E /* Button.swift */,
 				547BDB8B1A60C1B1009F1B50 /* Pause.swift */,
@@ -306,7 +303,7 @@
 				TargetAttributes = {
 					540324271A4B8B5300B61880 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = V6F2BC98PU;
+						DevelopmentTeam = KZ5Y22JK7H;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -407,7 +404,6 @@
 				54C242F91AC8C26C005385C2 /* OptionsMenu.swift in Sources */,
 				0180BD531C0A802C00B42979 /* FAQ.swift in Sources */,
 				01C6F1751C1B69D100739557 /* Boss.swift in Sources */,
-				A6A9CCFF1C1CCDDD00A8A286 /* ConnectionMenu.swift in Sources */,
 				547B0DAC1A5F59BC00B3985C /* Player.swift in Sources */,
 				540324341A4B8B5300B61880 /* GameViewController.swift in Sources */,
 				547BDB8C1A60C1B1009F1B50 /* Pause.swift in Sources */,
@@ -529,7 +525,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Code/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZacharyHirn.gametest;
+				PRODUCT_BUNDLE_IDENTIFIER = uw.gametest;
 				PRODUCT_NAME = Gametest;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -549,7 +545,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Code/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZacharyHirn.gametest;
+				PRODUCT_BUNDLE_IDENTIFIER = uw.gametest;
 				PRODUCT_NAME = Gametest;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
