@@ -31,7 +31,8 @@ class Button {
     /// - Usage Sprite constructor
     func addText(label: String, id: String) {
         let text = SKLabelNode(text: label)
-        text.fontName = "Helvetica-Bold"
+        //text.fontName = "Helvetica-Bold"
+        text.fontName = "Prototype"
         text.name = id
         text.fontSize = 100
         text.verticalAlignmentMode = .Center

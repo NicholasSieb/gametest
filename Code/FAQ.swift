@@ -57,7 +57,7 @@ class FAQ{
         let label = SKLabelNode(text: text)
         label.fontSize = size
         label.position = CGPointMake(x, y)
-        label.fontName = "Helvetica-Bold"
+        label.fontName = "Prototype"
         label.name = "howto"
         label.zPosition = 3000
         faq.addChild(label)
