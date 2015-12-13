@@ -205,10 +205,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !isGameOver {
                 
                 if Options.option.get("sound"){
-                    let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Pause", withExtension: "wav")!
-                    do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-                    bgMusic.prepareToPlay()
-                    bgMusic.play()
+                    let soundaction = SKAction.playSoundFileNamed("Pause.wav", waitForCompletion: false);
+                   self.runAction(soundaction)
+                    //let pauseSound = SoundPlayer(name: "Pause")
+                    //pauseSound.Play()
                 }
                 gamePaused = true
                 //speed = 0
@@ -294,10 +294,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //secondBody = contact.bodyB
             
             if Options.option.get("sound"){
-                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
-                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-                bgMusic.prepareToPlay()
-                bgMusic.play()
+                let soundaction = SKAction.playSoundFileNamed("Enemy-Explosion.wav", waitForCompletion: false);
+                self.runAction(soundaction)
             }
         }
         
@@ -313,10 +311,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //secondBody = contact.bodyB
             //  print("collision detected")
             if Options.option.get("sound"){
-                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
-                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-                bgMusic.prepareToPlay()
-                bgMusic.play()
+                let soundaction = SKAction.playSoundFileNamed("Enemy-Explosion.wav", waitForCompletion: false);
+                self.runAction(soundaction)
             }
         }
         
@@ -363,12 +359,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreboard.addScore(3)
             //secondBody = contact.bodyB
             //  print("collision detected")
-            if Options.option.get("sound"){
-                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
-                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-                bgMusic.prepareToPlay()
-                bgMusic.play()
-            }
+                if Options.option.get("sound"){
+                    let soundaction = SKAction.playSoundFileNamed("Enemy-Explosion.wav", waitForCompletion: false);
+                    self.runAction(soundaction)
+                }
             }
         }
         
@@ -388,12 +382,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreboard.addScore(5)
             //secondBody = contact.bodyB
             //  print("collision detected")
-            if Options.option.get("sound"){
-                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Enemy-Explosion", withExtension: "wav")!
-                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-                bgMusic.prepareToPlay()
-                bgMusic.play()
-            }
+                if Options.option.get("sound"){
+                    let soundaction = SKAction.playSoundFileNamed("Enemy-Explosion.wav", waitForCompletion: false);
+                    self.runAction(soundaction)
+                }
             }
         }
 
@@ -469,6 +461,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         //Here is a timer. It triggers the function "canShootAgain", and takes "shootSpeed" amount of seconds to execute.
                         _ = NSTimer.scheduledTimerWithTimeInterval(reloadSpeed, target: self, selector: "canShootAgain", userInfo: nil, repeats: false)
                         rocket.shootJoy(rocket.position.x, y1: rocket.position.y, x2: self.joystickTwo.selectorNode.position.x, y2: self.joystickTwo.selectorNode.position.y)
+                        if Options.option.get("sound"){
+                            let soundaction = SKAction.playSoundFileNamed("Laser.wav", waitForCompletion: false);
+                            self.runAction(soundaction)
+                        }
                     }
                     
                 }
@@ -528,6 +524,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check if sound enabled
         if Options.option.get("sound") {
             //play dead sound
+            let soundaction = SKAction.playSoundFileNamed("Player-Death.wav", waitForCompletion: false);
+            self.runAction(soundaction)
         }
         isGameOver = true
         //create explosion
@@ -535,7 +533,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rocket.removeFromParent()
         pause.removeThis()
         enemySpawnRate = 5
-        PopupMenu(size: size, title: "Too bad ;(", label: "Play", id: "gameover", connectOption: true).addTo(self)
+        PopupMenu(size: size, title: "Game Over!", label: "Play", id: "gameover", connectOption: true).addTo(self)
         if scoreboard.isHighscore() {
             addChild(scoreboard.getHighscoreLabel(size))
         }

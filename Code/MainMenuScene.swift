@@ -58,10 +58,11 @@ class MainMenuScene: SKScene {
                 gameScene.viewController = self.viewController
                 view?.presentScene(gameScene, transition: reveal)
                 if Options.option.get("sound"){
-                let bgMusicURL:NSURL = NSBundle.mainBundle().URLForResource("Start", withExtension: "wav")!
-                do { bgMusic = try AVAudioPlayer(contentsOfURL: bgMusicURL, fileTypeHint: nil) } catch _ { return print("file not found") }
-                bgMusic.prepareToPlay()
-                bgMusic.play()
+                    let soundaction = SKAction.playSoundFileNamed("Start.wav", waitForCompletion: false);
+                    self.runAction(soundaction)
+                    //let startSound = SoundPlayer(name: "Start")
+                    //startSound.Play()
+                    
                 }
             ///leaderboard touched, open Gamecenter
             case "score":
