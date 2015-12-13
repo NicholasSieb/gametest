@@ -243,11 +243,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func explodeLaser(point: CGPoint){
         var emitterNode: SKEmitterNode
-        emitterNode = SKEmitterNode(fileNamed: "EnemyExplosion.sks")!
+        emitterNode = SKEmitterNode(fileNamed: "LaserExplosion.sks")!
         emitterNode.particlePosition = point
         emitterNode.particleScale = 0.25
         self.addChild(emitterNode)
-        self.runAction(SKAction.waitForDuration(0.9), completion: { emitterNode.removeFromParent()})
+        self.runAction(SKAction.waitForDuration(0.35), completion: { emitterNode.removeFromParent()})
         
     }
  

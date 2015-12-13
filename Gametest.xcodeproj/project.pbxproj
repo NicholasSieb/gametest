@@ -13,6 +13,7 @@
 		017F4DA81C138984003BC7AA /* Player-Death.wav in Resources */ = {isa = PBXBuildFile; fileRef = 017F4DA41C138984003BC7AA /* Player-Death.wav */; };
 		017F4DA91C138984003BC7AA /* Start.wav in Resources */ = {isa = PBXBuildFile; fileRef = 017F4DA51C138984003BC7AA /* Start.wav */; };
 		0180BD531C0A802C00B42979 /* FAQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0180BD521C0A802C00B42979 /* FAQ.swift */; };
+		019C4A2B1C1CEE84004A87F5 /* LaserExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 019C4A2A1C1CEE84004A87F5 /* LaserExplosion.sks */; };
 		01BE6ECA1C1A9127006A119A /* Joystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE6EC91C1A9127006A119A /* Joystick.swift */; };
 		01BE6ECC1C1A9471006A119A /* selector.png in Resources */ = {isa = PBXBuildFile; fileRef = 01BE6ECB1C1A9471006A119A /* selector.png */; };
 		01BE6ECE1C1A9477006A119A /* jbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 01BE6ECD1C1A9477006A119A /* jbackground.png */; };
@@ -68,6 +69,7 @@
 		017F4DA41C138984003BC7AA /* Player-Death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Player-Death.wav"; path = "Code/sounds/Player-Death.wav"; sourceTree = SOURCE_ROOT; };
 		017F4DA51C138984003BC7AA /* Start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Start.wav; path = Code/sounds/Start.wav; sourceTree = SOURCE_ROOT; };
 		0180BD521C0A802C00B42979 /* FAQ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQ.swift; sourceTree = "<group>"; };
+		019C4A2A1C1CEE84004A87F5 /* LaserExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LaserExplosion.sks; sourceTree = "<group>"; };
 		01BE6EC91C1A9127006A119A /* Joystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Joystick.swift; sourceTree = "<group>"; };
 		01BE6ECB1C1A9471006A119A /* selector.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selector.png; sourceTree = "<group>"; };
 		01BE6ECD1C1A9477006A119A /* jbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jbackground.png; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 		540324511A4B8C0D00B61880 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				019C4A2A1C1CEE84004A87F5 /* LaserExplosion.sks */,
 				01C417FC1C19213300565E43 /* PlayerExplosion.sks */,
 				01C417F41C190C5300565E43 /* EnemyExplosion.sks */,
 				01C417F51C190C5300565E43 /* spark.png */,
@@ -300,7 +303,7 @@
 				TargetAttributes = {
 					540324271A4B8B5300B61880 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = P7X7D425JW;
+						DevelopmentTeam = KZ5Y22JK7H;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -344,6 +347,7 @@
 				54BC178E1AC1FABF000A7FED /* soundoff.png in Resources */,
 				017F4DA91C138984003BC7AA /* Start.wav in Resources */,
 				017F4DA11C138968003BC7AA /* Enemy-Explosion.wav in Resources */,
+				019C4A2B1C1CEE84004A87F5 /* LaserExplosion.sks in Resources */,
 				54ECDC211A64E99400860C5E /* settings.png in Resources */,
 				540324391A4B8B5300B61880 /* Images.xcassets in Resources */,
 				01C417FB1C1916BC00565E43 /* EngineExhaust.sks in Resources */,
@@ -521,7 +525,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Code/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = PhiKappaTheta.gametest;
+				PRODUCT_BUNDLE_IDENTIFIER = uw.gametest;
 				PRODUCT_NAME = Gametest;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -541,7 +545,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Code/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = PhiKappaTheta.gametest;
+				PRODUCT_BUNDLE_IDENTIFIER = uw.gametest;
 				PRODUCT_NAME = Gametest;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
