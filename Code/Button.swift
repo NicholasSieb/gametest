@@ -1,7 +1,7 @@
 import SpriteKit
 
 class Button {
-    var button: SKSpriteNode
+    var button: SKShapeNode
 
     /// Creates stylish button
     ///
@@ -13,11 +13,15 @@ class Button {
     /// - id name of button
     /// - Usage Sprite constructor
     init(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, label: String, id: String) {
-        button = SKSpriteNode(color: UIColor.redColor(), size: CGSizeMake(width, height))
+        button = SKShapeNode(rectOfSize: CGSizeMake(width, height), cornerRadius: width/13)
+        //button.path = CGPathCreateWithRoundedRect(CGRect(x: x, y: y, width: width, height: height),width/20, height/20, nil)
+        button.strokeColor = UIColor(red: 0.03, green: 0.10, blue: 0.20, alpha: 0.90)
+        button.fillColor = UIColor(red: 0.03, green: 0.10, blue: 0.20, alpha: 0.90)
+        //button = SKSpriteNode(color: UIColor(red: 0.07, green: 0.16, blue: 0.30, alpha: 0.8), size: CGSizeMake(width, height))
         button.position = CGPointMake(x, y);
-        button.zPosition = 10
         button.name = id
         addText(label, id: id)
+        button.zPosition = 10
     }
     
     /// Adds text to label
@@ -27,7 +31,8 @@ class Button {
     /// - Usage Sprite constructor
     func addText(label: String, id: String) {
         let text = SKLabelNode(text: label)
-        text.fontName = "Helvetica-Bold"
+        //text.fontName = "Helvetica-Bold"
+        text.fontName = "Prototype"
         text.name = id
         text.fontSize = 100
         text.verticalAlignmentMode = .Center

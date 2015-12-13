@@ -4,6 +4,7 @@ import SpriteKit
 
 class FAQ{
     var faq: SKSpriteNode
+    var faq2: SKSpriteNode
     /// Creates faq Sprites
     ///
     /// - parameter size, size of scene
@@ -13,15 +14,19 @@ class FAQ{
         let y = size.height / 2
         faq = SKSpriteNode(color: UIColor.blackColor(), size: size)
         faq.position = CGPoint(x: x, y: y)
-        faq.zPosition = 7
+        faq.zPosition = 12
         faq.name = "howto"
+        faq2 = SKSpriteNode(color: UIColor.blackColor(), size: size)
+        faq2.position = CGPoint(x: 0, y: -y)
+        faq2.zPosition = 12
+        faq2.name = "howto"
+        faq.addChild(faq2)
         let bg = Background(size: size).addTo(faq);
         bg.name = "howto"
-        bg.zPosition = 6
+        bg.zPosition = 13
         bg.position = CGPoint(x: -x, y: -y)
-        
         let bt = Button(x: 0, y: -y / 3, width: x * 2 / 3, height: y / 3, label: "Back", id: "back").addTo(faq)
-        bt.button.zPosition = 10
+        bt.button.zPosition = 14
         addPause(x, y: y)
     }
     /// Adds text to sprite
@@ -57,7 +62,7 @@ class FAQ{
         let label = SKLabelNode(text: text)
         label.fontSize = size
         label.position = CGPointMake(x, y)
-        label.fontName = "Helvetica-Bold"
+        label.fontName = "Prototype"
         label.name = "howto"
         label.zPosition = 3000
         faq.addChild(label)

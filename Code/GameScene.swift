@@ -22,12 +22,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var laserSize = 5;
     var laserColor = UIColor.greenColor();
     var canShoot = true
-    var reloadSpeed = 0.3
+    var reloadSpeed = 2.0
     var doFireLaser = false
     
     //enemy variables
     var removeEnemies = false
-    var enemySpawnRate = 5
+    var enemySpawnRate = 3
     
     //game state variables
     var gameCenterDelegate : GameSceneDelegate?
@@ -133,7 +133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 ///increases the size of the laser
             case "laserSize":
-                //check if there is score to spend
+                //check if there is score to spend. Maximum 15 upgrades to laser size
                 if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.laserSize < 15)
                 {
                     scoreboard.addScore(-1)
@@ -154,18 +154,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //decreases the reload speed
             case "reloadSpeed":
                 //checks if there are points to spend, if the game is still going, and if we are above the limit
-                if(scoreboard.getScore() >= 1 && isGameOver == false && reloadSpeed > 0.2){
+                if(scoreboard.getScore() >= 1 && isGameOver == false && reloadSpeed > 0.1){
                     scoreboard.addScore(-1)
                     reloadSpeed = reloadSpeed - 0.1
                 }
                 
                 //increases the velocity of the lasers
             case "laserVelocity":
-                //check if score to spend
-                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 200)
+                //check if score to spend. Maximum laser velocity is 400
+                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 400)
                 {
                     scoreboard.addScore(-1)
-                    rocket.velocity = rocket.velocity + (20/1.0)
+                    rocket.velocity = rocket.velocity + (10/1.0)
                 }
                 
             default:
@@ -245,6 +245,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.runAction(SKAction.waitForDuration(2), completion: { emitterNode.removeFromParent()})
         
     }
+    
+    func explodeLaser(point: CGPoint){
+        var emitterNode: SKEmitterNode
+        emitterNode = SKEmitterNode(fileNamed: "LaserExplosion.sks")!
+        emitterNode.particlePosition = point
+        emitterNode.particleScale = 0.25
+        self.addChild(emitterNode)
+        self.runAction(SKAction.waitForDuration(0.35), completion: { emitterNode.removeFromParent()})
+        
+    }
  
     
     func emitterStars(color: SKColor, starSpeedY: CGFloat, starsPerSecond: CGFloat, starScaleFactor: CGFloat) -> SKEmitterNode{
@@ -275,6 +285,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser enemy collision
         if (firstBody.node?.name == "enemy" && secondBody.node?.name == "laser"){
             let toChange = firstBody.node as? Enemy
+            let laser = secondBody.node
+            explodeLaser(laser!.position)
+            laser?.removeFromParent()
             explode((toChange?.position)!, player: false)
             toChange?.removeFromParent()
             scoreboard.addScore(1)
@@ -291,6 +304,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser enemy collision
         if (secondBody.node?.name == "enemy" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Enemy
+            let laser = secondBody.node
+            explodeLaser(laser!.position)
+            laser?.removeFromParent()
             explode((toChange?.position)!, player: false)
             toChange?.removeFromParent()
             scoreboard.addScore(1)
@@ -335,6 +351,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser boss collision
         if (secondBody.node?.name == "boss" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Boss
+            let laser = secondBody.node
+            explodeLaser(laser!.position)
+            laser?.removeFromParent()
             if (toChange?.health >= 0){
                 toChange?.health = (toChange?.health)! - 1
             }
@@ -356,6 +375,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser boss collision
         if (firstBody.node?.name == "boss" && secondBody.node?.name == "laser"){
             let toChange = firstBody.node as? Boss
+            let laser = secondBody.node
+            explodeLaser(laser!.position)
+            laser?.removeFromParent()
             if (toChange?.health >= 0){
                 toChange?.health = (toChange?.health)! - 1
                 toChange?.alpha = (toChange?.alpha)! - 0.05

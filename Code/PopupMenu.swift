@@ -34,7 +34,8 @@ class PopupMenu {
     ///helper function to add Title
     func addTitle(title: String, position: CGPoint) {
         let node = SKLabelNode(text: title)
-        node.fontName = "Helvetica-Bold"
+        //node.fontName = "Helvetica-Bold"
+        node.fontName = "Prototype"
         node.fontSize = 200
         node.color = UIColor.whiteColor()
         node.position = position
