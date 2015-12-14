@@ -119,18 +119,32 @@ extension ServiceManager : MCSessionDelegate {
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
         NSLog("%@", "didReceiveData: \(data.length) bytes")
         let str = NSString(data: data, encoding: NSUTF8StringEncoding) as! String
-        switch (str){
-        case "PLAYWITHME" :
+        
+        if(str.containsString("SCORE")){
             if(self.connectState == 1){
-                self.delegate?.Changed(self, string: "LETSPLAY")
+                self.delegate?.Changed(self, string: "E" + str)
             }
             break
-        case "OKATLETSPLAY" :
-            if(self.connectState == 1){
-                self.delegate?.Changed(self, string: "PARTREADY")
+        }
+        else {
+            switch (str){
+            case "PLAYWITHME" :
+                if(self.connectState == 1){
+                    self.delegate?.Changed(self, string: "LETSPLAY")
+                }
+                break
+            case "OKATLETSPLAY" :
+                if(self.connectState == 1){
+                    self.delegate?.Changed(self, string: "PARTREADY")
+                }
+                break
+            case "ILOST" :
+                if(self.connectState == 1){
+                    self.delegate?.Changed(self, string: "PARTLOST")
+                }
+                break
+            default: break
             }
-            break
-        default: break
         }
     }
     

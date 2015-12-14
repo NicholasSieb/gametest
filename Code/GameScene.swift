@@ -488,6 +488,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //in game
             case 4 :
                 doUpdate()
+                service.send("SCORE" + String(scoreboard.getScore()))
                 break
             //died and in game over scene
             case 5 : //do nothing
@@ -613,6 +614,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //set game state
             self.gameState = 5
             //tell service that the game is over
+            service.send("ILOST")
             service.connectState = 0
         }
         
