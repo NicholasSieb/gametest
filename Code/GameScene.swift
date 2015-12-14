@@ -50,7 +50,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var joystickTwo: Joystick!
     
     //the sound player
-    var bgMusic:AVAudioPlayer = AVAudioPlayer()
+    var bgMusic: AVAudioPlayer!
     
     //buttons
     
@@ -78,6 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         emitterNode.zPosition = -12
         self.addChild(emitterNode)
         if (Options.option.get("music")){
+            
             backgroundMusic("background")
             bgMusic.play()
         }
@@ -586,7 +587,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let soundaction = SKAction.playSoundFileNamed("Player-Death.wav", waitForCompletion: false);
             self.runAction(soundaction)
         }
+        if(bgMusic != nil){
+            bgMusic.stop()
+        }
         //bgMusic.stop()
+        joystickOne.hidden = true
+        joystickTwo.hidden = true
         isGameOver = true
         //create explosion
         explode(rocket.position, player: true)
