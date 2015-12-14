@@ -17,6 +17,9 @@ class ServiceManager : NSObject {
     private let serviceBrowser : MCNearbyServiceBrowser
     var delegate : ServiceManagerDelegate?
     
+    //0 is do not connect
+    //1 is try to connect
+    //2 is connected
     var connectState: Int
     
     override init() {
@@ -55,9 +58,8 @@ extension ServiceManager : MCNearbyServiceAdvertiserDelegate {
     }
     
     func advertiser(advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: NSData?, invitationHandler: ((Bool, MCSession) -> Void)) {
-        
-        NSLog("%@", "didReceiveInvitationFromPeer \(peerID)")
         if(connectState == 1){
+            NSLog("%@", "didReceiveInvitationFromPeer \(peerID)")
             invitationHandler(true, self.session)
         }
     }
@@ -71,9 +73,9 @@ extension ServiceManager : MCNearbyServiceBrowserDelegate {
     }
     
     func browser(browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
-        NSLog("%@", "foundPeer: \(peerID)")
-        NSLog("%@", "invitePeer: \(peerID)")
         if(connectState == 1){
+            NSLog("%@", "foundPeer: \(peerID)")
+            NSLog("%@", "invitePeer: \(peerID)")
             browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 10)
         }
     }

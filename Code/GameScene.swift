@@ -9,9 +9,9 @@ protocol GameSceneDelegate {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var viewController: GameViewController?
     
-    let service = ServiceManager()
-    var connectClicked = false
-    var partnerState = 0
+    var service: ServiceManager!
+    //the state of the game
+    var gameState = 0
 
     //The player
     var rocket: Player!
@@ -62,6 +62,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //initial scene setup
     override func didMoveToView(view: SKView) {
+        if(service == nil){
+            service = ServiceManager()
+        }
+        
         backgroundColor = UIColor.blackColor()
         Background(size: size).addTo(self)
         var emitterNode = emitterStars(SKColor.lightGrayColor(), starSpeedY: 50, starsPerSecond: 1, starScaleFactor: 0.2)
@@ -73,9 +77,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         emitterNode = emitterStars(SKColor.darkGrayColor(), starSpeedY: 15, starsPerSecond: 4, starScaleFactor: 0.05)
         emitterNode.zPosition = -12
         self.addChild(emitterNode)
-        if(connectClicked){
-            service.delegate = self
-            service.connectState = 1
+        if(gameState == 2){
+            self.service.delegate = self
+            //tell the service to try to connect
+            self.service.connectState = 1
         }
         else {
             buildGame(view)
@@ -114,9 +119,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let name = touched.name {
             switch name {
             case "gameover":
+                //set gameState to singlePlayer
+                self.gameState = 1
+                self.isGameOver = false
                 resetGame()
+                break
             case "pause":
                 pauseGame()
+                break
             case "home":
                 //create homeScene and remove unneeded things
                 removeUpgradeButtons()
@@ -125,12 +135,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
                 homeScene.viewController = self.viewController
                 view?.presentScene(homeScene, transition: reveal)
+                break
             case "score":
                 viewController?.openGC()
+                break
                 
             case "connect":
-                connectClicked = true
-                service.connectState = 1
+                //set game state to try to connect
+                if(gameState == 5){
+                    self.gameState = 4
+                    self.isGameOver = false
+                    resetGame()
+                }
+                else {
+                    //tell the service to try to connect
+                    self.gameState = 2
+                    self.isGameOver = false
+                    resetGame()
+                }
+                break
                 
                 ///increases the size of the laser
             case "laserSize":
@@ -141,6 +164,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     rocket.laserSize = rocket.laserSize + 1
                     rocket.boxSize = rocket.boxSize + 1
                 }
+                break
                 
                 //increases the speed of the ship
             case "shipSpeed":
@@ -151,6 +175,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     let additionVariable: CGFloat = 0.01
                     rocket.speedTwo = rocket.speedTwo + additionVariable
                 }
+                break
                 
                 //decreases the reload speed
             case "reloadSpeed":
@@ -159,6 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     scoreboard.addScore(-10)
                     reloadSpeed = reloadSpeed - 0.1
                 }
+                break
                 
                 //increases the velocity of the lasers
             case "laserVelocity":
@@ -168,9 +194,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     scoreboard.addScore(-1)
                     rocket.velocity = rocket.velocity + (10/1.0)
                 }
+                break
                 
             default:
                 currentlyTouching = true
+                break
                 
             }
             Utility.pressButton(self, touched: touched, score: String(scoreboard.getScore()))
@@ -257,7 +285,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
  
-    
     func emitterStars(color: SKColor, starSpeedY: CGFloat, starsPerSecond: CGFloat, starScaleFactor: CGFloat) -> SKEmitterNode{
         let time = size.height * UIScreen.mainScreen().scale / starSpeedY
         let emitterNode = SKEmitterNode()
@@ -410,26 +437,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     ///Main loop of GameScene, advance time in the game
     override func update(currentTime: CFTimeInterval) {
-        if (self.connectClicked){
-            //attempting to connect loop
-            
-            //successful connection
-            if(self.partnerState == 1){
-                buildGame(self.view!)
-                self.partnerState = 2
-            }
-            //post connection, mid game
-            else if(self.partnerState == 2){
-                doUpdate()
-            }
-            //post game, in reset screen
-            else if(self.partnerState == 3){
-                resetGame()
-                self.partnerState = 2
-            }
+
+        if (gameState == 1){
+            doUpdate()
         }
         else {
-            doUpdate()
+            //attempting to connect loop
+            
+            switch(gameState){
+                //trying to connect
+            case 2 : //do nothing
+                break
+                //connected
+            case 3 : buildGame(self.view!)
+                gameState = 4
+                break
+                //in game
+            case 4 : doUpdate()
+                break
+                //died and in game over scene
+            case 5 : //do nothing
+                break
+            default: break
+            }
         }
     
     }
@@ -539,16 +569,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if scoreboard.isHighscore() {
             addChild(scoreboard.getHighscoreLabel(size))
         }
-        self.connectClicked = false
-        self.partnerState = 3
-        self.service.session.disconnect()
-        self.service.connectState = 0
+        if (gameState == 4){
+            //set game state
+            self.gameState = 5
+            //disconnect phones
+//            self.service.session.disconnect()
+//            //set service state to do not connect state
+//            self.service.connectState = 0
+        }
         
     }
     
     /// Reset game to play again
     func resetGame() {
         let gameScene = GameScene(size: size)
+        gameScene.setState(self.gameState)
+        gameScene.setServ(self.service)
         gameScene.viewController = self.viewController
         gameScene.scaleMode = scaleMode
         let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
@@ -615,6 +651,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         laserVelocityButton.addTo(node)
 
     }
+    
     ///Here we remove the upgrade buttons from the pause menu
     func removeUpgradeButtons(){
         homeButton.removeFromParent()
@@ -623,7 +660,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         reloadSpeedButton.removeFromParent()
         laserVelocityButton.removeFromParent()
     }
-    
     
     ///helper function for shooting delays
     func canShootAgain(){
@@ -634,9 +670,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    func setState(x: Int){
+        self.gameState = x
+    }
+    
+    func setServ(x: ServiceManager){
+        self.service = x
+    }
+    
     func connect(y: Int){
-        if(self.partnerState == 0){
-            self.partnerState = y
+        if(self.gameState == 2){
+            if(y == 1){
+                self.gameState = 3
+            }
         }
     }
     
@@ -656,7 +702,6 @@ extension GameScene : ServiceManagerDelegate {
     }
     
     func connected(manager: ServiceManager, con: Int){
-        NSLog(String(con))
         self.connect(con)
     }
     

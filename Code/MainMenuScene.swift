@@ -2,6 +2,7 @@ import SpriteKit
 import AVFoundation
 
 class MainMenuScene: SKScene {
+    
     var viewController: GameViewController?
     var bgMusic:AVAudioPlayer = AVAudioPlayer()
     /// standard SKScene function to setup view
@@ -54,6 +55,7 @@ class MainMenuScene: SKScene {
             case "start":
                 let gameScene = GameScene(size: size)
                 gameScene.scaleMode = scaleMode
+                gameScene.setState(1)
                 let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
                 gameScene.viewController = self.viewController
                 view?.presentScene(gameScene, transition: reveal)
@@ -70,7 +72,7 @@ class MainMenuScene: SKScene {
             case "connect" :
                 let gameScene = GameScene(size: size)
                 gameScene.scaleMode = scaleMode
-                gameScene.connectClicked = true
+                gameScene.setState(2)
                 let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
                 gameScene.viewController = self.viewController
                 view?.presentScene(gameScene, transition: reveal)
