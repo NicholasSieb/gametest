@@ -80,7 +80,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (Options.option.get("music")){
             backgroundMusic("background")
             bgMusic.play()
-        
+        }
         self.service.delegate = self
         
         if(gameState == 2){
