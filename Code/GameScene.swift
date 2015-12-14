@@ -484,6 +484,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //waiting for play message
             case 2 : //do nothing
                 service.send("PLAYWITHME")
+                service.connectState = 1
                 break
             //PLAY
             case 3 :
@@ -761,9 +762,11 @@ extension GameScene : ServiceManagerDelegate {
                 self.gameOver()
                 break
             case "PEERLOST" :
-                self.gameState = 5
-                self.service.connectState = 0
-                self.gameOver()
+                if (self.gameState == 4){
+                    self.gameState = 5
+                    self.service.connectState = 0
+                    self.gameOver()
+                }
                 break
             default : break
             }

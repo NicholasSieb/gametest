@@ -135,7 +135,7 @@ extension ServiceManager : MCSessionDelegate {
                     self.delegate?.Changed(self, string: "LETSPLAY")
                 }
                 break
-            case "OKATLETSPLAY" :
+            case "OKAYLETSPLAY" :
                 if(self.connectState == 1){
                     self.delegate?.Changed(self, string: "PARTREADY")
                 }
