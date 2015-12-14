@@ -53,17 +53,19 @@ class MainMenuScene: SKScene {
             ///Start pressed move to GameScene
             case "start":
                 let gameScene = GameScene(size: size)
+                if Options.option.get("sound"){
+                    let soundaction = SKAction.playSoundFileNamed("Start.wav", waitForCompletion: false);
+                    self.runAction(soundaction)
+                }
                 gameScene.scaleMode = scaleMode
                 let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
                 gameScene.viewController = self.viewController
                 view?.presentScene(gameScene, transition: reveal)
-                if Options.option.get("sound"){
-                    let soundaction = SKAction.playSoundFileNamed("Start.wav", waitForCompletion: false);
-                    self.runAction(soundaction)
+                
                     //let startSound = SoundPlayer(name: "Start")
                     //startSound.Play()
                     
-                }
+                
             ///leaderboard touched, open Gamecenter
             case "score":
                 viewController?.openGC()

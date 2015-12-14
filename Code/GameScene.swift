@@ -89,7 +89,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pause = Pause(size: size, x: size.width - 50, y: size.height - size.height / 6).addTo(self)
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self
-        view.showsPhysics = true
+        view.showsPhysics = false
         _ = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
         
         //create the upgrade buttons
