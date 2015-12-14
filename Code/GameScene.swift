@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //enemy variables
     var removeEnemies = false
-    var enemySpawnRate = 4
+    var enemySpawnRate = 3
     var enemyVelocity: CGFloat = 4
     
     //game state variables
@@ -97,7 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self
         view.showsPhysics = false
-        _ = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
+        _ = NSTimer.scheduledTimerWithTimeInterval(35, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
         
         //create the upgrade buttons
         createUpgradeButtons(size)
@@ -109,6 +109,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         joystickTwo.position = CGPointMake(size.width - size.width / 6.5, size.height / 3.8)
         self.addChild(joystickOne)
         self.addChild(joystickTwo)
+        
     }
 
     
@@ -142,6 +143,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 viewController?.openGC()
                 break
                 
+            case "option_music":
+                if Options.option.get("music"){
+                    bgMusic.stop()
+                } else {
+                    backgroundMusic("background")
+                    bgMusic.play()
+                }
             case "connect":
                 //set game state and tell service you want to play a game
                 self.gameState = 2
@@ -374,6 +382,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             laser?.removeFromParent()
             if (toChange?.health >= 0){
                 toChange?.health = (toChange?.health)! - 1
+                if Options.option.get("sound") {
+                    let soundaction = SKAction.playSoundFileNamed("hitmarker.mp3", waitForCompletion: false);
+                    self.runAction(soundaction)
+                }
             }
             else {
             explode((toChange?.position)!, player: false)
@@ -396,7 +408,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             laser?.removeFromParent()
             if (toChange?.health >= 0){
                 toChange?.health = (toChange?.health)! - 1
-                toChange?.alpha = (toChange?.alpha)! - 0.05
+                if Options.option.get("sound") {
+                    let soundaction = SKAction.playSoundFileNamed("hitmarker.mp3", waitForCompletion: false);
+                    self.runAction(soundaction)
+                }
             }
             else {
             explode((toChange?.position)!, player: false)
@@ -416,6 +431,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    func backgroundMusic(name: String){
+        let sound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(name, ofType: "mp3")!)
+        do{
+            bgMusic = try AVAudioPlayer(contentsOfURL: sound)
+        } catch _ as NSError {
+            print("Sound fail")
+        }
+        bgMusic.numberOfLoops = 1
+        bgMusic.volume = 0.5
+        bgMusic.prepareToPlay()
+    }
     
     /// Increases spawn rate of enemies
     ///
@@ -555,6 +581,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let soundaction = SKAction.playSoundFileNamed("Player-Death.wav", waitForCompletion: false);
             self.runAction(soundaction)
         }
+        bgMusic.stop()
         isGameOver = true
         //create explosion
         explode(rocket.position, player: true)

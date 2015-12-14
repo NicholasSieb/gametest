@@ -33,5 +33,5 @@ class Options {
 }
 ///create list of options
 private let _Options = Options(options:
-["sound": true]
+["sound": true, "music": false]
 )
