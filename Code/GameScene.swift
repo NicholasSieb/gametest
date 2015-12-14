@@ -100,8 +100,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func buildGame(view: SKView) {
         rocket = Player(x: size.width / 2, y: size.height / 2).addTo(self) as! Player
         scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
+        scoreboard2 = Scoreboard(x:50, y: size.height - 2*size.height/5)
         if (self.gameState != 1){
-            scoreboard2 = Scoreboard(x:50, y: size.height - 2*size.height/5).addTo(self)
+            scoreboard2.addTo(self)
             scoreboard2.viewController = self.viewController
             scoreboard2.scoreboard.text = "Opponent: 0"
         }
@@ -628,6 +629,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     /// Reset game to play again
     func resetGame() {
+        self.removeAllChildren()
         let gameScene = GameScene(size: size)
         gameScene.setState(self.gameState)
         gameScene.setServ(self.service)
@@ -742,7 +744,16 @@ extension GameScene : ServiceManagerDelegate {
             
             if(string.containsString("ESCORE")){
                 let s = (string as NSString).substringFromIndex(6)
-                self.scoreboard2.setScore(Int(s)!)
+                if (self.scoreboard2 == nil){
+                    self.scoreboard2 = Scoreboard(x:50, y: self.size.height - 2*self.size.height/5)
+                    self.scoreboard2.addTo(self)
+                    self.scoreboard2.viewController = self.viewController
+                    self.scoreboard2.setScore(Int(s)!)
+
+                }
+                else {
+                    self.scoreboard2.setScore(Int(s)!)
+                }
             }
             
             switch(string){
@@ -760,6 +771,7 @@ extension GameScene : ServiceManagerDelegate {
                 self.gameState = 5
                 self.service.connectState = 0
                 self.gameOver()
+                NSLog("TheyLost")
                 break
             case "PEERLOST" :
                 if (self.gameState == 4){
