@@ -73,6 +73,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         emitterNode = emitterStars(SKColor.darkGrayColor(), starSpeedY: 15, starsPerSecond: 4, starScaleFactor: 0.05)
         emitterNode.zPosition = -12
         self.addChild(emitterNode)
+        if (Options.option.get("music")){
+            backgroundMusic("background")
+            bgMusic.play()
+        
+        }
         if(connectClicked){
             service.delegate = self
             service.connectState = 1
@@ -102,6 +107,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         joystickTwo.position = CGPointMake(size.width - size.width / 6.5, size.height / 3.8)
         self.addChild(joystickOne)
         self.addChild(joystickTwo)
+        
     }
 
     
@@ -128,6 +134,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case "score":
                 viewController?.openGC()
                 
+            case "option_music":
+                if Options.option.get("music"){
+                    bgMusic.stop()
+                } else {
+                    backgroundMusic("background")
+                    bgMusic.play()
+                }
             case "connect":
                 connectClicked = true
                 service.connectState = 1
@@ -395,6 +408,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    func backgroundMusic(name: String){
+        let sound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(name, ofType: "mp3")!)
+        do{
+            bgMusic = try AVAudioPlayer(contentsOfURL: sound)
+        } catch _ as NSError {
+            print("Sound fail")
+        }
+        bgMusic.numberOfLoops = 1
+        bgMusic.volume = 0.5
+        bgMusic.prepareToPlay()
+    }
     
     /// Increases spawn rate of enemies
     ///

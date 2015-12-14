@@ -7,7 +7,7 @@ class OptionsMenu {
     /// - parameter size
     /// - Usage Sprite constructor
     init(menu: SKNode, size: CGSize) {
-        let options = ["sound"]
+        let options = ["sound", "music"]
         var pos: CGFloat = 51
         for option in options {
             addOption(menu, size: size, option: option, pos: pos)
