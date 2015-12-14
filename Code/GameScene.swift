@@ -77,6 +77,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         emitterNode = emitterStars(SKColor.darkGrayColor(), starSpeedY: 15, starsPerSecond: 4, starScaleFactor: 0.05)
         emitterNode.zPosition = -12
         self.addChild(emitterNode)
+        if (Options.option.get("music")){
+            backgroundMusic("background")
+            bgMusic.play()
         
         self.service.delegate = self
         
