@@ -81,6 +81,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             backgroundMusic("background")
             bgMusic.play()
         }
+        NSLog("HERE")
         self.service.delegate = self
         
         if(gameState == 2){
@@ -585,7 +586,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let soundaction = SKAction.playSoundFileNamed("Player-Death.wav", waitForCompletion: false);
             self.runAction(soundaction)
         }
-        bgMusic.stop()
+        //bgMusic.stop()
         isGameOver = true
         //create explosion
         explode(rocket.position, player: true)
