@@ -5,7 +5,7 @@ class Player: Sprite {
     var fireArray = Array<SKTexture>();
     //variables for laser modification
     //var laserColor = UIColor.greenColor()
-    var laserColor = UIColor(red: 0.09, green: 0.52, blue: 0.18, alpha:1.0)
+    var laserColor = UIColor(red: 0.04, green: 0.90, blue: 0.17, alpha:1.0)
     var laserSize = 10
     var boxSize = 30
     //Here is the variable we use to increase the user's ship speed
