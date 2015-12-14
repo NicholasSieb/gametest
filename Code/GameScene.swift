@@ -562,6 +562,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.runAction(soundaction)
         }
         bgMusic.stop()
+        self.joystickOne.hidden = true
+        self.joystickTwo.hidden = true
         isGameOver = true
         //create explosion
         explode(rocket.position, player: true)
