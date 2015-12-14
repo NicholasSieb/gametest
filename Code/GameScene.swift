@@ -148,7 +148,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 ///increases the size of the laser
             case "laserSize":
                 //check if there is score to spend. Maximum 15 upgrades to laser size
-                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.laserSize < 12)
+                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.laserSize < 15)
                 {
                     scoreboard.addScore(-1)
                     rocket.laserSize = rocket.laserSize + 1
@@ -506,7 +506,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //print("y position is\(self.joystickTwo.selectorNode.position.y)")
                 //If user is touching, move the player and attempt to fire
                 if currentlyTouching {
-                    rocket.moveTo(currentPosition.x, y: currentPosition.y)
+                    /* rocket.moveTo(currentPosition.x, y: currentPosition.y)
                     //Here we determine whether we can shoot or not. Once we fire, we immediately disallow us to shoot anymore until the appropriate amount of time has been waited out.
                     if(canShoot == true)
                     {
@@ -515,6 +515,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         _ = NSTimer.scheduledTimerWithTimeInterval(reloadSpeed, target: self, selector: "canShootAgain", userInfo: nil, repeats: false)
                         rocket.shoot(rocket.position.x, y1: rocket.position.y, x2: currentPosition.x, y2: currentPosition.y)
                     }
+*/
                 }
                 
             }

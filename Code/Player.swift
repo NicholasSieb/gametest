@@ -4,8 +4,9 @@ import SpriteKit
 class Player: Sprite {
     var fireArray = Array<SKTexture>();
     //variables for laser modification
-    var laserColor = UIColor.blueColor()
-    var laserSize = 5
+    //var laserColor = UIColor.greenColor()
+    var laserColor = UIColor(red: 0.09, green: 0.52, blue: 0.18, alpha:1.0)
+    var laserSize = 10
     var boxSize = 30
     //Here is the variable we use to increase the user's ship speed
     var speedTwo: CGFloat = 6
@@ -45,8 +46,8 @@ class Player: Sprite {
     /// - Usage player.exhaust()
     func exhaust(){
         let emitterNode = SKEmitterNode(fileNamed: "EngineExhaust.sks")
-        emitterNode?.position = CGPoint(x: 0.5, y: -18.3)
-        emitterNode?.setScale(0.6)
+        emitterNode?.position = CGPoint(x: 0.5, y: -19.6)
+        emitterNode?.setScale(0.70)
         self.addChild(emitterNode!)
         
     }
