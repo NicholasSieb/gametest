@@ -22,12 +22,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var laserSize = 5;
     var laserColor = UIColor.greenColor();
     var canShoot = true
-    var reloadSpeed = 2.0
+    var reloadSpeed = 0.8
     var doFireLaser = false
     
     //enemy variables
     var removeEnemies = false
-    var enemySpawnRate = 3
+    var enemySpawnRate = 4
     
     //game state variables
     var gameCenterDelegate : GameSceneDelegate?
@@ -89,7 +89,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self
         view.showsPhysics = true
-        _ = NSTimer.scheduledTimerWithTimeInterval(35, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
+        _ = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
         
         //create the upgrade buttons
         createUpgradeButtons(size)
@@ -154,8 +154,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //decreases the reload speed
             case "reloadSpeed":
                 //checks if there are points to spend, if the game is still going, and if we are above the limit
-                if(scoreboard.getScore() >= 1 && isGameOver == false && reloadSpeed > 0.1){
-                    scoreboard.addScore(-1)
+                if(scoreboard.getScore() >= 10 && isGameOver == false && reloadSpeed > 0.4){
+                    scoreboard.addScore(-10)
                     reloadSpeed = reloadSpeed - 0.1
                 }
                 

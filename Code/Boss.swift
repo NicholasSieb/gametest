@@ -26,7 +26,7 @@ class Boss: Sprite {
         self.setScale(0.8)
         //set physics properties
         //self.physicsBody = SKPhysicsBody.init(texture: self.texture!, size: self.size)
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 60, height: 90))
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 70, height: 120))
         self.physicsBody!.dynamic = true
         self.physicsBody!.collisionBitMask = 0x0
         self.physicsBody!.contactTestBitMask = 0x0
