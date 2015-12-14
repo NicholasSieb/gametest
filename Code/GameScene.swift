@@ -77,9 +77,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         emitterNode = emitterStars(SKColor.darkGrayColor(), starSpeedY: 15, starsPerSecond: 4, starScaleFactor: 0.05)
         emitterNode.zPosition = -12
         self.addChild(emitterNode)
+        
+        self.service.delegate = self
+        
         if(gameState == 2){
-            self.service.delegate = self
-            //tell the service to try to connect
+            //tell the service you want to play a game
             self.service.connectState = 1
         }
         else {
@@ -141,18 +143,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 break
                 
             case "connect":
-                //set game state to try to connect
-                if(gameState == 5){
-                    self.gameState = 4
-                    self.isGameOver = false
-                    resetGame()
-                }
-                else {
-                    //tell the service to try to connect
-                    self.gameState = 2
-                    self.isGameOver = false
-                    resetGame()
-                }
+                //set game state and tell service you want to play a game
+                self.gameState = 2
+                service.connectState = 1
+                resetGame()
                 break
                 
                 ///increases the size of the laser
@@ -445,17 +439,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //attempting to connect loop
             
             switch(gameState){
-                //trying to connect
+            //waiting for play message
             case 2 : //do nothing
+                service.send("PLAYWITHME")
                 break
-                //connected
-            case 3 : buildGame(self.view!)
+            //PLAY
+            case 3 :
+                buildGame(self.view!)
                 gameState = 4
                 break
-                //in game
-            case 4 : doUpdate()
+            //in game
+            case 4 :
+                doUpdate()
                 break
-                //died and in game over scene
+            //died and in game over scene
             case 5 : //do nothing
                 break
             default: break
@@ -550,7 +547,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    
     /// Function to end game when player is killed
     func gameOver() {
         //check if sound enabled
@@ -572,10 +568,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (gameState == 4){
             //set game state
             self.gameState = 5
-            //disconnect phones
-//            self.service.session.disconnect()
-//            //set service state to do not connect state
-//            self.service.connectState = 0
+            //tell service that the game is over
+            service.connectState = 0
         }
         
     }
@@ -666,8 +660,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         canShoot = true
     }
     
-    func sendUpdate() {
-        
+    func play() {
+        //if we are waiting for a game -> play
+        if(gameState == 2){
+            gameState = 3
+        }
     }
     
     func setState(x: Int){
@@ -678,13 +675,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.service = x
     }
     
-    func connect(y: Int){
-        if(self.gameState == 2){
-            if(y == 1){
-                self.gameState = 3
-            }
-        }
-    }
     
 }
 
@@ -697,13 +687,22 @@ extension GameScene : ServiceManagerDelegate {
     
     func Changed(manager: ServiceManager, string: String) {
         NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
-            self.sendUpdate()
+            switch(string){
+            //partner wants to play
+            case "LETSPLAY" :
+                self.service.send("OKAYLETSPLAY")
+                self.service.connectState = 2
+                self.gameState = 3
+                break
+            case "PARTREADY" :
+                self.service.connectState = 2
+                self.gameState = 3
+                break
+            default : break
+            }
         }
     }
     
-    func connected(manager: ServiceManager, con: Int){
-        self.connect(con)
-    }
     
 }
 

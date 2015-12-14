@@ -5,7 +5,6 @@ protocol ServiceManagerDelegate {
     
     func connectedDevicesChanged(manager : ServiceManager, connectedDevices: [String])
     func Changed(manager : ServiceManager, string: String)
-    func connected(manager : ServiceManager, con: Int)
     
 }
 
@@ -49,6 +48,21 @@ class ServiceManager : NSObject {
         return session
     }()
     
+    func send(name : String) {
+        
+        if session.connectedPeers.count > 0 {
+            var error : NSError?
+            let dat = NSData(data: name.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)
+            do {
+                try session.sendData(dat, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+            }
+            catch let error1 as NSError {
+                error = error1
+                NSLog("%@", "\(error)")
+            }
+        }
+    }
+    
 }
 
 extension ServiceManager : MCNearbyServiceAdvertiserDelegate {
@@ -58,10 +72,8 @@ extension ServiceManager : MCNearbyServiceAdvertiserDelegate {
     }
     
     func advertiser(advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: NSData?, invitationHandler: ((Bool, MCSession) -> Void)) {
-        if(connectState == 1){
-            NSLog("%@", "didReceiveInvitationFromPeer \(peerID)")
-            invitationHandler(true, self.session)
-        }
+        NSLog("%@", "didReceiveInvitationFromPeer \(peerID)")
+        invitationHandler(true, self.session)
     }
     
 }
@@ -73,11 +85,9 @@ extension ServiceManager : MCNearbyServiceBrowserDelegate {
     }
     
     func browser(browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
-        if(connectState == 1){
-            NSLog("%@", "foundPeer: \(peerID)")
-            NSLog("%@", "invitePeer: \(peerID)")
-            browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 10)
-        }
+        NSLog("%@", "foundPeer: \(peerID)")
+        NSLog("%@", "invitePeer: \(peerID)")
+        browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 10)
     }
     
     func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -104,18 +114,24 @@ extension ServiceManager : MCSessionDelegate {
     func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
         NSLog("%@", "peer \(peerID) didChangeState: \(state.stringValue())")
         self.delegate?.connectedDevicesChanged(self, connectedDevices: session.connectedPeers.map({$0.displayName}))
-        if(state.stringValue() == "Connected"){
-            self.delegate?.connected(self, con: 1)
-        }
-        else {
-            self.delegate?.connected(self, con: 0)
-        }
     }
     
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
         NSLog("%@", "didReceiveData: \(data.length) bytes")
         let str = NSString(data: data, encoding: NSUTF8StringEncoding) as! String
-        self.delegate?.Changed(self, string: str)
+        switch (str){
+        case "PLAYWITHME" :
+            if(self.connectState == 1){
+                self.delegate?.Changed(self, string: "LETSPLAY")
+            }
+            break
+        case "OKATLETSPLAY" :
+            if(self.connectState == 1){
+                self.delegate?.Changed(self, string: "PARTREADY")
+            }
+            break
+        default: break
+        }
     }
     
     func session(session: MCSession, didReceiveStream stream: NSInputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
