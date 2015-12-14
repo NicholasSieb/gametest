@@ -77,6 +77,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         emitterNode = emitterStars(SKColor.darkGrayColor(), starSpeedY: 15, starsPerSecond: 4, starScaleFactor: 0.05)
         emitterNode.zPosition = -12
         self.addChild(emitterNode)
+        if(bgMusic != nil){
+            bgMusic.stop()
+        }
         if (Options.option.get("music")){
             
             backgroundMusic("background")
@@ -138,6 +141,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case "home":
                 //create homeScene and remove unneeded things
                 removeUpgradeButtons()
+                if(bgMusic != nil){
+                    bgMusic.stop()
+                }
                 let homeScene = MainMenuScene(size: size)
                 homeScene.scaleMode = scaleMode
                 let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
