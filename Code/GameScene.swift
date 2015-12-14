@@ -303,7 +303,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser enemy collision
         if (secondBody.node?.name == "enemy" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Enemy
-            let laser = secondBody.node
+            let laser = firstBody.node
             explodeLaser(laser!.position)
             laser?.removeFromParent()
             explode((toChange?.position)!, player: false)
@@ -348,7 +348,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser boss collision
         if (secondBody.node?.name == "boss" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Boss
-            let laser = secondBody.node
+            let laser = firstBody.node
             explodeLaser(laser!.position)
             laser?.removeFromParent()
             if (toChange?.health >= 0){
