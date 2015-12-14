@@ -92,6 +92,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(gameState == 2){
             //tell the service you want to play a game
             self.service.connectState = 1
+            createHomeButton(size)
+            self.addChild(homeButton)
         }
         else {
             buildGame(view)
@@ -102,6 +104,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rocket = Player(x: size.width / 2, y: size.height / 2).addTo(self) as! Player
         scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
         scoreboard2 = Scoreboard(x:50, y: size.height - 2*size.height/5)
+        if(homeButton != nil){
+            removeHomeButton()
+        }
         if (self.gameState != 1){
             scoreboard2.addTo(self)
             scoreboard2.viewController = self.viewController
@@ -131,6 +136,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches{
         currentPosition = touch.locationInNode(self)
+          
             
         
         let touched = self.nodeAtPoint(currentPosition)
@@ -147,10 +153,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 break
             case "home":
                 //create homeScene and remove unneeded things
+                if (gameState == 2){
+                    self.removeAllChildren()
+                    self.gameState == 5
+                    self.service.connectState = 0
+                    
+                } else {
                 removeUpgradeButtons()
+                }
                 if(bgMusic != nil){
                     bgMusic.stop()
                 }
+                
                 let homeScene = MainMenuScene(size: size)
                 homeScene.scaleMode = scaleMode
                 let reveal = SKTransition.doorsOpenVerticalWithDuration(0.5)
@@ -170,7 +184,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             case "connect":
                 //set game state and tell service you want to play a game
+                self.removeAllChildren()
                 self.gameState = 2
+                gameState = 2
                 service.connectState = 1
                 resetGame()
                 break
@@ -221,7 +237,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 break
                 
             }
+            if(gameState == 2){
+                
+            } else {
             Utility.pressButton(self, touched: touched, score: String(scoreboard.getScore()))
+            }
         } else {
             currentlyTouching = true
         }
@@ -613,15 +633,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bgMusic.stop()
         }
         //bgMusic.stop()
+        if(joystickOne != nil){
         joystickOne.hidden = true
         joystickTwo.hidden = true
+        }
         isGameOver = true
         //create explosion
         explode(rocket.position, player: true)
         rocket.removeFromParent()
         pause.removeThis()
         enemySpawnRate = 5
-        PopupMenu(size: size, title: "Game Over!", label: "Play", id: "gameover", connectOption: true).addTo(self)
+        
         if scoreboard.isHighscore() {
             addChild(scoreboard.getHighscoreLabel(size))
         }
@@ -631,7 +653,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //tell service that the game is over
             service.send("ILOST")
             service.connectState = 0
-        }
+            PopupMenu(size: size, title: "You lost!", label: "Play", id: "gameover", connectOption: true).addTo(self)
+            print(1)
+        } else if(gameState == 5){
+            PopupMenu(size: size, title: "Winner!", label: "Play", id: "gameover", connectOption: true).addTo(self)
+            print(2)
+        } else {
+            PopupMenu(size: size, title: "Game Over!", label: "Play", id: "gameover", connectOption: true).addTo(self)        }
         
     }
     
@@ -696,6 +724,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         laserVelocityButton.xScale = 3.0
         laserVelocityButton.yScale = 3.0
         
+    }
+    
+    func createHomeButton(size: CGSize) {
+        homeButton = Sprite(named: "home", x: size.width - size.width / 4.0, y: size.height / 3)
+        homeButton.xScale = 0.4
+        homeButton.yScale = 0.4
+        homeButton.name = "home"
+    }
+    
+    func removeHomeButton(){
+        homeButton.removeFromParent()
     }
     
     //add the buttons to the game

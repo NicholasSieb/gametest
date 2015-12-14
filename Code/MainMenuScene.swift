@@ -17,7 +17,7 @@ class MainMenuScene: SKScene {
         emitterNode = emitterStars(SKColor.darkGrayColor(), starSpeedY: 15, starsPerSecond: 4, starScaleFactor: 0.05)
         emitterNode.zPosition = -12
         self.addChild(emitterNode)
-        PopupMenu(size: size, title: "Game Test for 407", label: "Play", id: "start", connectOption: true).addTo(self)
+        PopupMenu(size: size, title: "Flux", label: "Play", id: "start", connectOption: true).addTo(self)
     }
     /// Helper function to create a star emitterNode
     ///
