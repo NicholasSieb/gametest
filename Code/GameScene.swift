@@ -94,7 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pause = Pause(size: size, x: size.width - 50, y: size.height - size.height / 6).addTo(self)
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self
-        view.showsPhysics = true
+        view.showsPhysics = false
         _ = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
         
         //create the upgrade buttons
@@ -330,7 +330,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser enemy collision
         if (secondBody.node?.name == "enemy" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Enemy
-            let laser = secondBody.node
+            let laser = firstBody.node
             explodeLaser(laser!.position)
             laser?.removeFromParent()
             explode((toChange?.position)!, player: false)
@@ -375,7 +375,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //check laser boss collision
         if (secondBody.node?.name == "boss" && firstBody.node?.name == "laser"){
             let toChange = secondBody.node as? Boss
-            let laser = secondBody.node
+            let laser = firstBody.node
             explodeLaser(laser!.position)
             laser?.removeFromParent()
             if (toChange?.health >= 0){
