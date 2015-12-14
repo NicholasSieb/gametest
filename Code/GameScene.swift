@@ -34,6 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameCenterDelegate : GameSceneDelegate?
     var scoreboard: Scoreboard!
     var scoreboard2: Scoreboard!
+    var scored = false
     var isGameOver = false
 
     //pause variables
@@ -338,6 +339,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             explode((toChange?.position)!, player: false)
             toChange?.removeFromParent()
             scoreboard.addScore(1)
+            scored = true
             //secondBody = contact.bodyB
             
             if Options.option.get("sound"){
@@ -355,6 +357,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             explode((toChange?.position)!, player: false)
             toChange?.removeFromParent()
             scoreboard.addScore(1)
+            scored = true
             //secondBody = contact.bodyB
             //  print("collision detected")
             if Options.option.get("sound"){
@@ -408,6 +411,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             explode((toChange?.position)!, player: false)
             toChange?.removeFromParent()
             scoreboard.addScore(3)
+            scored = true
             //secondBody = contact.bodyB
             //  print("collision detected")
                 if Options.option.get("sound"){
@@ -434,6 +438,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             explode((toChange?.position)!, player: false)
             toChange?.removeFromParent()
             scoreboard.addScore(5)
+            scored = true
             //secondBody = contact.bodyB
             //  print("collision detected")
                 if Options.option.get("sound"){
@@ -495,7 +500,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //in game
             case 4 :
                 doUpdate()
-                service.send("SCORE" + String(scoreboard.getScore()))
+                if(scored){
+                    service.send("SCORE" + String(scoreboard.getScore()))
+                    scored = false
+                }
                 break
             //died and in game over scene
             case 5 : //do nothing
@@ -771,7 +779,6 @@ extension GameScene : ServiceManagerDelegate {
                 self.gameState = 5
                 self.service.connectState = 0
                 self.gameOver()
-                NSLog("TheyLost")
                 break
             case "PEERLOST" :
                 if (self.gameState == 4){
