@@ -28,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //enemy variables
     var removeEnemies = false
     var enemySpawnRate = 4
+    var enemyVelocity: CGFloat = 4
     
     //game state variables
     var gameCenterDelegate : GameSceneDelegate?
@@ -134,7 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 ///increases the size of the laser
             case "laserSize":
                 //check if there is score to spend. Maximum 15 upgrades to laser size
-                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.laserSize < 15)
+                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.laserSize < 12)
                 {
                     scoreboard.addScore(-1)
                     rocket.laserSize = rocket.laserSize + 1
@@ -144,10 +145,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //increases the speed of the ship
             case "shipSpeed":
                 //check if there is score to spend and speed is not at it's limit
-                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.speedTwo < 20)
+                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.joystickSpeed < 0.20)
                 {
                     scoreboard.addScore(-1)
-                    let additionVariable: CGFloat = 1
+                    let additionVariable: CGFloat = 0.01
                     rocket.speedTwo = rocket.speedTwo + additionVariable
                 }
                 
@@ -162,7 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //increases the velocity of the lasers
             case "laserVelocity":
                 //check if score to spend. Maximum laser velocity is 400
-                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 400)
+                if(scoreboard.getScore() >= 1 && isGameOver == false && rocket.velocity < 200)
                 {
                     scoreboard.addScore(-1)
                     rocket.velocity = rocket.velocity + (10/1.0)
@@ -402,6 +403,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Don't increase spawn if game is paused
         if(!gamePaused){
         enemySpawnRate = enemySpawnRate + 1
+        enemyVelocity = enemyVelocity + 0.1
         //print(enemySpawnRate)
         }
     }
@@ -438,13 +440,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if (self.joystickOne.velocity.x != 0 || self.joystickOne.velocity.y != 0) {
                     //if (rocket.position.x <= 0 || rocket.position.y < 0 || rocket.position.x >= self.size.width || rocket.position.y >= self.size.height){
                     //} else {
-                    if (rocket.position.x + 0.15 * self.joystickOne.velocity.x < 0 || rocket.position.x + 0.15 * self.joystickOne.velocity.x > self.size.width){
+                    if (rocket.position.x + rocket.joystickSpeed * self.joystickOne.velocity.x < 0 || rocket.position.x + rocket.joystickSpeed * self.joystickOne.velocity.x > self.size.width){
                         
                     }
-                    else if (rocket.position.y + 0.15 * self.joystickOne.velocity.y < 180 || rocket.position.y + 0.15 * self.joystickOne.velocity.y > self.size.height - 180){
+                    else if (rocket.position.y + rocket.joystickSpeed * self.joystickOne.velocity.y < 180 || rocket.position.y + rocket.joystickSpeed * self.joystickOne.velocity.y > self.size.height - 180){
                         
                     } else {
-                    rocket.position = CGPointMake(rocket.position.x + 0.15 * self.joystickOne.velocity.x, rocket.position.y + 0.15 * self.joystickOne.velocity.y)
+                    rocket.position = CGPointMake(rocket.position.x + rocket.joystickSpeed * self.joystickOne.velocity.x, rocket.position.y + rocket.joystickSpeed * self.joystickOne.velocity.y)
                     }
                 
                 }
@@ -505,7 +507,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let randomX = 10 + random() % Int(size.width) - 10
             let startY = startAtTop.boolValue ? size.height : 0
             //construct enemy
-            let enemy = Enemy(x: CGFloat(randomX), y: startY, startAtTop: startAtTop).addTo(self)
+            let enemy = Enemy(x: CGFloat(randomX), y: startY, startAtTop: startAtTop, vel: enemyVelocity).addTo(self)
             enemy.zPosition = 2
         }
         if random() % 1000 < enemySpawnRate/5 {

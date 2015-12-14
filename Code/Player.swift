@@ -9,6 +9,7 @@ class Player: Sprite {
     var boxSize = 30
     //Here is the variable we use to increase the user's ship speed
     var speedTwo: CGFloat = 6
+    var joystickSpeed: CGFloat = 0.15
     //Here is the variable we use to determine the laser's speed
     var velocity = (70/1.0)
     //set collision info

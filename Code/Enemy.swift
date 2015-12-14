@@ -4,7 +4,7 @@ class Enemy: Sprite {
     //determines starting position
     var startAtTop: Bool!
     //speed of enemy movement
-    let vel: CGFloat = 4
+    var vel: CGFloat = 4
     var dir: [CGFloat] = [0,0]
     var currAngle = CGFloat(0)
     let radius: CGFloat = 2
@@ -16,10 +16,11 @@ class Enemy: Sprite {
     /// - parameter y, y starting coord
     /// - parameter startAtTop, choose starting position
     /// - Usage Sprite constructor
-    init(x: CGFloat, y: CGFloat, startAtTop: Bool) {
+    init(x: CGFloat, y: CGFloat, startAtTop: Bool, vel: CGFloat) {
         super.init(named: "enemy", x: x, y: y)
         self.startAtTop = startAtTop
         self.setScale(0.8)
+        self.vel = vel
         //set physics properties
         //self.physicsBody = SKPhysicsBody.init(texture: self.texture!, size: self.size)
         self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 60, height: 60))
