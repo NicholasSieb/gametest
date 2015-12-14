@@ -33,6 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //game state variables
     var gameCenterDelegate : GameSceneDelegate?
     var scoreboard: Scoreboard!
+    var scoreboard2: Scoreboard!
     var isGameOver = false
 
     //pause variables
@@ -100,6 +101,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func buildGame(view: SKView) {
         rocket = Player(x: size.width / 2, y: size.height / 2).addTo(self) as! Player
         scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
+        if (self.gameState != 1){
+            scoreboard2 = Scoreboard(x:50, y: size.height - 2*size.height/5).addTo(self)
+            scoreboard2.viewController = self.viewController
+        }
         scoreboard.viewController = self.viewController
         pause = Pause(size: size, x: size.width - 50, y: size.height - size.height / 6).addTo(self)
         self.physicsWorld.gravity = CGVectorMake(0,0)

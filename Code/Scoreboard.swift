@@ -44,6 +44,13 @@ class Scoreboard {
         scoreboard.text = "Credits: \(self.score)"
         highScore()
     }
+    /// Sets score
+    ///
+    /// - parameter score
+    func setScore(score: Int) {
+        self.score = score
+        scoreboard.text = "Credits of Opponent: \(self.score)"
+    }
     /// Function to access score value
     ///
     /// - returns score as int
