@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //enemy variables
     var removeEnemies = false
-    var enemySpawnRate = 4
+    var enemySpawnRate = 3
     var enemyVelocity: CGFloat = 4
     
     //game state variables
@@ -95,7 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self
         view.showsPhysics = false
-        _ = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
+        _ = NSTimer.scheduledTimerWithTimeInterval(35, target: self, selector: "increaseSpawn", userInfo: nil, repeats: true)
         
         //create the upgrade buttons
         createUpgradeButtons(size)
@@ -366,6 +366,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             laser?.removeFromParent()
             if (toChange?.health >= 0){
                 toChange?.health = (toChange?.health)! - 1
+                if Options.option.get("sound") {
+                    let soundaction = SKAction.playSoundFileNamed("hitmarker.mp3", waitForCompletion: false);
+                    self.runAction(soundaction)
+                }
             }
             else {
             explode((toChange?.position)!, player: false)
@@ -388,7 +392,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             laser?.removeFromParent()
             if (toChange?.health >= 0){
                 toChange?.health = (toChange?.health)! - 1
-                toChange?.alpha = (toChange?.alpha)! - 0.05
+                if Options.option.get("sound") {
+                    let soundaction = SKAction.playSoundFileNamed("hitmarker.mp3", waitForCompletion: false);
+                    self.runAction(soundaction)
+                }
             }
             else {
             explode((toChange?.position)!, player: false)
@@ -553,6 +560,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let soundaction = SKAction.playSoundFileNamed("Player-Death.wav", waitForCompletion: false);
             self.runAction(soundaction)
         }
+        bgMusic.stop()
         isGameOver = true
         //create explosion
         explode(rocket.position, player: true)
