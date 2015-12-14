@@ -49,7 +49,7 @@ class Scoreboard {
     /// - parameter score
     func setScore(score: Int) {
         self.score = score
-        scoreboard.text = "Credits of Opponent: \(self.score)"
+        scoreboard.text = "Opponent: \(self.score)"
     }
     /// Function to access score value
     ///

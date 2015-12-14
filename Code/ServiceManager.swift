@@ -92,6 +92,9 @@ extension ServiceManager : MCNearbyServiceBrowserDelegate {
     
     func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
         NSLog("%@", "lostPeer: \(peerID)")
+        if(self.connectState == 2){
+            self.delegate?.Changed(self, string: "PEERLOST")
+        }
     }
     
 }
@@ -117,14 +120,13 @@ extension ServiceManager : MCSessionDelegate {
     }
     
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
-        NSLog("%@", "didReceiveData: \(data.length) bytes")
+        //NSLog("%@", "didReceiveData: \(data.length) bytes")
         let str = NSString(data: data, encoding: NSUTF8StringEncoding) as! String
         
         if(str.containsString("SCORE")){
-            if(self.connectState == 1){
+            if(self.connectState == 2){
                 self.delegate?.Changed(self, string: "E" + str)
             }
-            break
         }
         else {
             switch (str){
@@ -139,7 +141,7 @@ extension ServiceManager : MCSessionDelegate {
                 }
                 break
             case "ILOST" :
-                if(self.connectState == 1){
+                if(self.connectState == 2){
                     self.delegate?.Changed(self, string: "PARTLOST")
                 }
                 break

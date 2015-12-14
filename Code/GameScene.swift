@@ -86,7 +86,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             backgroundMusic("background")
             bgMusic.play()
         }
-        NSLog("HERE")
         self.service.delegate = self
         
         if(gameState == 2){
@@ -104,6 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (self.gameState != 1){
             scoreboard2 = Scoreboard(x:50, y: size.height - 2*size.height/5).addTo(self)
             scoreboard2.viewController = self.viewController
+            scoreboard2.scoreboard.text = "Opponent: 0"
         }
         scoreboard.viewController = self.viewController
         pause = Pause(size: size, x: size.width - 50, y: size.height - size.height / 6).addTo(self)
@@ -735,9 +735,15 @@ extension GameScene : ServiceManagerDelegate {
         NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
         }
     }
-    
+
     func Changed(manager: ServiceManager, string: String) {
         NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+            
+            if(string.containsString("ESCORE")){
+                let s = (string as NSString).substringFromIndex(6)
+                self.scoreboard2.setScore(Int(s)!)
+            }
+            
             switch(string){
             //partner wants to play
             case "LETSPLAY" :
@@ -748,6 +754,16 @@ extension GameScene : ServiceManagerDelegate {
             case "PARTREADY" :
                 self.service.connectState = 2
                 self.gameState = 3
+                break
+            case "PARTLOST" :
+                self.gameState = 5
+                self.service.connectState = 0
+                self.gameOver()
+                break
+            case "PEERLOST" :
+                self.gameState = 5
+                self.service.connectState = 0
+                self.gameOver()
                 break
             default : break
             }
