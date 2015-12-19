@@ -28,6 +28,7 @@ class PopupMenu {
         
         //Sprite(named: "laserSize", x: size.width/2 - 2*size.width/17,  y: size.height - size.height / 5, size: CGSizeMake(size.height / 6, size.height / 6)).addTo(menu)
         addTitle(title, position: CGPointMake(width / 2, 3 * height / 5))
+        menu.name = label
         
     }
 

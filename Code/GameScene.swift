@@ -101,7 +101,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func buildGame(view: SKView) {
+        if (rocket != nil){
+        rocket.removeFromParent()
+        }
         rocket = Player(x: size.width / 2, y: size.height / 2).addTo(self) as! Player
+        if (scoreboard != nil){
+            scoreboard.scoreboard.removeFromParent()
+        }
+       
+        if (scoreboard2 != nil){
+            scoreboard2.scoreboard.removeFromParent()
+        }
+        let toChange = self.childNodeWithName("Play") as? SKSpriteNode
+        if (toChange != nil){
+        toChange!.removeFromParent()
+        }
         scoreboard = Scoreboard(x: 50, y: size.height - size.height / 5).addTo(self)
         scoreboard2 = Scoreboard(x:50, y: size.height - 2*size.height/5)
         if(homeButton != nil){
@@ -159,7 +173,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.service.connectState = 0
                     
                 } else {
+                    if(laserSizeButton != nil){
                 removeUpgradeButtons()
+                    }
                 }
                 if(bgMusic != nil){
                     bgMusic.stop()
@@ -629,6 +645,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let soundaction = SKAction.playSoundFileNamed("Player-Death.wav", waitForCompletion: false);
             self.runAction(soundaction)
         }
+        let toChange = self.childNodeWithName("Play") as? SKSpriteNode
+        if (toChange != nil){
+            toChange!.removeFromParent()
+        }
         if(bgMusic != nil){
             bgMusic.stop()
         }
@@ -639,10 +659,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         isGameOver = true
         //create explosion
+        if(rocket != nil){
         explode(rocket.position, player: true)
         rocket.removeFromParent()
+        }
+        if(pause != nil){
         pause.removeThis()
-        enemySpawnRate = 5
+        }
+        enemySpawnRate = 4
         
         if scoreboard.isHighscore() {
             addChild(scoreboard.getHighscoreLabel(size))
@@ -653,9 +677,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //tell service that the game is over
             service.send("ILOST")
             service.connectState = 0
+            if (self.childNodeWithName("Play") != nil){
+                let node = self.childNodeWithName("Play")
+                print("Got to remove")
+                node?.removeFromParent()
+            }
             PopupMenu(size: size, title: "You lost!", label: "Play", id: "gameover", connectOption: true).addTo(self)
             print(1)
         } else if(gameState == 5){
+            if (self.childNodeWithName("Play") != nil){
+                let node = self.childNodeWithName("Play")
+                print("Got to remove")
+                node?.removeFromParent()
+            }
             PopupMenu(size: size, title: "Winner!", label: "Play", id: "gameover", connectOption: true).addTo(self)
             print(2)
         } else {
