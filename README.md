@@ -1,8 +1,6 @@
-# Project for CS 407
+# Gametest - Project
 
 TODO:
-
-Multiplayer
 
 Apple Gamecenter support - Works but need Developer account to add to app store
 
